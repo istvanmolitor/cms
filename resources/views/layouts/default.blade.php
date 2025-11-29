@@ -1,8 +1,7 @@
 @extends('cms::layouts.base')
-@endsection
-    </div>
-        @yield('content')
-    <div class="container mx-auto">
+
 @section('body')
-
-
+    <div class="container mx-auto">
+        @yield('content')
+    </div>
+@endsection

@@ -25,8 +25,10 @@ class PageController
 
         $page->load('content.contentElements');
 
+        $layout = config('cms.layouts.' . $page->layout . '.template');
+        
         return view('cms::page.show', [
-            'layout' => config('cms.layouts.' . $page->layout . '.template'),
+            'layout' => $layout ?? 'cms::layouts.default',
             'page' => $page,
         ]);
     }

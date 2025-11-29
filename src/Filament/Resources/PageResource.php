@@ -70,7 +70,9 @@ class PageResource extends Resource
                     ->label(__('Layout'))
                     ->required()
                     ->options(function () {
-                        return config('cms.layouts', []);
+                        return collect(config('cms.layouts', []))
+                            ->mapWithKeys(fn ($layout, $key) => [$key => $layout['name']])
+                            ->toArray();
                     })
                     ->default(config('cms.default_layout', 'default')),
 
