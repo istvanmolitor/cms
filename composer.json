@@ -1,0 +1,28 @@
+{
+    "name": "istvanmolitor/cms",
+    "description": "CMS package for filament 4 applications.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Molitor István",
+            "email": "istvanmolitor@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "istvanmolitor/user": "*@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Molitor\\Cms\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Molitor\\Cms\\Providers\\CmsServiceProvider"
+            ]
+        }
+    }
+}
