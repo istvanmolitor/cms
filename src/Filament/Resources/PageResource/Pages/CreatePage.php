@@ -27,11 +27,25 @@ class CreatePage extends CreateRecord
         // Create a new Content record
         $content = $contentRepository->create($userId);
 
+        // Extract content elements from data
+        $contentElements = $data['contentElements'] ?? [];
+        unset($data['contentElements']);
+
         // Add the content_id to the page data
         $data['content_id'] = $content->id;
 
-        // Create and return the page
-        return static::getModel()::create($data);
+        // Create the page
+        $page = static::getModel()::create($data);
+
+        // Create content elements
+        foreach ($contentElements as $element) {
+            $content->contentElements()->create([
+                'type' => $element['type'],
+                'content' => $element['content'],
+            ]);
+        }
+
+        return $page;
     }
 }
 

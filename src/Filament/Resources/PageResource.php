@@ -15,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Molitor\Cms\Models\Page;
+use Molitor\Cms\Filament\Forms\Components\ContentEditor;
 
 class PageResource extends Resource
 {
@@ -63,6 +64,8 @@ class PageResource extends Resource
                     ->maxLength(255)
                     ->unique(ignoreRecord: true)
                     ->alphaDash(),
+
+                ContentEditor::make('contentElements'),
             ]);
     }
 
