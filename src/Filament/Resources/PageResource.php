@@ -2,6 +2,7 @@
 
 namespace Molitor\Cms\Filament\Resources;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -103,6 +104,11 @@ class PageResource extends Resource
             ])
             ->filters([])
             ->actions([
+                Action::make('view')
+                    ->label(__('View'))
+                    ->icon('heroicon-o-eye')
+                    ->url(fn (Page $record): string => route('cms.page.show', ['slug' => $record->slug]))
+                    ->openUrlInNewTab(),
                 EditAction::make(),
                 DeleteAction::make(),
             ])
