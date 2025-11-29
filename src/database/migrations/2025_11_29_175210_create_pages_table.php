@@ -17,6 +17,7 @@ class CreatePagesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
+            $table->string('layout')->default('default');
 
             $table->unsignedBigInteger('content_id');
             $table->foreign('content_id')->references('id')->on('contents');

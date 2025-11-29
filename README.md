@@ -4,9 +4,43 @@
 
 Ez a CMS csomag Filament 4 alkalmazásokhoz készült, amely lehetővé teszi oldalak és tartalmak kezelését.
 
+## Telepítés
+
+### Konfiguráció publikálása
+
+A CMS csomag konfigurációs fájlját publikálhatod a főprojektbe:
+
+```bash
+php artisan vendor:publish --tag=cms-config
+```
+
+Ez létrehozza a `config/cms.php` fájlt, ahol testreszabhatod a rendelkezésre álló layoutokat és az alapértelmezett layoutot.
+
+### Konfiguráció
+
+A `config/cms.php` fájlban a következőket állíthatod be:
+
+- **layouts**: A rendelkezésre álló layoutok listája (kulcs-érték párok)
+- **default_layout**: Az alapértelmezett layout, amit új oldalak kapnak
+
+Példa konfiguráció:
+
+```php
+return [
+    'layouts' => [
+        'default' => 'Default Layout',
+        'full-width' => 'Full Width',
+        'sidebar-left' => 'Sidebar Left',
+        'sidebar-right' => 'Sidebar Right',
+    ],
+    'default_layout' => 'default',
+];
+```
+
 ## Funkciók
 
 - **Page (Oldal) kezelés**: Oldalak létrehozása, szerkesztése, törlése
+- **Layout választás**: Oldalakhoz különböző layoutok rendelhetők
 - **Content (Tartalom) kezelés**: Tartalmak kezelése
 - **ContentElement (Tartalom elem) kezelés**: Különböző típusú tartalmi elemek (text, html, stb.)
 - **Frontend megjelenítés**: Nyilvános végpont az oldalak megjelenítéséhez
@@ -48,6 +82,40 @@ Az alkalmazásban felülírhatod ezt a view-t a következő helyen:
 
 ```
 resources/views/vendor/cms/page/show.blade.php
+```
+
+### Layout testreszabás
+
+Az oldalak különböző layoutokat használhatnak. A csomag alapértelmezetten a következő layoutokat tartalmazza:
+
+- `default` - Alapértelmezett layout konténerrel
+- `full-width` - Teljes szélességű layout
+- `sidebar-left` - Layout bal oldali sidebarral
+- `sidebar-right` - Layout jobb oldali sidebarral
+
+A layout fájlok helye:
+
+```
+packages/cms/resources/views/layouts/{layout-name}.blade.php
+```
+
+Saját layoutokat is létrehozhatsz:
+
+1. Adj hozzá egy új layout bejegyzést a `config/cms.php` fájlhoz
+2. Hozz létre egy új layout fájlt a megfelelő néven:
+   - A csomagban: `packages/cms/resources/views/layouts/{layout-name}.blade.php`
+   - Az alkalmazásban (felülírás): `resources/views/vendor/cms/layouts/{layout-name}.blade.php`
+
+Példa layout:
+
+```blade
+@extends('cms::layouts.base')
+
+@section('body')
+    <div class="custom-layout">
+        @yield('content')
+    </div>
+@endsection
 ```
 
 ## API végpontok

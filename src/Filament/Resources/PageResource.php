@@ -66,6 +66,14 @@ class PageResource extends Resource
                     ->unique(ignoreRecord: true)
                     ->alphaDash(),
 
+                Forms\Components\Select::make('layout')
+                    ->label(__('Layout'))
+                    ->required()
+                    ->options(function () {
+                        return config('cms.layouts', []);
+                    })
+                    ->default(config('cms.default_layout', 'default')),
+
                 ContentEditor::make('contentElements'),
             ]);
     }
@@ -88,6 +96,10 @@ class PageResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->limit(50),
+                Tables\Columns\TextColumn::make('layout')
+                    ->label(__('Layout'))
+                    ->sortable()
+                    ->formatStateUsing(fn (string $state): string => config('cms.layouts')[$state] ?? $state),
                 Tables\Columns\TextColumn::make('content_id')
                     ->label(__('Content ID'))
                     ->sortable(),
