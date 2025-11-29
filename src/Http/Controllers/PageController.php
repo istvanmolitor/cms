@@ -23,10 +23,10 @@ class PageController
             abort(404);
         }
 
-        // Load the content relationship with content elements
         $page->load('content.contentElements');
 
         return view('cms::page.show', [
+            'layout' => config('cms.layouts.' . $page->layout . '.template'),
             'page' => $page,
         ]);
     }

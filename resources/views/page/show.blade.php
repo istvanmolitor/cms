@@ -1,4 +1,4 @@
-@extends('cms::layouts.' . ($page->layout ?? 'page'))
+@extends($layout ?? 'cms::layouts.page')
 
 @section('content')
     <h1>{{ $page->title }}</h1>
