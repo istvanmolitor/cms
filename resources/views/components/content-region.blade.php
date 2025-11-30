@@ -1,2 +1,2 @@
 régió
-<x-content :name="$content" />
+<x-content :content="$region->content" />

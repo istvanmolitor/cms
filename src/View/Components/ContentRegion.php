@@ -25,7 +25,7 @@ class ContentRegion extends Component
         }
 
         return view('cms::components.content-region', [
-            'content' => $region->content
+            'region' => $region
         ]);
     }
 }
