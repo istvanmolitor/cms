@@ -33,7 +33,7 @@ class ContentRegion extends Component
         if ($this->contentBoxes->isNotEmpty()) {
             $this->contentBoxes->load('content.contentElements');
         }
-        
+
         return view('cms::components.content-region');
     }
 }
