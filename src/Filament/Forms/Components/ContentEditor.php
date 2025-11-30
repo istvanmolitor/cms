@@ -4,64 +4,33 @@ namespace Molitor\Cms\Filament\Forms\Components;
 
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\RichEditor;
 use Molitor\Cms\Services\ContentElementHandler;
 
 class ContentEditor
 {
     public static function make(string $name = 'contentElements'): Repeater
     {
+        $handler = app(ContentElementHandler::class);
+
         return Repeater::make($name)
             ->label(__('Content Elements'))
             ->schema([
                 Select::make('type')
                     ->label(__('Element Type'))
                     ->required()
-                    ->options(fn () => app(ContentElementHandler::class)->getOptions())
+                    ->options(fn () => $handler->getOptions())
                     ->live()
-                    ->default('text'),
+                    ->default('text')
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        // Clear content when type changes
+                        $set('content', null);
+                    }),
 
-                RichEditor::make('content')
-                    ->label(__('Content'))
-                    ->required()
-                    ->columnSpanFull()
-                    ->visible(fn ($get) => in_array($get('type'), ['text', 'heading', 'quote', 'list']))
-                    ->toolbarButtons([
-                        'bold',
-                        'italic',
-                        'underline',
-                        'link',
-                        'bulletList',
-                        'orderedList',
-                        'h2',
-                        'h3',
-                    ]),
-
-                Textarea::make('content')
-                    ->label(__('Image URL'))
-                    ->required()
-                    ->rows(2)
-                    ->columnSpanFull()
-                    ->visible(fn ($get) => $get('type') === 'image'),
-
-                Textarea::make('content')
-                    ->label(__('Video URL'))
-                    ->required()
-                    ->rows(2)
-                    ->columnSpanFull()
-                    ->visible(fn ($get) => $get('type') === 'video'),
-
-                Textarea::make('content')
-                    ->label(__('Code'))
-                    ->required()
-                    ->rows(10)
-                    ->columnSpanFull()
-                    ->visible(fn ($get) => $get('type') === 'code'),
+                ...self::getAllFormFields($handler),
             ])
             ->itemLabel(fn (array $state): ?string =>
                 isset($state['type'])
-                    ? __(ucfirst($state['type']))
+                    ? $handler->getElementType($state['type'])?->getLabel()
                     : null
             )
             ->collapsible()
@@ -70,6 +39,23 @@ class ContentEditor
             ->addActionLabel(__('Add Content Element'))
             ->defaultItems(0)
             ->columnSpanFull();
+    }
+
+    private static function getAllFormFields(ContentElementHandler $handler): array
+    {
+        $allFields = [];
+
+        foreach ($handler->getOptions() as $type => $label) {
+            $fields = $handler->getFormFields($type);
+
+            foreach ($fields as $field) {
+                // Make each field visible only when its type is selected
+                $field->visible(fn ($get) => $get('type') === $type);
+                $allFields[] = $field;
+            }
+        }
+
+        return $allFields;
     }
 }
 

@@ -7,4 +7,6 @@ abstract class BaseContentElementType
     abstract public function getType(): string;
 
     abstract public function getLabel(): string;
+
+    abstract public function getFormFields(): array;
 }

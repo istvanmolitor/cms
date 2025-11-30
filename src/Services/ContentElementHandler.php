@@ -27,4 +27,10 @@ class ContentElementHandler
         }
         return $options;
     }
+
+    public function getFormFields(string $type): array
+    {
+        $elementType = $this->getElementType($type);
+        return $elementType ? $elementType->getFormFields() : [];
+    }
 }

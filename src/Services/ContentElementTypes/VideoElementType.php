@@ -2,6 +2,8 @@
 
 namespace Molitor\Cms\Services\ContentElementTypes;
 
+use Filament\Forms\Components\Textarea;
+
 class VideoElementType extends BaseContentElementType
 {
     public function getType(): string
@@ -12,6 +14,17 @@ class VideoElementType extends BaseContentElementType
     public function getLabel(): string
     {
         return __('Video');
+    }
+
+    public function getFormFields(): array
+    {
+        return [
+            Textarea::make('content')
+                ->label(__('Video URL'))
+                ->required()
+                ->rows(2)
+                ->columnSpanFull(),
+        ];
     }
 }
 
