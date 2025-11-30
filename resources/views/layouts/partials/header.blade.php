@@ -10,15 +10,7 @@
 
             {{-- Desktop Navigation --}}
             <nav class="hidden md:flex space-x-8">
-                <a href="/" class="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">
-                    Kezdőlap
-                </a>
-                <a href="/about" class="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">
-                    Rólunk
-                </a>
-                <a href="/contact" class="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">
-                    Kapcsolat
-                </a>
+                <x-menu name="main" />
             </nav>
 
             {{-- Mobile menu button --}}
@@ -36,15 +28,7 @@
         {{-- Mobile Navigation --}}
         <div id="mobile-menu" class="hidden md:hidden pb-4">
             <div class="flex flex-col space-y-2">
-                <a href="/" class="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium hover:bg-gray-50 rounded transition-colors">
-                    Kezdőlap
-                </a>
-                <a href="/about" class="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium hover:bg-gray-50 rounded transition-colors">
-                    Rólunk
-                </a>
-                <a href="/contact" class="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium hover:bg-gray-50 rounded transition-colors">
-                    Kapcsolat
-                </a>
+                <x-menu name="main" />
             </div>
         </div>
     </div>

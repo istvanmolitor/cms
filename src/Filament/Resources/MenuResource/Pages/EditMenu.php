@@ -2,6 +2,7 @@
 
 namespace Molitor\Cms\Filament\Resources\MenuResource\Pages;
 
+use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Molitor\Cms\Filament\Resources\MenuResource;
 
@@ -12,7 +13,7 @@ class EditMenu extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            \Filament\Actions\DeleteAction::make(),
+            Actions\DeleteAction::make(),
         ];
     }
 }

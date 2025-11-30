@@ -2,6 +2,7 @@
 
 namespace Molitor\Cms\Filament\Resources\MenuResource\Pages;
 
+use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Molitor\Cms\Filament\Resources\MenuResource;
 
@@ -12,8 +13,7 @@ class ListMenus extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            \Filament\Actions\CreateAction::make(),
+            Actions\CreateAction::make(),
         ];
     }
 }
-

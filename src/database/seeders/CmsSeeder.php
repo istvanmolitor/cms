@@ -22,5 +22,8 @@ class CmsSeeder extends Seeder
         } catch (PermissionException $e) {
             $this->command->error($e->getMessage());
         }
+
+        // Seed menu data
+        $this->call(MenuSeeder::class);
     }
 }

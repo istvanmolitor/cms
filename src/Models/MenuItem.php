@@ -44,7 +44,24 @@ class MenuItem extends Model
 
     public function children(): HasMany
     {
-        return $this->hasMany(MenuItem::class, 'parent_id');
+        return $this->hasMany(MenuItem::class, 'parent_id')
+            ->orderBy('sort');
+    }
+
+    /**
+     * Check if this menu item has children
+     */
+    public function hasChildren(): bool
+    {
+        return $this->children()->exists();
+    }
+
+    /**
+     * Get all descendants recursively
+     */
+    public function descendants(): HasMany
+    {
+        return $this->children()->with('descendants');
     }
 }
 
