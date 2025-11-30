@@ -1,10 +1,7 @@
-@extends('cms::layouts.base')
+@extends('cms::layouts.page')
 
-@section('body')
-    @include('cms::layouts.partials.header')
-    <div class="w-full">
+@section('page')
+    <main class="w-full">
         @yield('content')
-    </div>
-    @include('cms::layouts.partials.footer')
+    </main>
 @endsection
-

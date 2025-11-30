@@ -1,9 +1,7 @@
-@extends('cms::layouts.base')
+@extends('cms::layouts.page')
 
-@section('body')
-    @include('cms::layouts.partials.header')
+@section('page')
     <div class="container mx-auto">
         @yield('content')
     </div>
-    @include('cms::layouts.partials.footer')
 @endsection

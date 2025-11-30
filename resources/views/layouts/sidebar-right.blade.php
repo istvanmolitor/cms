@@ -1,15 +1,13 @@
-@extends('cms::layouts.base')
+@extends('cms::layouts.page')
 
-@section('body')
-    @include('cms::layouts.partials.header')
+@section('page')
     <div class="container mx-auto flex">
-        <main class="w-3/4 pr-4">
+        <main class="w-3/4">
             @yield('content')
         </main>
-        <aside class="w-1/4">
-            @yield('sidebar')
+        <aside class="w-1/4 pr-4">
+            <x-content-region name="sidebar" />
         </aside>
     </div>
-    @include('cms::layouts.partials.footer')
 @endsection
 
