@@ -20,6 +20,10 @@ class ContentRegion extends Model
         'name' => 'string',
     ];
 
+    protected $with = [
+        'content.contentElements',
+    ];
+
     public function content(): BelongsTo
     {
         return $this->belongsTo(Content::class);

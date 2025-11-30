@@ -76,7 +76,7 @@ class PageResource extends Resource
                     })
                     ->default(config('cms.default_layout', 'default')),
 
-                ContentEditor::make('contentElements'),
+                ContentEditor::make('content.contentElements'),
             ]);
     }
 

@@ -13,12 +13,16 @@ class ContentElement extends Model
         'content_id',
         'type',
         'content',
+        'sort',
+        'is_visible',
     ];
 
     protected $casts = [
         'content_id' => 'integer',
         'type' => 'string',
         'content' => 'string',
+        'sort' => 'integer',
+        'is_visible' => 'boolean',
     ];
 
     public function content(): BelongsTo

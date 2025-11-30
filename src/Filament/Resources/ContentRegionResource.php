@@ -51,7 +51,7 @@ class ContentRegionResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
-                ContentEditor::make('contentElements'),
+                ContentEditor::make('content.contentElements'),
             ]);
     }
 
