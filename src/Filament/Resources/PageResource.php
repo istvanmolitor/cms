@@ -101,7 +101,7 @@ class PageResource extends Resource
                 Tables\Columns\TextColumn::make('layout')
                     ->label(__('Layout'))
                     ->sortable()
-                    ->formatStateUsing(fn (string $state): string => config('cms.layouts')[$state] ?? $state),
+                    ->formatStateUsing(fn (string $state): string => config('cms.layouts')[$state]['name'] ?? $state),
                 Tables\Columns\TextColumn::make('content_id')
                     ->label(__('Content ID'))
                     ->sortable(),

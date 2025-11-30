@@ -2,6 +2,7 @@
 
 namespace Molitor\Cms\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Molitor\Cms\Repositories\ContentBoxRepository;
 use Molitor\Cms\Repositories\ContentBoxRepositoryInterface;
@@ -13,6 +14,7 @@ use Molitor\Cms\Repositories\ContentRepository;
 use Molitor\Cms\Repositories\ContentRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
+use Molitor\Cms\View\Components\ContentRegion;
 
 class CmsServiceProvider extends ServiceProvider
 {
@@ -31,6 +33,9 @@ class CmsServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/cms.php', 'cms'
         );
+
+        // Register Blade components
+        Blade::component('content-region', ContentRegion::class);
     }
 
     public function register()
