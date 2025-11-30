@@ -84,17 +84,13 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label(__('ID'))
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('title')
-                    ->label(__('Title'))
+                Tables\Columns\TextColumn::make('slug')
+                    ->label(__('Slug'))
                     ->searchable()
                     ->sortable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('slug')
-                    ->label(__('Slug'))
+                Tables\Columns\TextColumn::make('title')
+                    ->label(__('Title'))
                     ->searchable()
                     ->sortable()
                     ->limit(50),
@@ -102,9 +98,6 @@ class PageResource extends Resource
                     ->label(__('Layout'))
                     ->sortable()
                     ->formatStateUsing(fn (string $state): string => config('cms.layouts')[$state]['name'] ?? $state),
-                Tables\Columns\TextColumn::make('content_id')
-                    ->label(__('Content ID'))
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('Created At'))
                     ->dateTime()

@@ -8,7 +8,6 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -59,11 +58,6 @@ class ContentRegionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label(__('ID'))
-                    ->sortable()
-                    ->searchable(),
-
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Name'))
                     ->searchable()
