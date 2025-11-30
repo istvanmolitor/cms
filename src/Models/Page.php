@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Page extends Model
 {
@@ -24,9 +24,9 @@ class Page extends Model
         'layout' => 'default',
     ];
 
-    public function content(): BelongsTo
+    public function content(): HasOne
     {
-        return $this->belongsTo(Content::class);
+        return $this->hasOne(Content::class);
     }
 }
 

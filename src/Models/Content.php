@@ -34,9 +34,4 @@ class Content extends Model
     {
         return $this->hasOne(Page::class);
     }
-
-    public function contentBoxes(): HasMany
-    {
-        return $this->hasMany(ContentBox::class);
-    }
 }

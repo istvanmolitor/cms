@@ -22,6 +22,9 @@ class CreateContentElementsTable extends Migration
             $table->string('type');
             $table->longText('content');
 
+            $table->boolean('is_visible')->default(true);
+            $table->integer('sort')->default(0);
+
             $table->timestamps();
         });
     }

@@ -30,12 +30,12 @@ class ContentElementRepository implements ContentElementRepositoryInterface
         return $this->getByContentId($content->id);
     }
 
-    public function create(int $contentId, string $type, string $content): ContentElement
+    public function create(Content $content, string $type, string $data): ContentElement
     {
         return $this->contentElement->create([
-            'content_id' => $contentId,
+            'content_id' => $content->id,
             'type' => $type,
-            'content' => $content,
+            'content' => $data,
         ]);
     }
 
@@ -53,6 +53,11 @@ class ContentElementRepository implements ContentElementRepositoryInterface
     public function getByType(string $type): Collection
     {
         return $this->contentElement->where('type', $type)->get();
+    }
+
+    public function deleteByContent(Content $content): void
+    {
+        $this->contentElement->where('content_id', $content->id)->delete();
     }
 }
 

@@ -12,6 +12,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Molitor\Cms\Filament\Forms\Components\ContentEditor;
 use Molitor\Cms\Models\ContentRegion;
 
 class ContentRegionResource extends Resource
@@ -50,51 +51,7 @@ class ContentRegionResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
-
-                Section::make(__('Content Boxes'))
-                    ->schema([
-                        Forms\Components\Repeater::make('contentBoxes')
-                            ->relationship('contentBoxes')
-                            ->label('')
-                            ->schema([
-                                Forms\Components\TextInput::make('title')
-                                    ->label(__('Title'))
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->columnSpanFull(),
-
-                                Forms\Components\Select::make('content_id')
-                                    ->label(__('Content'))
-                                    ->relationship('content', 'id')
-                                    ->searchable()
-                                    ->preload()
-                                    ->required()
-                                    ->createOptionForm([
-                                        Forms\Components\Hidden::make('user_id')
-                                            ->default(fn () => auth()->id()),
-                                    ])
-                                    ->columnSpan(1),
-
-                                Forms\Components\Toggle::make('is_visible')
-                                    ->label(__('Visible'))
-                                    ->default(true)
-                                    ->inline(false)
-                                    ->columnSpan(1),
-
-                                Forms\Components\TextInput::make('sort')
-                                    ->label(__('Sort Order'))
-                                    ->numeric()
-                                    ->default(0)
-                                    ->columnSpan(1),
-                            ])
-                            ->columns(3)
-                            ->defaultItems(0)
-                            ->reorderable(true)
-                            ->reorderableWithButtons()
-                            ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => $state['title'] ?? null)
-                            ->addActionLabel(__('Add Content Box')),
-                    ]),
+                ContentEditor::make('contentElements'),
             ]);
     }
 
@@ -111,18 +68,6 @@ class ContentRegionResource extends Resource
                     ->label(__('Name'))
                     ->searchable()
                     ->sortable(),
-
-                Tables\Columns\TextColumn::make('contentBoxes_count')
-                    ->counts('contentBoxes')
-                    ->label(__('Content Boxes'))
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('visible_boxes_count')
-                    ->label(__('Visible Boxes'))
-                    ->getStateUsing(fn (ContentRegion $record): int =>
-                        $record->contentBoxes()->where('is_visible', true)->count()
-                    )
-                    ->sortable(false),
             ])
             ->filters([])
             ->actions([

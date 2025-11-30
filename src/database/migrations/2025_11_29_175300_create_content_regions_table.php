@@ -16,6 +16,9 @@ class CreateContentRegionsTable extends Migration
         Schema::create('content_regions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+
+            $table->unsignedBigInteger('content_id');
+            $table->foreign('content_id')->references('id')->on('contents');
         });
     }
 
