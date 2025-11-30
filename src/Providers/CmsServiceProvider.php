@@ -10,6 +10,10 @@ use Molitor\Cms\Repositories\ContentRegionRepository;
 use Molitor\Cms\Repositories\ContentRegionRepositoryInterface;
 use Molitor\Cms\Repositories\ContentRepository;
 use Molitor\Cms\Repositories\ContentRepositoryInterface;
+use Molitor\Cms\Repositories\MenuItemRepository;
+use Molitor\Cms\Repositories\MenuItemRepositoryInterface;
+use Molitor\Cms\Repositories\MenuRepository;
+use Molitor\Cms\Repositories\MenuRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
 use Molitor\Cms\Services\ContentElementHandler;
@@ -53,6 +57,8 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(ContentElementRepositoryInterface::class, ContentElementRepository::class);
         $this->app->bind(ContentRegionRepositoryInterface::class, ContentRegionRepository::class);
         $this->app->bind(PageRepositoryInterface::class, PageRepository::class);
+        $this->app->bind(MenuRepositoryInterface::class, MenuRepository::class);
+        $this->app->bind(MenuItemRepositoryInterface::class, MenuItemRepository::class);
 
         $this->app->singleton(ContentElementHandler::class, function ($app) {
             $handler = new ContentElementHandler();

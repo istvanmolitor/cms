@@ -24,7 +24,7 @@ class CreateMenuItemsTable extends Migration
             $table->integer('sort')->default(0);
             $table->boolean('is_external')->default(false);
             $table->string('icon')->nullable();
-            $table->string('parent_id')->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
 
             $table->timestamps();
         });
