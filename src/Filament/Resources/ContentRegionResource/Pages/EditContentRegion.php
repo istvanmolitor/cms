@@ -6,6 +6,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Molitor\Cms\Filament\Resources\ContentRegionResource;
 use Molitor\Cms\Models\Content;
+use Molitor\Cms\Services\ContentElementHandler;
 
 class EditContentRegion extends EditRecord
 {
@@ -27,15 +28,19 @@ class EditContentRegion extends EditRecord
     {
         // Load content elements into the nested structure
         if ($this->record->content) {
+            $handler = app(ContentElementHandler::class);
+
             $data['content'] = [
                 'contentElements' => $this->record->content->contentElements()
                     ->where('is_visible', true)
                     ->orderBy('sort', 'asc')
                     ->get()
-                    ->map(fn ($element) => [
-                        'type' => $element->type,
-                        'content' => $element->content,
-                    ])
+                    ->map(function ($element) use ($handler) {
+                        $deserializedData = $handler->deserialize($element->type, $element->content);
+                        return array_merge([
+                            'type' => $element->type,
+                        ], $deserializedData);
+                    })
                     ->toArray(),
             ];
         }
@@ -47,6 +52,7 @@ class EditContentRegion extends EditRecord
     {
         // Handle content elements update
         if (isset($data['content']['contentElements'])) {
+            $handler = app(ContentElementHandler::class);
             $content = $this->record->content;
 
             if (!$content) {
@@ -61,7 +67,7 @@ class EditContentRegion extends EditRecord
             foreach ($data['content']['contentElements'] as $index => $element) {
                 $content->contentElements()->create([
                     'type' => $element['type'],
-                    'content' => $element['content'],
+                    'content' => $handler->serialize($element['type'], $element),
                     'sort' => $index,
                     'is_visible' => true,
                 ]);

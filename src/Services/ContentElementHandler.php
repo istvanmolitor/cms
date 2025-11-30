@@ -33,4 +33,16 @@ class ContentElementHandler
         $elementType = $this->getElementType($type);
         return $elementType ? $elementType->getFormFields() : [];
     }
+
+    public function serialize(string $type, array $data): string
+    {
+        $elementType = $this->getElementType($type);
+        return $elementType ? $elementType->serialize($data) : '';
+    }
+
+    public function deserialize(string $type, string $content): array
+    {
+        $elementType = $this->getElementType($type);
+        return $elementType ? $elementType->deserialize($content) : [];
+    }
 }

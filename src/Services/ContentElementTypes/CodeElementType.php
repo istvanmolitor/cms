@@ -26,5 +26,15 @@ class CodeElementType extends BaseContentElementType
                 ->columnSpanFull(),
         ];
     }
+
+    public function serialize(array $data): string
+    {
+        return $data['content'] ?? '';
+    }
+
+    public function deserialize(string $content): array
+    {
+        return ['content' => $content];
+    }
 }
 

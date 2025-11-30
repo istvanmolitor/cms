@@ -6,6 +6,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Molitor\Cms\Filament\Resources\PageResource;
 use Molitor\Cms\Repositories\ContentRepositoryInterface;
+use Molitor\Cms\Services\ContentElementHandler;
 
 class CreatePage extends CreateRecord
 {
@@ -38,10 +39,11 @@ class CreatePage extends CreateRecord
         $page = static::getModel()::create($data);
 
         // Create content elements
+        $handler = app(ContentElementHandler::class);
         foreach ($contentElements as $element) {
             $content->contentElements()->create([
                 'type' => $element['type'],
-                'content' => $element['content'],
+                'content' => $handler->serialize($element['type'], $element),
             ]);
         }
 

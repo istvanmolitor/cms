@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use Molitor\Cms\Filament\Resources\PageResource;
+use Molitor\Cms\Services\ContentElementHandler;
 
 class EditPage extends EditRecord
 {
@@ -34,12 +35,16 @@ class EditPage extends EditRecord
 
         // Add content elements to the form data
         if ($this->record->content) {
+            $handler = app(ContentElementHandler::class);
+
             $data['contentElements'] = $this->record->content->contentElements
-                ->map(fn ($element) => [
-                    'id' => $element->id,
-                    'type' => $element->type,
-                    'content' => $element->content,
-                ])
+                ->map(function ($element) use ($handler) {
+                    $deserializedData = $handler->deserialize($element->type, $element->content);
+                    return array_merge([
+                        'id' => $element->id,
+                        'type' => $element->type,
+                    ], $deserializedData);
+                })
                 ->toArray();
         }
 
@@ -59,6 +64,8 @@ class EditPage extends EditRecord
         $content = $record->content;
 
         if ($content) {
+            $handler = app(ContentElementHandler::class);
+
             // Get existing element IDs
             $existingIds = collect($contentElements)
                 ->pluck('id')
@@ -78,13 +85,13 @@ class EditPage extends EditRecord
                         ->where('id', $elementData['id'])
                         ->update([
                             'type' => $elementData['type'],
-                            'content' => $elementData['content'],
+                            'content' => $handler->serialize($elementData['type'], $elementData),
                         ]);
                 } else {
                     // Create new element
                     $content->contentElements()->create([
                         'type' => $elementData['type'],
-                        'content' => $elementData['content'],
+                        'content' => $handler->serialize($elementData['type'], $elementData),
                     ]);
                 }
             }

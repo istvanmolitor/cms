@@ -5,6 +5,7 @@ namespace Molitor\Cms\Filament\Resources\ContentRegionResource\Pages;
 use Filament\Resources\Pages\CreateRecord;
 use Molitor\Cms\Filament\Resources\ContentRegionResource;
 use Molitor\Cms\Models\Content;
+use Molitor\Cms\Services\ContentElementHandler;
 
 class CreateContentRegion extends CreateRecord
 {
@@ -22,10 +23,12 @@ class CreateContentRegion extends CreateRecord
 
         // Create content elements if provided
         if (isset($data['content']['contentElements']) && is_array($data['content']['contentElements'])) {
+            $handler = app(ContentElementHandler::class);
+
             foreach ($data['content']['contentElements'] as $index => $element) {
                 $content->contentElements()->create([
                     'type' => $element['type'],
-                    'content' => $element['content'],
+                    'content' => $handler->serialize($element['type'], $element),
                     'sort' => $index,
                     'is_visible' => true,
                 ]);
