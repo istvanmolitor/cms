@@ -27,6 +27,7 @@ use Molitor\Cms\Services\ContentElementTypes\VideoElementType;
 use Molitor\Cms\View\Components\Content;
 use Molitor\Cms\View\Components\ContentElement;
 use Molitor\Cms\View\Components\ContentRegion;
+use Molitor\Cms\View\Components\Menu;
 
 class CmsServiceProvider extends ServiceProvider
 {
@@ -49,6 +50,7 @@ class CmsServiceProvider extends ServiceProvider
         Blade::component('content-region', ContentRegion::class);
         Blade::component('content', Content::class);
         Blade::component('content-element', ContentElement::class);
+        Blade::component('menu', Menu::class);
     }
 
     public function register()
