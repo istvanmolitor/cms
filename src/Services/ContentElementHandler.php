@@ -2,6 +2,7 @@
 
 namespace Molitor\Cms\Services;
 
+use Molitor\Cms\Models\ContentElement;
 use Molitor\Cms\Services\ContentElementTypes\BaseContentElementType;
 
 class ContentElementHandler
@@ -44,5 +45,26 @@ class ContentElementHandler
     {
         $elementType = $this->getElementType($type);
         return $elementType ? $elementType->deserialize($content) : [];
+    }
+
+    public function renderContent(string $type, string $content): string
+    {
+        $elementType = $this->getElementType($type);
+        if (!$elementType) {
+            return '';
+        }
+
+        $data = $elementType->deserialize($content);
+        $template = $elementType->getTemplate();
+
+        return view($template, $data)->render();
+    }
+
+    public function render(ContentElement $contentElement): string
+    {
+        if(empty($contentElement->type) || empty($contentElement->content)) {
+            return '';
+        }
+        return $this->renderContent($contentElement->type, $contentElement->content);
     }
 }

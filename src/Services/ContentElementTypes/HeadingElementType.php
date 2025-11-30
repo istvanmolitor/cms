@@ -43,5 +43,10 @@ class HeadingElementType extends BaseContentElementType
     {
         return ['content' => $content];
     }
+
+    public function getTemplate(): string
+    {
+        return 'cms::components.content-elements.heading';
+    }
 }
 

@@ -19,4 +19,9 @@ abstract class BaseContentElementType
      * Convert stored string back to form data
      */
     abstract public function deserialize(string $content): array;
+
+    /**
+     * Get the template path for rendering this element type
+     */
+    abstract public function getTemplate(): string;
 }
