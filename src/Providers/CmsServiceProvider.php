@@ -12,6 +12,14 @@ use Molitor\Cms\Repositories\ContentRepository;
 use Molitor\Cms\Repositories\ContentRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
+use Molitor\Cms\Services\ContentElementHandler;
+use Molitor\Cms\Services\ContentElementTypes\CodeElementType;
+use Molitor\Cms\Services\ContentElementTypes\HeadingElementType;
+use Molitor\Cms\Services\ContentElementTypes\ImageElementType;
+use Molitor\Cms\Services\ContentElementTypes\ListElementType;
+use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
+use Molitor\Cms\Services\ContentElementTypes\TextElementType;
+use Molitor\Cms\Services\ContentElementTypes\VideoElementType;
 use Molitor\Cms\View\Components\Content;
 use Molitor\Cms\View\Components\ContentElement;
 use Molitor\Cms\View\Components\ContentRegion;
@@ -45,5 +53,17 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(ContentElementRepositoryInterface::class, ContentElementRepository::class);
         $this->app->bind(ContentRegionRepositoryInterface::class, ContentRegionRepository::class);
         $this->app->bind(PageRepositoryInterface::class, PageRepository::class);
+
+        $this->app->singleton(ContentElementHandler::class, function ($app) {
+            $handler = new ContentElementHandler();
+            $handler->addElementType(new TextElementType());
+            $handler->addElementType(new HeadingElementType());
+            $handler->addElementType(new ImageElementType());
+            $handler->addElementType(new VideoElementType());
+            $handler->addElementType(new CodeElementType());
+            $handler->addElementType(new QuoteElementType());
+            $handler->addElementType(new ListElementType());
+            return $handler;
+        });
     }
 }

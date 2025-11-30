@@ -6,6 +6,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\RichEditor;
+use Molitor\Cms\Services\ContentElementHandler;
 
 class ContentEditor
 {
@@ -17,15 +18,7 @@ class ContentEditor
                 Select::make('type')
                     ->label(__('Element Type'))
                     ->required()
-                    ->options([
-                        'text' => __('Text'),
-                        'heading' => __('Heading'),
-                        'image' => __('Image'),
-                        'video' => __('Video'),
-                        'code' => __('Code'),
-                        'quote' => __('Quote'),
-                        'list' => __('List'),
-                    ])
+                    ->options(fn () => app(ContentElementHandler::class)->getOptions())
                     ->live()
                     ->default('text'),
 
