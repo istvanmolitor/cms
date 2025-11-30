@@ -3,6 +3,7 @@
 namespace Molitor\Cms\Services\ContentElementTypes;
 
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
 
 class HeadingElementType extends BaseContentElementType
 {
@@ -19,18 +20,9 @@ class HeadingElementType extends BaseContentElementType
     public function getFormFields(): array
     {
         return [
-            RichEditor::make('content')
+            TextInput::make('content')
                 ->label(__('Content'))
                 ->required()
-                ->columnSpanFull()
-                ->toolbarButtons([
-                    'bold',
-                    'italic',
-                    'underline',
-                    'link',
-                    'h2',
-                    'h3',
-                ]),
         ];
     }
 

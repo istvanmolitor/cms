@@ -22,7 +22,6 @@ class ContentEditor
                     ->live()
                     ->default('text')
                     ->afterStateUpdated(function ($state, callable $set) {
-                        // Clear content when type changes
                         $set('content', null);
                     }),
 
@@ -49,7 +48,6 @@ class ContentEditor
             $fields = $handler->getFormFields($type);
 
             foreach ($fields as $field) {
-                // Make each field visible only when its type is selected
                 $field->visible(fn ($get) => $get('type') === $type);
                 $allFields[] = $field;
             }

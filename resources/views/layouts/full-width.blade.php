@@ -1,7 +1,7 @@
 @extends('cms::layouts.page')
 
 @section('page')
-    <main class="w-full">
+    <div class="w-full">
         @yield('content')
-    </main>
+    </div>
 @endsection

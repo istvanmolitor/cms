@@ -2,6 +2,10 @@
 
 @section('body')
     @include('cms::layouts.partials.header')
-    @yield('page')
+
+    <main class="flex-grow">
+        @yield('page')
+    </main>
+
     @include('cms::layouts.partials.footer')
 @endsection
