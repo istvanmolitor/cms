@@ -2,6 +2,7 @@
 
 namespace Molitor\Cms\Filament\Resources\PageResource\Pages;
 
+use Filament\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use Molitor\Cms\Filament\Resources\PageResource;
@@ -13,6 +14,17 @@ class EditPage extends EditRecord
     public function getTitle(): string
     {
         return __('Edit Page');
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('view')
+                ->label(__('View'))
+                ->icon('heroicon-o-eye')
+                ->url(fn (): string => route('cms.page.show', ['slug' => $this->record->slug]))
+                ->openUrlInNewTab(),
+        ];
     }
 
     protected function mutateFormDataBeforeFill(array $data): array

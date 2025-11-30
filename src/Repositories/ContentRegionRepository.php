@@ -9,7 +9,8 @@ use Molitor\Cms\Models\ContentRegion;
 class ContentRegionRepository implements ContentRegionRepositoryInterface
 {
     public function __construct(
-        private ContentRegion $contentRegion
+        private ContentRegion $contentRegion,
+        private ContentRepositoryInterface $contentRepository
     ) {
     }
 
@@ -27,6 +28,7 @@ class ContentRegionRepository implements ContentRegionRepositoryInterface
     {
         return $this->contentRegion->create([
             'name' => $name,
+            'content_id' => $this->contentRepository->create()->id,
         ]);
     }
 

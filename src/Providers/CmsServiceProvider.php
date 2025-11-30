@@ -12,6 +12,7 @@ use Molitor\Cms\Repositories\ContentRepository;
 use Molitor\Cms\Repositories\ContentRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
+use Molitor\Cms\View\Components\Content;
 use Molitor\Cms\View\Components\ContentRegion;
 
 class CmsServiceProvider extends ServiceProvider
@@ -32,8 +33,8 @@ class CmsServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/cms.php', 'cms'
         );
 
-        // Register Blade components
         Blade::component('content-region', ContentRegion::class);
+        Blade::component('content', Content::class);
     }
 
     public function register()

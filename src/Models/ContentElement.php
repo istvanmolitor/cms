@@ -17,6 +17,8 @@ class ContentElement extends Model
 
     protected $casts = [
         'content_id' => 'integer',
+        'type' => 'string',
+        'content' => 'string',
     ];
 
     public function content(): BelongsTo

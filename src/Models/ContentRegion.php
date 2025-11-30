@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ContentRegion extends Model
 {
@@ -20,8 +20,8 @@ class ContentRegion extends Model
         'name' => 'string',
     ];
 
-    public function content(): HasOne
+    public function content(): BelongsTo
     {
-        return $this->hasOne(Content::class);
+        return $this->belongsTo(Content::class);
     }
 }

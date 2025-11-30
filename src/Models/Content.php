@@ -13,25 +13,10 @@ use Molitor\User\Models\User;
 class Content extends Model
 {
     protected $fillable = [
-        'user_id',
     ];
-
-    protected $casts = [
-        'user_id' => 'integer',
-    ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function contentElements(): HasMany
     {
         return $this->hasMany(ContentElement::class);
-    }
-
-    public function page(): HasOne
-    {
-        return $this->hasOne(Page::class);
     }
 }

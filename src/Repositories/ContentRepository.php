@@ -21,9 +21,7 @@ class ContentRepository implements ContentRepositoryInterface
 
     public function create(): Content
     {
-        return $this->content->create([
-            'user_id' => auth()->id(),
-        ]);
+        return $this->content->create();
     }
 
     public function delete(Content $content): void
