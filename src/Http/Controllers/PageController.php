@@ -15,6 +15,16 @@ class PageController
     ) {
     }
 
+    public function index(): View|Response
+    {
+        $layout = config('cms.default_layout', 'default');
+        $layout = config('cms.layouts.' . $layout . '.template');
+
+        return view('cms::page.index', [
+            'layout' => $layout ?? 'cms::layouts.default',
+        ]);
+    }
+
     public function show(string $slug): View|Response
     {
         $page = $this->pageRepository->getBySlug($slug);

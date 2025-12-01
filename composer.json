@@ -11,7 +11,9 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "istvanmolitor/user": "*@dev"
+        "istvanmolitor/user": "*@dev",
+        "istvanmolitor/language": "*@dev",
+        "istvanmolitor/menu": "*@dev"
     },
     "autoload": {
         "psr-4": {

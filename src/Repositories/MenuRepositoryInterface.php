@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface MenuRepositoryInterface
 {
-    public function getById(int $id): ?Menu;
+    public function getById(int $id): Menu|null;
 
-    public function getByName(string $name): ?Menu;
+    public function getByName(string $name): Menu|null;
 
     public function getAll(): Collection;
 

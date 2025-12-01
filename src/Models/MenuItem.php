@@ -7,13 +7,12 @@ namespace Molitor\Cms\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Molitor\Language\Models\TranslatableModel;
 
-class MenuItem extends Model
+class MenuItem extends TranslatableModel
 {
     protected $fillable = [
         'menu_id',
-        'label',
-        'url',
         'sort',
         'is_external',
         'icon',
@@ -31,6 +30,11 @@ class MenuItem extends Model
         'sort' => 0,
         'is_external' => false,
     ];
+
+    public function getTranslationModelClass(): string
+    {
+        return MenuItemTranslation::class;
+    }
 
     public function menu(): BelongsTo
     {
