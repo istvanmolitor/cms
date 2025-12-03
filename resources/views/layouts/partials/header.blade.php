@@ -10,7 +10,7 @@
 
             {{-- Desktop Navigation --}}
             <nav class="hidden md:flex space-x-8">
-                <x-menu name="main" />
+                <x-cms-menu name="main" />
             </nav>
 
             {{-- Mobile menu button --}}
@@ -28,7 +28,7 @@
         {{-- Mobile Navigation --}}
         <div id="mobile-menu" class="hidden md:hidden pb-4">
             <div class="flex flex-col space-y-2">
-                <x-menu name="main" />
+                <x-cms-menu name="main" />
             </div>
         </div>
     </div>

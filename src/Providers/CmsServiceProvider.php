@@ -53,7 +53,8 @@ class CmsServiceProvider extends ServiceProvider
         Blade::component('content-region', ContentRegion::class);
         Blade::component('content', Content::class);
         Blade::component('content-element', ContentElement::class);
-        Blade::component('menu', Menu::class);
+        // Use a distinct alias for the CMS menu component to avoid collisions with the Menu package
+        Blade::component('cms-menu', Menu::class);
         Blade::component('menu-item', MenuItem::class);
     }
 

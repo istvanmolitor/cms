@@ -7,6 +7,8 @@ namespace Molitor\Cms\View\Components;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 use Molitor\Cms\Repositories\MenuRepositoryInterface;
+use Molitor\Cms\Services\CmsMenuBuilder;
+use Molitor\Menu\Services\MenuManager;
 
 class Menu extends Component
 {
@@ -14,17 +16,17 @@ class Menu extends Component
         protected MenuRepositoryInterface $menuRepository,
         protected string $name
     ) {
-
     }
 
     public function render(): View
     {
-
-        $menu = app('menu')->build('main');
-        dd($menu);
+        /** @var MenuManager $menuManager */
+        $menuManager = app(MenuManager::class);
+        $menuManager->addMenuBuilder(new CmsMenuBuilder());
+        $menu = $menuManager->build($this->name);
 
         return view('cms::components.main-menu', [
-            'menu' => $this->menuRepository->getByName($this->name),
+            'menu' => $menu,
         ]);
     }
 }

@@ -22,8 +22,9 @@ class CmsMenuBuilder extends MenuBuilder
             /** @var MenuItem $menuItem */
             foreach ($menuRecord->menuItems as $menuItem) {
                 $item = new \Molitor\Menu\Services\MenuItem($menuItem->label);
-                $item->setHref($menuItem->url);
+                $item->setUrl($menuItem->url);
                 $item->setIcon($menuItem->icon);
+                $item->setIsExternal($menuItem->is_external);
                 $tree->addItem($menuItem->id, $menuItem->parent_id, $item);
             }
         }
