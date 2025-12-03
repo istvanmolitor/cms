@@ -34,7 +34,6 @@ class ContentEditor
             )
             ->collapsible()
             ->collapsed()
-            ->reorderable()
             ->addActionLabel(__('Add Content Element'))
             ->defaultItems(0)
             ->columnSpanFull();

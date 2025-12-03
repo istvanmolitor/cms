@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Molitor\Cms\Repositories;
 
+use Molitor\Cms\Models\Menu;
 use Molitor\Cms\Models\MenuItem;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -57,6 +58,11 @@ class MenuItemRepository implements MenuItemRepositoryInterface
     {
         $menuItem->update(['sort' => $sort]);
         return $menuItem->fresh();
+    }
+
+    public function getOptions(): array
+    {
+        return $this->menuItem->all()->pluck('label', 'id')->toArray();
     }
 }
 

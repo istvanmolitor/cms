@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 use Molitor\Cms\Filament\Resources\MenuItemResource\Pages;
 use Molitor\Cms\Models\MenuItem;
+use Molitor\Cms\Repositories\MenuItemRepositoryInterface;
+use Molitor\Language\Filament\Components\TranslatableFields;
 
 class MenuItemResource extends Resource
 {
@@ -46,8 +48,10 @@ class MenuItemResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
+        /** @var MenuItemRepositoryInterface $menuItemRepository */
+        $menuItemRepository = app(MenuItemRepositoryInterface::class);
+
         return $schema
-            ->columns(2)
             ->components([
                 Forms\Components\Select::make('menu_id')
                     ->label(__('Menu'))
@@ -57,33 +61,26 @@ class MenuItemResource extends Resource
                     ->preload()
                     ->columnSpanFull(),
 
-                Forms\Components\TextInput::make('label')
-                    ->label(__('Label'))
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
+                TranslatableFields::schema([
+                    Forms\Components\TextInput::make('label')
+                        ->label(__('Label'))
+                        ->required()
+                        ->maxLength(255)
+                        ->columnSpanFull(),
 
-                Forms\Components\TextInput::make('url')
-                    ->label(__('URL'))
-                    ->required()
-                    ->maxLength(255)
-                    ->placeholder('/path/to/page')
-                    ->columnSpanFull(),
+                    Forms\Components\TextInput::make('url')
+                        ->label(__('URL'))
+                        ->required()
+                        ->maxLength(255)
+                        ->placeholder('/path/to/page')
+                        ->columnSpanFull(),
+                ]),
 
                 Forms\Components\Select::make('parent_id')
                     ->label(__('Parent Item'))
-                    ->relationship(
-                        name: 'parent',
-                        titleAttribute: 'label',
-                        modifyQueryUsing: fn (Builder $query, ?array $data) =>
-                            isset($data['menu_id'])
-                                ? $query->where('menu_id', $data['menu_id'])
-                                : $query
-                    )
+                    ->options($menuItemRepository->getOptions())
                     ->searchable()
-                    ->preload()
                     ->nullable()
-                    ->helperText(__('Leave empty for a top-level menu item'))
                     ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('sort')
@@ -214,4 +211,3 @@ class MenuItemResource extends Resource
         ];
     }
 }
-

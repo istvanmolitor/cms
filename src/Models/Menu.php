@@ -6,7 +6,6 @@ namespace Molitor\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Collection;
 
 class Menu extends Model
 {
@@ -14,9 +13,9 @@ class Menu extends Model
         'name',
     ];
 
-    public function items(): HasMany
+    public function menuItems(): HasMany
     {
-        return $this->hasMany(MenuItem::class);
+        return $this->hasMany(MenuItem::class, 'menu_id');
     }
 
     /**
@@ -27,18 +26,6 @@ class Menu extends Model
         return $this->hasMany(MenuItem::class)
             ->whereNull('parent_id')
             ->orderBy('sort');
-    }
-
-    /**
-     * Get hierarchical menu items with children
-     */
-    public function getHierarchicalItems(): Collection
-    {
-        return $this->items()
-            ->with('children')
-            ->whereNull('parent_id')
-            ->orderBy('sort')
-            ->get();
     }
 }
 

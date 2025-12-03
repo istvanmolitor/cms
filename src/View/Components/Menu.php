@@ -19,6 +19,10 @@ class Menu extends Component
 
     public function render(): View
     {
+
+        $menu = app('menu')->build('main');
+        dd($menu);
+
         return view('cms::components.main-menu', [
             'menu' => $this->menuRepository->getByName($this->name),
         ]);

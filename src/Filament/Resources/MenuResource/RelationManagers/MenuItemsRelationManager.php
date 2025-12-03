@@ -17,7 +17,7 @@ use Molitor\Cms\Models\MenuItem;
 
 class MenuItemsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'items';
+    protected static string $relationship = 'menuItems';
 
     public static function getTitle(\Illuminate\Database\Eloquent\Model $ownerRecord, string $pageClass): string
     {

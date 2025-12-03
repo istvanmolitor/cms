@@ -19,6 +19,9 @@ class CreateMenuItemTranslationsTable extends Migration
             $table->unsignedBigInteger('menu_item_id');
             $table->foreign('menu_item_id')->references('id')->on('menu_items');
 
+            $table->unsignedBigInteger('language_id');
+            $table->foreign('language_id')->references('id')->on('languages');
+
             $table->string('label');
             $table->string('url');
         });

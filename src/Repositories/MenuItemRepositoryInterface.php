@@ -22,6 +22,8 @@ interface MenuItemRepositoryInterface
     public function delete(MenuItem $menuItem): void;
 
     public function updateSort(MenuItem $menuItem, int $sort): MenuItem;
+
+    public function getOptions(): array;
 }
 
 

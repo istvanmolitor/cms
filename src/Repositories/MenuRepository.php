@@ -21,14 +21,7 @@ class MenuRepository implements MenuRepositoryInterface
 
     public function getByName(string $name): ?Menu
     {
-        return $this->menu
-            ->with(['items' => function ($query) {
-                $query->whereNull('parent_id')
-                    ->with('children')
-                    ->orderBy('sort');
-            }])
-            ->where('name', $name)
-            ->first();
+        return $this->menu->where('name', $name)->first();
     }
 
     public function getAll(): Collection

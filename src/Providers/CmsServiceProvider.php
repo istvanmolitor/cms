@@ -16,6 +16,7 @@ use Molitor\Cms\Repositories\MenuRepository;
 use Molitor\Cms\Repositories\MenuRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
+use Molitor\Cms\Services\CmsMenuBuilder;
 use Molitor\Cms\Services\ContentElementHandler;
 use Molitor\Cms\Services\ContentElementTypes\CodeElementType;
 use Molitor\Cms\Services\ContentElementTypes\HeadingElementType;
@@ -29,6 +30,7 @@ use Molitor\Cms\View\Components\ContentElement;
 use Molitor\Cms\View\Components\ContentRegion;
 use Molitor\Cms\View\Components\Menu;
 use Molitor\Cms\View\Components\MenuItem;
+use Molitor\Menu\Services\MenuManager;
 
 class CmsServiceProvider extends ServiceProvider
 {
@@ -75,5 +77,7 @@ class CmsServiceProvider extends ServiceProvider
             $handler->addElementType(new ListElementType());
             return $handler;
         });
+
+        app(MenuManager::class)->registerMenuBuilder(new CmsMenuBuilder());
     }
 }
