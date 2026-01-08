@@ -14,7 +14,7 @@ class MenuSeeder extends Seeder
         $mainMenu = Menu::firstOrCreate(['name' => 'main']);
 
         // Clear existing items
-        $mainMenu->items()->delete();
+        $mainMenu->menuItems()->delete();
 
         // Create top-level menu items
         $homeItem = MenuItem::create([
