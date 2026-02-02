@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
 
 class PageApiController
@@ -14,9 +15,26 @@ class PageApiController
     ) {
     }
 
-    public function show(string $slug): JsonResponse
+    public function index(): JsonResponse
     {
-        $page = $this->pageRepository->getBySlug($slug);
+        $pages = $this->pageRepository->getAll();
+
+        return response()->json([
+            'data' => $pages->map(function ($page) {
+                return [
+                    'id' => $page->id,
+                    'title' => $page->title,
+                    'slug' => $page->slug,
+                    'created_at' => $page->created_at?->toIso8601String(),
+                    'updated_at' => $page->updated_at?->toIso8601String(),
+                ];
+            })->values()->toArray()
+        ]);
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        $page = $this->pageRepository->getById($id);
 
         if (!$page) {
             return response()->json([
@@ -48,20 +66,65 @@ class PageApiController
         ]);
     }
 
-    public function index(): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $pages = $this->pageRepository->getAll();
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:pages,slug',
+        ]);
+
+        $page = $this->pageRepository->create($data);
 
         return response()->json([
-            'data' => $pages->map(function ($page) {
-                return [
-                    'id' => $page->id,
-                    'title' => $page->title,
-                    'slug' => $page->slug,
-                    'created_at' => $page->created_at?->toIso8601String(),
-                    'updated_at' => $page->updated_at?->toIso8601String(),
-                ];
-            })->values()->toArray()
+            'data' => $page
+        ], 201);
+    }
+
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $page = $this->pageRepository->getById($id);
+
+        if (!$page) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
+
+        $data = $request->validate([
+            'title' => 'sometimes|required|string|max:255',
+            'slug' => 'sometimes|required|string|max:255|unique:pages,slug,' . $id,
+        ]);
+
+        $page = $this->pageRepository->update($page, $data);
+
+        return response()->json([
+            'data' => $page
+        ]);
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $page = $this->pageRepository->getById($id);
+
+        if (!$page) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
+
+        $this->pageRepository->delete($page);
+
+        return response()->json(null, 204);
+    }
+
+    public function getBySlug(string $slug): JsonResponse
+    {
+        $page = $this->pageRepository->getBySlug($slug);
+
+        if (!$page) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
+
+        $page->load('content.contentElements');
+
+        return response()->json([
+            'data' => $page
         ]);
     }
 }

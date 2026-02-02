@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Molitor\Cms\Repositories;
 
+use Illuminate\Support\Collection;
 use Molitor\Cms\Models\Page;
 
 class PageRepository implements PageRepositoryInterface
@@ -12,6 +13,11 @@ class PageRepository implements PageRepositoryInterface
         private Page $page,
         private ContentRepositoryInterface $contentRepository
     ) {
+    }
+
+    public function getAll(): Collection
+    {
+        return $this->page->all();
     }
 
     public function getById(int $id): Page|null
@@ -24,20 +30,29 @@ class PageRepository implements PageRepositoryInterface
         return $this->page->where('slug', $slug)->first();
     }
 
-    public function create(string $title, string $slug): Page
+    public function create(array $data): Page
     {
-        return $this->page->create([
-            'title' => $title,
-            'slug' => $slug,
-            'content_id' => $this->contentRepository->create()->id,
-        ]);
+        if (!isset($data['content_id'])) {
+            $data['content_id'] = $this->contentRepository->create()->id;
+        }
+
+        return $this->page->create($data);
+    }
+
+    public function update(Page $page, array $data): Page
+    {
+        $page->update($data);
+
+        return $page;
     }
 
     public function delete(Page $page): void
     {
         $content = $page->content;
         $page->delete();
-        $this->contentRepository->delete($content);
+        if ($content) {
+            $this->contentRepository->delete($content);
+        }
     }
 }
 

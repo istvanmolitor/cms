@@ -39,15 +39,15 @@ class CmsServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'cms');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'cms');
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         $this->publishes([
-            __DIR__ . '/../../config/cms.php' => config_path('cms.php'),
+            __DIR__ . '/../config/cms.php' => config_path('cms.php'),
         ], 'cms-config');
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/cms.php', 'cms'
+            __DIR__ . '/../config/cms.php', 'cms'
         );
 
         Blade::component('content-region', ContentRegion::class);
@@ -79,6 +79,6 @@ class CmsServiceProvider extends ServiceProvider
             return $handler;
         });
 
-        app(MenuManager::class)->registerMenuBuilder(new CmsMenuBuilder());
+        app(MenuManager::class)->addMenuBuilder(new CmsMenuBuilder());
     }
 }

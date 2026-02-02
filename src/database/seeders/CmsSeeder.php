@@ -1,6 +1,6 @@
 <?php
 
-namespace Molitor\Cms\database\seeders;
+namespace Molitor\Cms\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Molitor\User\Exceptions\PermissionException;
