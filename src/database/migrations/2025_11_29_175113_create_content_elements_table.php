@@ -19,7 +19,9 @@ class CreateContentElementsTable extends Migration
             $table->unsignedBigInteger('content_id');
             $table->foreign('content_id')->references('id')->on('contents');
 
-            $table->string('type');
+            $table->unsignedBigInteger('content_element_type_id');
+            $table->foreign('content_element_type_id')->references('id')->on('content_element_types');
+
             $table->longText('content');
 
             $table->boolean('is_visible')->default(true);

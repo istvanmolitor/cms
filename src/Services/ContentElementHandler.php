@@ -3,11 +3,18 @@
 namespace Molitor\Cms\Services;
 
 use Molitor\Cms\Models\ContentElement;
+use Molitor\Cms\Repositories\ContentElementTypeRepositoryInterface;
 use Molitor\Cms\Services\ContentElementTypes\BaseContentElementType;
 
 class ContentElementHandler
 {
     private array $elementTypes = [];
+
+    public function __construct(
+        private ContentElementTypeRepositoryInterface $contentElementTypeRepository
+    )
+    {
+    }
 
     public function addElementType(BaseContentElementType $elementType): void
     {
@@ -29,12 +36,6 @@ class ContentElementHandler
         return $options;
     }
 
-    public function getFormFields(string $type): array
-    {
-        $elementType = $this->getElementType($type);
-        return $elementType ? $elementType->getFormFields() : [];
-    }
-
     public function serialize(string $type, array $data): string
     {
         $elementType = $this->getElementType($type);
@@ -47,24 +48,30 @@ class ContentElementHandler
         return $elementType ? $elementType->deserialize($content) : [];
     }
 
-    public function renderContent(string $type, string $content): string
+    public function getTypeName(ContentElement $contentElement): ?string
     {
-        $elementType = $this->getElementType($type);
-        if (!$elementType) {
-            return '';
+        $contentElementType = $this->contentElementTypeRepository->getById($contentElement->content_elemnet_type_id);
+        if(empty($contentElementType)) {
+            return null;
         }
-
-        $data = $elementType->deserialize($content);
-        $template = $elementType->getTemplate();
-
-        return view($template, $data)->render();
+        return $contentElementType->type;
     }
 
-    public function render(ContentElement $contentElement): string
+    public function getContentData(ContentElement $contentElement): array
     {
-        if(empty($contentElement->type) || empty($contentElement->content)) {
-            return '';
+        $typeName = $this->getTypeName($contentElement);
+        if($typeName) {
+            return [];
         }
-        return $this->renderContent($contentElement->type, $contentElement->content);
+        return $this->deserialize($typeName, $contentElement->content);
+    }
+
+    public function setContentData(ContentElement $contentElement, array $data): void
+    {
+        $typeName = $this->getTypeName($contentElement);
+        if($typeName) {
+            return;
+        }
+        $contentElement->content = $this->serialize($typeName, $data);
     }
 }

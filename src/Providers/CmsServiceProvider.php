@@ -4,6 +4,8 @@ namespace Molitor\Cms\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Molitor\Cms\Repositories\ContentElementTypeRepository;
+use Molitor\Cms\Repositories\ContentElementTypeRepositoryInterface;
 use Molitor\Cms\Repositories\ContentElementRepository;
 use Molitor\Cms\Repositories\ContentElementRepositoryInterface;
 use Molitor\Cms\Repositories\ContentRegionRepository;
@@ -62,22 +64,20 @@ class CmsServiceProvider extends ServiceProvider
     {
         $this->app->bind(ContentRepositoryInterface::class, ContentRepository::class);
         $this->app->bind(ContentElementRepositoryInterface::class, ContentElementRepository::class);
+        $this->app->bind(ContentElementTypeRepositoryInterface::class, ContentElementTypeRepository::class);
         $this->app->bind(ContentRegionRepositoryInterface::class, ContentRegionRepository::class);
         $this->app->bind(PageRepositoryInterface::class, PageRepository::class);
         $this->app->bind(MenuRepositoryInterface::class, MenuRepository::class);
         $this->app->bind(MenuItemRepositoryInterface::class, MenuItemRepository::class);
 
-        $this->app->singleton(ContentElementHandler::class, function ($app) {
-            $handler = new ContentElementHandler();
-            $handler->addElementType(new TextElementType());
-            $handler->addElementType(new HeadingElementType());
-            $handler->addElementType(new ImageElementType());
-            $handler->addElementType(new VideoElementType());
-            $handler->addElementType(new CodeElementType());
-            $handler->addElementType(new QuoteElementType());
-            $handler->addElementType(new ListElementType());
-            return $handler;
-        });
+        $handler = app(ContentElementHandler::class);
+        $handler->addElementType(new TextElementType());
+        $handler->addElementType(new HeadingElementType());
+        $handler->addElementType(new ImageElementType());
+        $handler->addElementType(new VideoElementType());
+        $handler->addElementType(new CodeElementType());
+        $handler->addElementType(new QuoteElementType());
+        $handler->addElementType(new ListElementType());
 
         app(MenuManager::class)->addMenuBuilder(new CmsMenuBuilder());
     }

@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Molitor\Cms\Http\Requests\ContentRegion\StoreContentRegionRequest;
+use Molitor\Cms\Http\Requests\ContentRegion\UpdateContentRegionRequest;
+use Molitor\Cms\Http\Resources\ContentRegionResource;
 use Molitor\Cms\Repositories\ContentRegionRepositoryInterface;
 
 class ContentRegionApiController
@@ -15,21 +18,14 @@ class ContentRegionApiController
     ) {
     }
 
-    public function index(): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
         $regions = $this->contentRegionRepository->getAll();
 
-        return response()->json([
-            'data' => $regions->map(function ($region) {
-                return [
-                    'id' => $region->id,
-                    'name' => $region->name,
-                ];
-            })->values()->toArray()
-        ]);
+        return ContentRegionResource::collection($regions);
     }
 
-    public function show(int $id): JsonResponse
+    public function show(int $id): JsonResponse|ContentRegionResource
     {
         $region = $this->contentRegionRepository->getById($id);
 
@@ -39,38 +35,21 @@ class ContentRegionApiController
             ], 404);
         }
 
-        return response()->json([
-            'data' => [
-                'id' => $region->id,
-                'name' => $region->name,
-                'content' => $region->content ? [
-                    'id' => $region->content->id,
-                    'elements' => $region->content->contentElements->map(function ($element) {
-                        return [
-                            'id' => $element->id,
-                            'type' => $element->type,
-                            'content' => $element->content,
-                        ];
-                    })->values()->toArray(),
-                ] : null,
-            ]
-        ]);
+        $region->load('content.contentElements');
+
+        return new ContentRegionResource($region);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreContentRegionRequest $request): ContentRegionResource
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255|unique:content_regions,name',
-        ]);
+        $data = $request->validated();
 
         $region = $this->contentRegionRepository->create($data['name']);
 
-        return response()->json([
-            'data' => $region
-        ], 201);
+        return new ContentRegionResource($region);
     }
 
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateContentRegionRequest $request, int $id): JsonResponse|ContentRegionResource
     {
         $region = $this->contentRegionRepository->getById($id);
 
@@ -78,15 +57,11 @@ class ContentRegionApiController
             return response()->json(['error' => 'Content region not found'], 404);
         }
 
-        $data = $request->validate([
-            'name' => 'sometimes|required|string|max:255|unique:content_regions,name,' . $id,
-        ]);
+        $data = $request->validated();
 
         $region = $this->contentRegionRepository->update($region, $data);
 
-        return response()->json([
-            'data' => $region
-        ]);
+        return new ContentRegionResource($region);
     }
 
     public function destroy(int $id): JsonResponse

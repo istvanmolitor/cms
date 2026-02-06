@@ -10,6 +10,8 @@ use Molitor\Cms\Models\ContentElement;
 
 class ContentElementRepository implements ContentElementRepositoryInterface
 {
+    private array $cache = [];
+
     public function __construct(
         private ContentElement $contentElement
     ) {
@@ -17,7 +19,10 @@ class ContentElementRepository implements ContentElementRepositoryInterface
 
     public function getById(int $id): ?ContentElement
     {
-        return $this->contentElement->find($id);
+        if(!array_key_exists($id, $this->cache)) {
+            $this->cache[$id] = $this->contentElement->find($id);
+        }
+        return $this->cache[$id];
     }
 
     public function getByContentId(int $contentId): Collection
