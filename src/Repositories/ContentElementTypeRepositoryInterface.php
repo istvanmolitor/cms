@@ -10,6 +10,7 @@ use Molitor\Cms\Models\ContentElementType;
 interface ContentElementTypeRepositoryInterface
 {
     public function getById(int $id): ?ContentElementType;
+    public function getByType(string $type): ?ContentElementType;
 
     public function getAll(): Collection;
 }

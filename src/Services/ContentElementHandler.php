@@ -54,7 +54,7 @@ class ContentElementHandler
         if(empty($contentElementType)) {
             return null;
         }
-        return $contentElementType->type;
+        return $contentElementType->name;
     }
 
     public function getContentData(ContentElement $contentElement): array

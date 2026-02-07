@@ -24,6 +24,11 @@ class ContentElementTypeRepository implements ContentElementTypeRepositoryInterf
         return $this->cache[$id];
     }
 
+    public function getByType(string $type): ?ContentElementType
+    {
+        return $this->contentElementType->where('name', $type)->first();
+    }
+
     public function getAll(): Collection
     {
         return $this->contentElementType->all();

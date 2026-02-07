@@ -35,11 +35,21 @@ class ContentElementRepository implements ContentElementRepositoryInterface
         return $this->getByContentId($content->id);
     }
 
-    public function create(Content $content, string $type, string $data, int $sort = 0, bool $isVisible = true): ContentElement
+    public function create(Content $content, string $type, string|array $data, int $sort = 0, bool $isVisible = true): ContentElement
     {
+        if (is_array($data)) {
+            /** @var \Molitor\Cms\Services\ContentElementHandler $handler */
+            $handler = app(\Molitor\Cms\Services\ContentElementHandler::class);
+            $data = $handler->serialize($type, $data);
+        }
+
+        /** @var ContentElementTypeRepositoryInterface $typeRepository */
+        $typeRepository = app(ContentElementTypeRepositoryInterface::class);
+        $contentElementType = $typeRepository->getByType($type);
+
         return $this->contentElement->create([
             'content_id' => $content->id,
-            'type' => $type,
+            'content_element_type_id' => $contentElementType?->id,
             'content' => $data,
             'sort' => $sort,
             'is_visible' => $isVisible,
