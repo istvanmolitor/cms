@@ -44,7 +44,7 @@ class ContentRegionApiController
     {
         $data = $request->validated();
 
-        $region = $this->contentRegionRepository->create($data['name']);
+        $region = $this->contentRegionRepository->create($data);
 
         return new ContentRegionResource($region);
     }

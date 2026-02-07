@@ -36,11 +36,52 @@ class PageRepository implements PageRepositoryInterface
             $data['content_id'] = $this->contentRepository->create()->id;
         }
 
-        return $this->page->create($data);
+        $page = $this->page->create($data);
+
+        if (isset($data['content']['content_elements'])) {
+            $content = $page->content;
+            if ($content) {
+                /** @var ContentElementRepositoryInterface $elementRepository */
+                $elementRepository = app(ContentElementRepositoryInterface::class);
+
+                foreach ($data['content']['content_elements'] as $elementData) {
+                    $elementRepository->create(
+                        $content,
+                        $elementData['type'],
+                        $elementData['content'],
+                        $elementData['sort'] ?? 0,
+                        $elementData['is_visible'] ?? true
+                    );
+                }
+            }
+        }
+
+        return $page;
     }
 
     public function update(Page $page, array $data): Page
     {
+        if (isset($data['content']['content_elements'])) {
+            $content = $page->content;
+            if ($content) {
+                /** @var ContentElementRepositoryInterface $elementRepository */
+                $elementRepository = app(ContentElementRepositoryInterface::class);
+
+                // Egyszerűség kedvéért töröljük a régieket és újakat hozunk létre
+                $elementRepository->deleteByContent($content);
+
+                foreach ($data['content']['content_elements'] as $elementData) {
+                    $elementRepository->create(
+                        $content,
+                        $elementData['type'],
+                        $elementData['content'],
+                        $elementData['sort'] ?? 0,
+                        $elementData['is_visible'] ?? true
+                    );
+                }
+            }
+        }
+
         $page->update($data);
 
         return $page;

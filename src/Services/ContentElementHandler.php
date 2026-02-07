@@ -50,7 +50,7 @@ class ContentElementHandler
 
     public function getTypeName(ContentElement $contentElement): ?string
     {
-        $contentElementType = $this->contentElementTypeRepository->getById($contentElement->content_elemnet_type_id);
+        $contentElementType = $this->contentElementTypeRepository->getById($contentElement->content_element_type_id);
         if(empty($contentElementType)) {
             return null;
         }
@@ -60,7 +60,7 @@ class ContentElementHandler
     public function getContentData(ContentElement $contentElement): array
     {
         $typeName = $this->getTypeName($contentElement);
-        if($typeName) {
+        if(!$typeName) {
             return [];
         }
         return $this->deserialize($typeName, $contentElement->content);
@@ -69,7 +69,7 @@ class ContentElementHandler
     public function setContentData(ContentElement $contentElement, array $data): void
     {
         $typeName = $this->getTypeName($contentElement);
-        if($typeName) {
+        if(!$typeName) {
             return;
         }
         $contentElement->content = $this->serialize($typeName, $data);

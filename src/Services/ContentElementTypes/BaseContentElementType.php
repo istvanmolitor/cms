@@ -24,4 +24,16 @@ abstract class BaseContentElementType
      * Get the template path for rendering this element type
      */
     abstract public function getTemplate(): string;
+
+    /**
+     * Get the validation rules for this element type
+     *
+     * @return array<string, mixed>
+     */
+    public function getValidationRules(): array
+    {
+        return [
+            'content' => 'sometimes|string',
+        ];
+    }
 }

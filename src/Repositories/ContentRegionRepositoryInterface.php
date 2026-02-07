@@ -15,7 +15,7 @@ interface ContentRegionRepositoryInterface
 
     public function getByName(string $name): ContentRegion|null;
 
-    public function create(string $name): ContentRegion;
+    public function create(array $data): ContentRegion;
 
     public function update(ContentRegion $contentRegion, array $data): ContentRegion;
 

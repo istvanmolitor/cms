@@ -28,12 +28,30 @@ class HeadingElementType extends BaseContentElementType
 
     public function serialize(array $data): string
     {
-        return $data['content'] ?? '';
+        return json_encode([
+            'text' => $data['text'] ?? '',
+            'level' => $data['level'] ?? 1,
+        ]);
     }
 
     public function deserialize(string $content): array
     {
-        return ['content' => $content];
+        $data = json_decode($content, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return [
+                'text' => $content,
+                'level' => 1,
+            ];
+        }
+        return $data;
+    }
+
+    public function getValidationRules(): array
+    {
+        return [
+            'text' => 'required|string',
+            'level' => 'required|integer|min:1|max:6',
+        ];
     }
 
     public function getTemplate(): string

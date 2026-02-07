@@ -35,12 +35,14 @@ class ContentElementRepository implements ContentElementRepositoryInterface
         return $this->getByContentId($content->id);
     }
 
-    public function create(Content $content, string $type, string $data): ContentElement
+    public function create(Content $content, string $type, string $data, int $sort = 0, bool $isVisible = true): ContentElement
     {
         return $this->contentElement->create([
             'content_id' => $content->id,
             'type' => $type,
             'content' => $data,
+            'sort' => $sort,
+            'is_visible' => $isVisible,
         ]);
     }
 

@@ -30,16 +30,56 @@ class ContentRegionRepository implements ContentRegionRepositoryInterface
         return $this->contentRegion->where('name', $name)->first();
     }
 
-    public function create(string $name): ContentRegion
+    public function create(array $data): ContentRegion
     {
-        return $this->contentRegion->create([
-            'name' => $name,
+        $contentRegion = $this->contentRegion->create([
+            'name' => $data['name'],
             'content_id' => $this->contentRepository->create()->id,
         ]);
+
+        if (isset($data['content']['content_elements'])) {
+            $content = $contentRegion->content;
+            if ($content) {
+                /** @var ContentElementRepositoryInterface $elementRepository */
+                $elementRepository = app(ContentElementRepositoryInterface::class);
+
+                foreach ($data['content']['content_elements'] as $elementData) {
+                    $elementRepository->create(
+                        $content,
+                        $elementData['type'],
+                        $elementData['content'],
+                        $elementData['sort'] ?? 0,
+                        $elementData['is_visible'] ?? true
+                    );
+                }
+            }
+        }
+
+        return $contentRegion;
     }
 
     public function update(ContentRegion $contentRegion, array $data): ContentRegion
     {
+        if (isset($data['content']['content_elements'])) {
+            $content = $contentRegion->content;
+            if ($content) {
+                /** @var ContentElementRepositoryInterface $elementRepository */
+                $elementRepository = app(ContentElementRepositoryInterface::class);
+
+                $elementRepository->deleteByContent($content);
+
+                foreach ($data['content']['content_elements'] as $elementData) {
+                    $elementRepository->create(
+                        $content,
+                        $elementData['type'],
+                        $elementData['content'],
+                        $elementData['sort'] ?? 0,
+                        $elementData['is_visible'] ?? true
+                    );
+                }
+            }
+        }
+
         $contentRegion->update($data);
 
         return $contentRegion;
