@@ -19,7 +19,7 @@ use Molitor\Cms\Repositories\MenuRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
 use Molitor\Cms\Services\CmsMenuBuilder;
-use Molitor\Cms\Services\ContentElementHandler;
+use Molitor\Cms\Services\ContentHandler;
 use Molitor\Cms\Services\ContentElementTypes\CodeElementType;
 use Molitor\Cms\Services\ContentElementTypes\HeadingElementType;
 use Molitor\Cms\Services\ContentElementTypes\ImageElementType;
@@ -70,7 +70,7 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(MenuRepositoryInterface::class, MenuRepository::class);
         $this->app->bind(MenuItemRepositoryInterface::class, MenuItemRepository::class);
 
-        $handler = app(ContentElementHandler::class);
+        $handler = app(ContentHandler::class);
         $handler->addElementType(new TextElementType());
         $handler->addElementType(new HeadingElementType());
         $handler->addElementType(new ImageElementType());

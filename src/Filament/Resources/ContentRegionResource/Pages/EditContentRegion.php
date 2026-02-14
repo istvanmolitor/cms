@@ -6,7 +6,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Molitor\Cms\Filament\Resources\ContentRegionResource;
 use Molitor\Cms\Models\Content;
-use Molitor\Cms\Services\ContentElementHandler;
+use Molitor\Cms\Services\ContentHandler;
 
 class EditContentRegion extends EditRecord
 {
@@ -28,7 +28,7 @@ class EditContentRegion extends EditRecord
     {
         // Load content elements into the nested structure
         if ($this->record->content) {
-            $handler = app(ContentElementHandler::class);
+            $handler = app(ContentHandler::class);
 
             $data['content'] = [
                 'contentElements' => $this->record->content->contentElements()
@@ -52,7 +52,7 @@ class EditContentRegion extends EditRecord
     {
         // Handle content elements update
         if (isset($data['content']['contentElements'])) {
-            $handler = app(ContentElementHandler::class);
+            $handler = app(ContentHandler::class);
             $content = $this->record->content;
 
             if (!$content) {

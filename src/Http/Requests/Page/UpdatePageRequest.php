@@ -24,12 +24,14 @@ class UpdatePageRequest extends FormRequest
         return [
             'title' => 'sometimes|required|string|max:255',
             'slug' => 'sometimes|required|string|max:255|unique:pages,slug,' . $id,
+            /*
             'content' => 'sometimes|required|array',
             'content.content_elements' => 'sometimes|required|array|min:1',
             'content.content_elements.*.type' => 'required|string|max:255',
             'content.content_elements.*.content' => ['required', 'array', new ContentElementValidator()],
             'content.content_elements.*.sort' => 'required|integer',
             'content.content_elements.*.is_visible' => 'required|boolean',
+            */
         ];
     }
 }

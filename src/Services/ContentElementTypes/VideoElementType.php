@@ -2,11 +2,9 @@
 
 namespace Molitor\Cms\Services\ContentElementTypes;
 
-use Filament\Forms\Components\TextInput;
-
 class VideoElementType extends BaseContentElementType
 {
-    public function getType(): string
+    public function getName(): string
     {
         return 'video';
     }
@@ -16,37 +14,20 @@ class VideoElementType extends BaseContentElementType
         return __('Video');
     }
 
-    public function getFormFields(): array
-    {
-        return [
-            TextInput::make('url')
-                ->label(__('YouTube URL'))
-                ->required()
-                ->columnSpanFull(),
-            TextInput::make('width')
-                ->label(__('Szélesség'))
-                ->default('300px'),
-            TextInput::make('height')
-                ->label(__('Magasság'))
-                ->default('450px'),
-        ];
-    }
-
     public function serialize(array $data): string
     {
-        return json_encode([
+        return serialize([
             'url' => $data['url'] ?? '',
             'width' => $data['width'] ?? '300px',
             'height' => $data['height'] ?? '450px',
         ]);
     }
 
-    public function deserialize(string $content): array
+    public function unserialize(string $content): array
     {
-        $data = json_decode($content, true);
-
+        $data = unserialize($content);
         return [
-            'url' => $data['url'] ?? $content,
+            'url' => $data['url'] ?? '',
             'width' => $data['width'] ?? '300px',
             'height' => $data['height'] ?? '450px',
         ];

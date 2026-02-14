@@ -7,12 +7,12 @@ namespace Molitor\Cms\View\Components;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 use Molitor\Cms\Models\ContentElement as ContentElementModel;
-use Molitor\Cms\Services\ContentElementHandler;
+use Molitor\Cms\Services\ContentHandler;
 
 class ContentElement extends Component
 {
     public function __construct(
-        private ContentElementHandler $contentElementHandler,
+        private ContentHandler     $contentElementHandler,
         public ContentElementModel $element,
     ) {
 

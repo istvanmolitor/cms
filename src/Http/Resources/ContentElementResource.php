@@ -7,7 +7,7 @@ namespace Molitor\Cms\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Molitor\Cms\Models\ContentElement;
-use Molitor\Cms\Services\ContentElementHandler;
+use Molitor\Cms\Services\ContentHandler;
 
 class ContentElementResource extends JsonResource
 {
@@ -16,8 +16,8 @@ class ContentElementResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var ContentElementHandler $handler */
-        $handler = app(ContentElementHandler::class);
+        /** @var ContentHandler $handler */
+        $handler = app(ContentHandler::class);
 
         /** @var ContentElement $contentElement */
         $contentElement = $this->resource;

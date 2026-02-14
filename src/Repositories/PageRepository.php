@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Repositories;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Molitor\Cms\Models\Page;
 
 class PageRepository implements PageRepositoryInterface
@@ -39,7 +40,7 @@ class PageRepository implements PageRepositoryInterface
         $page = $this->page->create($data);
 
         if (isset($data['content']['content_elements'])) {
-            $content = $page->content;
+            $content = $this->contentRepository->getById($data['content_id']);
             if ($content) {
                 /** @var ContentElementRepositoryInterface $elementRepository */
                 $elementRepository = app(ContentElementRepositoryInterface::class);
@@ -61,26 +62,7 @@ class PageRepository implements PageRepositoryInterface
 
     public function update(Page $page, array $data): Page
     {
-        if (isset($data['content']['content_elements'])) {
-            $content = $page->content;
-            if ($content) {
-                /** @var ContentElementRepositoryInterface $elementRepository */
-                $elementRepository = app(ContentElementRepositoryInterface::class);
 
-                // Egyszerűség kedvéért töröljük a régieket és újakat hozunk létre
-                $elementRepository->deleteByContent($content);
-
-                foreach ($data['content']['content_elements'] as $elementData) {
-                    $elementRepository->create(
-                        $content,
-                        $elementData['type'],
-                        $elementData['content'],
-                        $elementData['sort'] ?? 0,
-                        $elementData['is_visible'] ?? true
-                    );
-                }
-            }
-        }
 
         $page->update($data);
 

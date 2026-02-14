@@ -10,6 +10,7 @@ use Molitor\Cms\Http\Requests\Page\StorePageRequest;
 use Molitor\Cms\Http\Requests\Page\UpdatePageRequest;
 use Molitor\Cms\Http\Resources\PageResource;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
+use Molitor\Cms\Services\ContentHandler;
 
 class PageApiController
 {
@@ -41,16 +42,18 @@ class PageApiController
         return new PageResource($page);
     }
 
-    public function store(StorePageRequest $request): PageResource
+    public function store(StorePageRequest $request, ContentHandler $contentHandler): PageResource
     {
-        $data = $request->validated();
+        $data = $request->all();
 
         $page = $this->pageRepository->create($data);
+
+        $contentHandler->sevaContentElements($page->content, $data['content']['content_elements'] ?? []);
 
         return new PageResource($page);
     }
 
-    public function update(UpdatePageRequest $request, int $id): JsonResponse|PageResource
+    public function update(UpdatePageRequest $request, int $id, ContentHandler $contentHandler): JsonResponse|PageResource
     {
         $page = $this->pageRepository->getById($id);
 
@@ -58,9 +61,11 @@ class PageApiController
             return response()->json(['error' => 'Page not found'], 404);
         }
 
-        $data = $request->validated();
+        $page->title = $request->title;
+        $page->slug = $request->slug;
+        $page->save();
 
-        $page = $this->pageRepository->update($page, $data);
+        $contentHandler->sevaContentElements($page->content, $data['content']['content_elements'] ?? []);
 
         return new PageResource($page);
     }

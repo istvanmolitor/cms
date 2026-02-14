@@ -4,13 +4,13 @@ namespace Molitor\Cms\Filament\Forms\Components;
 
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Molitor\Cms\Services\ContentElementHandler;
+use Molitor\Cms\Services\ContentHandler;
 
 class ContentEditor
 {
     public static function make(string $name = 'contentElements'): Repeater
     {
-        $handler = app(ContentElementHandler::class);
+        $handler = app(ContentHandler::class);
 
         return Repeater::make($name)
             ->label(__('Content Elements'))
@@ -39,7 +39,7 @@ class ContentEditor
             ->columnSpanFull();
     }
 
-    private static function getAllFormFields(ContentElementHandler $handler): array
+    private static function getAllFormFields(ContentHandler $handler): array
     {
         $allFields = [];
 

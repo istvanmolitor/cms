@@ -2,11 +2,9 @@
 
 namespace Molitor\Cms\Services\ContentElementTypes;
 
-use Filament\Forms\Components\Textarea;
-
-class CodeElementType extends BaseContentElementType
+class CodeElementType extends TextElementType
 {
-    public function getType(): string
+    public function getName(): string
     {
         return 'code';
     }
@@ -14,27 +12,6 @@ class CodeElementType extends BaseContentElementType
     public function getLabel(): string
     {
         return __('Code');
-    }
-
-    public function getFormFields(): array
-    {
-        return [
-            Textarea::make('content')
-                ->label(__('Code'))
-                ->required()
-                ->rows(10)
-                ->columnSpanFull(),
-        ];
-    }
-
-    public function serialize(array $data): string
-    {
-        return $data['content'] ?? '';
-    }
-
-    public function deserialize(string $content): array
-    {
-        return ['content' => $content];
     }
 
     public function getTemplate(): string

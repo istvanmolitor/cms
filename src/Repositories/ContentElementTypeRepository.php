@@ -9,24 +9,43 @@ use Molitor\Cms\Models\ContentElementType;
 
 class ContentElementTypeRepository implements ContentElementTypeRepositoryInterface
 {
-    private array $cache = [];
+    private array $nameCache = [];
+    private array $idCache = [];
 
     public function __construct(
         private ContentElementType $contentElementType
     ) {
     }
 
-    public function getById(int $id): ?ContentElementType
+    public function addCache(ContentElementType|null $elementType): void
     {
-        if(!array_key_exists($id, $this->cache)) {
-            $this->cache[$id] = $this->contentElementType->find($id);
-        }
-        return $this->cache[$id];
+        $this->idCache[$elementType->id] = $elementType;
+        $this->nameCache[$elementType->name] = $elementType;
     }
 
-    public function getByType(string $type): ?ContentElementType
+    public function getById(int $id): ?ContentElementType
     {
-        return $this->contentElementType->where('name', $type)->first();
+        if(!array_key_exists($id, $this->idCache)) {
+            $this->addCache($this->contentElementType->find($id));
+        }
+        return $this->idCache[$id];
+    }
+
+    private function create(string $name): ContentElementType
+    {
+        return $this->contentElementType->create(['name' => $name]);
+    }
+
+    public function getByName(string $name): ?ContentElementType
+    {
+        if(!array_key_exists($name, $this->nameCache)) {
+            $contentElementType = $this->contentElementType->where('name', $name)->first();
+            if(!$contentElementType) {
+                $contentElementType = $this->create($name);
+            }
+            $this->addCache($contentElementType);
+        }
+        return $this->nameCache[$name];
     }
 
     public function getAll(): Collection

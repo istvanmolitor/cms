@@ -4,11 +4,9 @@ namespace Molitor\Cms\Services\ContentElementTypes;
 
 abstract class BaseContentElementType
 {
-    abstract public function getType(): string;
+    abstract public function getName(): string;
 
     abstract public function getLabel(): string;
-
-    abstract public function getFormFields(): array;
 
     /**
      * Convert form data to a string for database storage
@@ -18,7 +16,7 @@ abstract class BaseContentElementType
     /**
      * Convert stored string back to form data
      */
-    abstract public function deserialize(string $content): array;
+    abstract public function unserialize(string $content): array;
 
     /**
      * Get the template path for rendering this element type

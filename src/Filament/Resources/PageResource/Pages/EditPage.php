@@ -6,7 +6,7 @@ use Filament\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use Molitor\Cms\Filament\Resources\PageResource;
-use Molitor\Cms\Services\ContentElementHandler;
+use Molitor\Cms\Services\ContentHandler;
 
 class EditPage extends EditRecord
 {
@@ -35,7 +35,7 @@ class EditPage extends EditRecord
 
         // Add content elements to the form data
         if ($this->record->content) {
-            $handler = app(ContentElementHandler::class);
+            $handler = app(ContentHandler::class);
 
             $data['contentElements'] = $this->record->content->contentElements
                 ->map(function ($element) use ($handler) {
@@ -64,7 +64,7 @@ class EditPage extends EditRecord
         $content = $record->content;
 
         if ($content) {
-            $handler = app(ContentElementHandler::class);
+            $handler = app(ContentHandler::class);
 
             // Get existing element IDs
             $existingIds = collect($contentElements)

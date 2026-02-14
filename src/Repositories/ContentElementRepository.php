@@ -7,6 +7,7 @@ namespace Molitor\Cms\Repositories;
 use Illuminate\Database\Eloquent\Collection;
 use Molitor\Cms\Models\Content;
 use Molitor\Cms\Models\ContentElement;
+use Molitor\Cms\Services\ContentHandler;
 
 class ContentElementRepository implements ContentElementRepositoryInterface
 {
@@ -27,7 +28,7 @@ class ContentElementRepository implements ContentElementRepositoryInterface
 
     public function getByContentId(int $contentId): Collection
     {
-        return $this->contentElement->where('content_id', $contentId)->get();
+        return $this->contentElement->where('content_id', $contentId)->orderBy('sort', 'asc')->get();
     }
 
     public function getByContent(Content $content): Collection
@@ -38,14 +39,14 @@ class ContentElementRepository implements ContentElementRepositoryInterface
     public function create(Content $content, string $type, string|array $data, int $sort = 0, bool $isVisible = true): ContentElement
     {
         if (is_array($data)) {
-            /** @var \Molitor\Cms\Services\ContentElementHandler $handler */
-            $handler = app(\Molitor\Cms\Services\ContentElementHandler::class);
+            /** @var ContentHandler $handler */
+            $handler = app(ContentHandler::class);
             $data = $handler->serialize($type, $data);
         }
 
         /** @var ContentElementTypeRepositoryInterface $typeRepository */
         $typeRepository = app(ContentElementTypeRepositoryInterface::class);
-        $contentElementType = $typeRepository->getByType($type);
+        $contentElementType = $typeRepository->getByName($type);
 
         return $this->contentElement->create([
             'content_id' => $content->id,

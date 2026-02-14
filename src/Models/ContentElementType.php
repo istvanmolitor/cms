@@ -15,4 +15,6 @@ class ContentElementType extends Model
     protected $casts = [
         'name' => 'string',
     ];
+
+    public $timestamps = false;
 }

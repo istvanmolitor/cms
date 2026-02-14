@@ -2,12 +2,9 @@
 
 namespace Molitor\Cms\Services\ContentElementTypes;
 
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\TextInput;
-
 class HeadingElementType extends BaseContentElementType
 {
-    public function getType(): string
+    public function getName(): string
     {
         return 'heading';
     }
@@ -17,33 +14,21 @@ class HeadingElementType extends BaseContentElementType
         return __('Heading');
     }
 
-    public function getFormFields(): array
-    {
-        return [
-            TextInput::make('content')
-                ->label(__('Content'))
-                ->required()
-        ];
-    }
-
     public function serialize(array $data): string
     {
-        return json_encode([
+        return serialize([
             'text' => $data['text'] ?? '',
-            'level' => $data['level'] ?? 1,
+            'level' => $data['level'] ?? ''
         ]);
     }
 
-    public function deserialize(string $content): array
+    public function unserialize(string $content): array
     {
-        $data = json_decode($content, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return [
-                'text' => $content,
-                'level' => 1,
-            ];
-        }
-        return $data;
+        $data = unserialize($content);
+        return [
+            'text' => $data['text'] ?? '',
+            'level' => $data['level'] ?? ''
+        ];
     }
 
     public function getValidationRules(): array

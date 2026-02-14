@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Validator;
-use Molitor\Cms\Services\ContentElementHandler;
+use Molitor\Cms\Services\ContentHandler;
 
 class ContentElementValidator implements ValidationRule, DataAwareRule
 {
@@ -52,8 +52,8 @@ class ContentElementValidator implements ValidationRule, DataAwareRule
             return;
         }
 
-        /** @var ContentElementHandler $handler */
-        $handler = app(ContentElementHandler::class);
+        /** @var ContentHandler $handler */
+        $handler = app(ContentHandler::class);
         $elementType = $handler->getElementType($type);
 
         if (!$elementType) {
