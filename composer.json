@@ -18,7 +18,7 @@
     "autoload": {
         "psr-4": {
             "Molitor\\Cms\\": "src/",
-            "Molitor\\Cms\\Database\\Seeders\\": "src/database/seeders/"
+            "Molitor\\Cms\\Database\\Seeders\\": "src/Database/Seeders/"
         }
     },
     "extra": {
