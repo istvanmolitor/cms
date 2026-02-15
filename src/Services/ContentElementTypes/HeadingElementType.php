@@ -54,17 +54,6 @@ class HeadingElementType extends BaseContentElementType
         ];
     }
 
-    /**
-     * Check if a string is valid JSON
-     */
-    private function isJson(string $string): bool
-    {
-        if (empty($string)) {
-            return false;
-        }
-        json_decode($string);
-        return json_last_error() === JSON_ERROR_NONE;
-    }
 
     public function getValidationRules(): array
     {

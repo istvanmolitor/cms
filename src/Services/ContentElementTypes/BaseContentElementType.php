@@ -31,4 +31,16 @@ abstract class BaseContentElementType
      * @return array<string, mixed>
      */
     abstract public function getValidationRules(): array;
+
+    /**
+     * Check if a string is valid JSON
+     */
+    protected function isJson(string $string): bool
+    {
+        if (empty($string)) {
+            return false;
+        }
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
+    }
 }

@@ -59,9 +59,9 @@ class VideoElementType extends BaseContentElementType
     public function getValidationRules(): array
     {
         return [
-            'url' => isset($data['url']) ? (string)$data[ 'url'] : '',
-            'width' => isset($data['width']) ? (string)$data[ 'width'] : '',
-            'height' => isset($data['height']) ? (string)$data[ 'height'] : '',
+            'url' => 'required|string|url',
+            'width' => 'nullable|string',
+            'height' => 'nullable|string',
         ];
     }
 
