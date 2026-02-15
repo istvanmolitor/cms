@@ -107,5 +107,20 @@ class ContentRegionRepository implements ContentRegionRepositoryInterface
 
         $this->contentHandler->copyContentElements($draftContent, $publishedContent);
     }
-}
 
+    public function resetDraft(ContentRegion $contentRegion): void
+    {
+        if (!$contentRegion->draft_content_id) {
+            return;
+        }
+
+        $draftContent = $contentRegion->draftContent;
+        $publishedContent = $contentRegion->content;
+
+        if (!$draftContent || !$publishedContent) {
+            return;
+        }
+
+        $this->contentHandler->copyContentElements($publishedContent, $draftContent);
+    }
+}

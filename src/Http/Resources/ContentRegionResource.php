@@ -18,6 +18,7 @@ class ContentRegionResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'content' => new ContentResource($this->whenLoaded('content')),
+            'draftContent' => new ContentResource($this->whenLoaded('draftContent')),
         ];
     }
 }

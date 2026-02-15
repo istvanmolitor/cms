@@ -10,6 +10,7 @@ use Molitor\Cms\Http\Requests\ContentRegion\StoreContentRegionRequest;
 use Molitor\Cms\Http\Requests\ContentRegion\UpdateContentRegionRequest;
 use Molitor\Cms\Http\Resources\ContentRegionResource;
 use Molitor\Cms\Repositories\ContentRegionRepositoryInterface;
+use Molitor\Cms\Services\ContentHandler;
 
 class ContentRegionApiController
 {
@@ -36,6 +37,7 @@ class ContentRegionApiController
         }
 
         $region->load('content.contentElements');
+        $region->load('draftContent.contentElements');
 
         return new ContentRegionResource($region);
     }
@@ -49,7 +51,7 @@ class ContentRegionApiController
         return new ContentRegionResource($region);
     }
 
-    public function update(UpdateContentRegionRequest $request, int $id): JsonResponse|ContentRegionResource
+    public function update(UpdateContentRegionRequest $request, int $id, ContentHandler $contentHandler): JsonResponse|ContentRegionResource
     {
         $region = $this->contentRegionRepository->getById($id);
 
@@ -59,7 +61,56 @@ class ContentRegionApiController
 
         $data = $request->validated();
 
-        $region = $this->contentRegionRepository->update($region, $data);
+        $region->name = $request->name;
+
+        // Create draft content if it doesn't exist
+        if (!$region->draft_content_id) {
+            $draftContent = app(\Molitor\Cms\Repositories\ContentRepositoryInterface::class)->create();
+            $region->draft_content_id = $draftContent->id;
+        }
+
+        $region->save();
+
+        // Update draft content instead of published content
+        $contentHandler->sevaContentElements($region->draftContent, $data['content']['content_elements'] ?? []);
+
+        // Reload relationships
+        $region->load('content.contentElements');
+        $region->load('draftContent.contentElements');
+
+        return new ContentRegionResource($region);
+    }
+
+    public function approveDraft(int $id): JsonResponse|ContentRegionResource
+    {
+        $region = $this->contentRegionRepository->getById($id);
+
+        if (!$region) {
+            return response()->json(['error' => 'Content region not found'], 404);
+        }
+
+        $this->contentRegionRepository->approveDraft($region);
+
+        // Reload relationships
+        $region->load('content.contentElements');
+        $region->load('draftContent.contentElements');
+
+        return new ContentRegionResource($region);
+    }
+
+    public function resetDraft(int $id): JsonResponse|ContentRegionResource
+    {
+        $region = $this->contentRegionRepository->getById($id);
+
+        if (!$region) {
+            return response()->json(['error' => 'Content region not found'], 404);
+        }
+
+        $this->contentRegionRepository->resetDraft($region);
+
+        // Reload relationships
+        $region->load('content.contentElements');
+        $region->load('draftContent.contentElements');
 
         return new ContentRegionResource($region);
     }

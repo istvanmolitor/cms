@@ -62,11 +62,59 @@ class PageApiController
             return response()->json(['error' => 'Page not found'], 404);
         }
 
+        $data = $request->all();
+
         $page->title = $request->title;
         $page->slug = $request->slug;
+
+        // Create draft content if it doesn't exist
+        if (!$page->draft_content_id) {
+            $draftContent = app(\Molitor\Cms\Repositories\ContentRepositoryInterface::class)->create();
+            $page->draft_content_id = $draftContent->id;
+        }
+
         $page->save();
 
-        $contentHandler->sevaContentElements($page->content, $data['content']['content_elements'] ?? []);
+        // Update draft content instead of published content
+        $contentHandler->sevaContentElements($page->draftContent, $data['content']['content_elements'] ?? []);
+
+        // Reload relationships
+        $page->load('content.contentElements');
+        $page->load('draftContent.contentElements');
+
+        return new PageResource($page);
+    }
+
+    public function approveDraft(int $id): JsonResponse|PageResource
+    {
+        $page = $this->pageRepository->getById($id);
+
+        if (!$page) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
+
+        $this->pageRepository->approveDraft($page);
+
+        // Reload relationships
+        $page->load('content.contentElements');
+        $page->load('draftContent.contentElements');
+
+        return new PageResource($page);
+    }
+
+    public function resetDraft(int $id): JsonResponse|PageResource
+    {
+        $page = $this->pageRepository->getById($id);
+
+        if (!$page) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
+
+        $this->pageRepository->resetDraft($page);
+
+        // Reload relationships
+        $page->load('content.contentElements');
+        $page->load('draftContent.contentElements');
 
         return new PageResource($page);
     }

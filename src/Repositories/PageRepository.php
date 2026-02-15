@@ -93,5 +93,21 @@ class PageRepository implements PageRepositoryInterface
 
         $this->contentHandler->copyContentElements($draftContent, $publishedContent);
     }
+
+    public function resetDraft(Page $page): void
+    {
+        if (!$page->draft_content_id) {
+            return;
+        }
+
+        $draftContent = $page->draftContent;
+        $publishedContent = $page->content;
+
+        if (!$draftContent || !$publishedContent) {
+            return;
+        }
+
+        $this->contentHandler->copyContentElements($publishedContent, $draftContent);
+    }
 }
 
