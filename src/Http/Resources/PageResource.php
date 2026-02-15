@@ -20,6 +20,8 @@ class PageResource extends JsonResource
             'slug' => $this->slug,
             'content' => new ContentResource($this->whenLoaded('content')),
             'draftContent' => new ContentResource($this->whenLoaded('draftContent')),
+            'authors' => AuthorResource::collection($this->whenLoaded('authors')),
+            'pageGroups' => PageGroupResource::collection($this->whenLoaded('pageGroups')),
             'created_at' => $this->created_at?->toIso8601String(),
             'updated_at' => $this->updated_at?->toIso8601String(),
         ];

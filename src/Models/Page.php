@@ -6,6 +6,7 @@ namespace Molitor\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Page extends Model
 {
@@ -33,6 +34,16 @@ class Page extends Model
     public function draftContent(): BelongsTo
     {
         return $this->belongsTo(Content::class, 'draft_content_id');
+    }
+
+    public function authors(): BelongsToMany
+    {
+        return $this->belongsToMany(Author::class, 'page_authors', 'page_id', 'author_id');
+    }
+
+    public function pageGroups(): BelongsToMany
+    {
+        return $this->belongsToMany(PageGroup::class, 'page_page_groups', 'page_id', 'page_group_id');
     }
 }
 

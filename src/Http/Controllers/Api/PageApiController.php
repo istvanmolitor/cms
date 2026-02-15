@@ -39,6 +39,8 @@ class PageApiController
         // Load the content relationship with content elements
         $page->load('content.contentElements');
         $page->load('draftContent.contentElements');
+        $page->load('authors');
+        $page->load('pageGroups');
 
         return new PageResource($page);
     }
@@ -50,6 +52,16 @@ class PageApiController
         $page = $this->pageRepository->create($data);
 
         $contentHandler->sevaContentElements($page->content, $data['content']['content_elements'] ?? []);
+
+        // Sync authors if provided
+        if (isset($data['author_ids'])) {
+            $page->authors()->sync($data['author_ids']);
+        }
+
+        // Sync page groups if provided
+        if (isset($data['page_group_ids'])) {
+            $page->pageGroups()->sync($data['page_group_ids']);
+        }
 
         return new PageResource($page);
     }
@@ -77,6 +89,16 @@ class PageApiController
 
         // Update draft content instead of published content
         $contentHandler->sevaContentElements($page->draftContent, $data['content']['content_elements'] ?? []);
+
+        // Sync authors if provided
+        if (isset($data['author_ids'])) {
+            $page->authors()->sync($data['author_ids']);
+        }
+
+        // Sync page groups if provided
+        if (isset($data['page_group_ids'])) {
+            $page->pageGroups()->sync($data['page_group_ids']);
+        }
 
         // Reload relationships
         $page->load('content.contentElements');
@@ -141,6 +163,8 @@ class PageApiController
         }
 
         $page->load('content.contentElements');
+        $page->load('authors');
+        $page->load('pageGroups');
 
         return new PageResource($page);
     }

@@ -28,6 +28,10 @@ class StorePageRequest extends FormRequest
             'content.content_elements.*.settings' => ['required', 'array', new ContentElementValidator()],
             'content.content_elements.*.sort' => 'required|integer',
             'content.content_elements.*.is_visible' => 'required|boolean',
+            'author_ids' => 'nullable|array',
+            'author_ids.*' => 'exists:authors,id',
+            'page_group_ids' => 'nullable|array',
+            'page_group_ids.*' => 'exists:page_groups,id',
         ];
     }
 }
