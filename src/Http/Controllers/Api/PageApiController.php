@@ -41,6 +41,7 @@ class PageApiController
         $page->load('draftContent.contentElements');
         $page->load('authors');
         $page->load('pageGroups');
+        $page->load('language');
 
         return new PageResource($page);
     }
@@ -78,6 +79,14 @@ class PageApiController
 
         $page->title = $request->title;
         $page->slug = $request->slug;
+
+        if ($request->has('language_id')) {
+            $page->language_id = $request->language_id;
+        }
+
+        if ($request->has('main_image_url')) {
+            $page->main_image_url = $request->main_image_url;
+        }
 
         // Create draft content if it doesn't exist
         if (!$page->draft_content_id) {
@@ -165,6 +174,7 @@ class PageApiController
         $page->load('content.contentElements');
         $page->load('authors');
         $page->load('pageGroups');
+        $page->load('language');
 
         return new PageResource($page);
     }

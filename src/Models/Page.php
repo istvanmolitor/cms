@@ -14,8 +14,10 @@ class Page extends Model
         'title',
         'slug',
         'layout',
+        'main_image_url',
         'content_id',
         'draft_content_id',
+        'language_id',
     ];
 
     protected $casts = [
@@ -44,6 +46,11 @@ class Page extends Model
     public function pageGroups(): BelongsToMany
     {
         return $this->belongsToMany(PageGroup::class, 'page_page_groups', 'page_id', 'page_group_id');
+    }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(\Molitor\Language\Models\Language::class, 'language_id');
     }
 }
 

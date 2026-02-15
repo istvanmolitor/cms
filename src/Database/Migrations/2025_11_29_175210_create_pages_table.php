@@ -18,12 +18,16 @@ class CreatePagesTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->string('layout')->default('default');
+            $table->string('main_image_url')->nullable();
 
             $table->unsignedBigInteger('content_id');
             $table->foreign('content_id')->references('id')->on('contents');
 
             $table->unsignedBigInteger('draft_content_id');
             $table->foreign('draft_content_id')->references('id')->on('contents');
+
+            $table->unsignedBigInteger('language_id')->nullable();
+            $table->foreign('language_id')->references('id')->on('languages');
 
             $table->timestamps();
         });

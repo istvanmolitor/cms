@@ -22,6 +22,8 @@ class StorePageRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:pages,slug',
+            'main_image_url' => 'nullable|string|max:2048',
+            'language_id' => 'nullable|exists:languages,id',
             'content' => 'required|array',
             'content.content_elements' => 'required|array|min:1',
             'content.content_elements.*.type' => 'required|string|max:255',

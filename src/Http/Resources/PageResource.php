@@ -18,6 +18,8 @@ class PageResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
+            'language_id' => $this->language_id,
+            'language' => $this->whenLoaded('language'),
             'content' => new ContentResource($this->whenLoaded('content')),
             'draftContent' => new ContentResource($this->whenLoaded('draftContent')),
             'authors' => AuthorResource::collection($this->whenLoaded('authors')),
