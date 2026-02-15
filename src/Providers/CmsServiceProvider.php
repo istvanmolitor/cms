@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Molitor\Cms\Models\ContentRegion;
 use Molitor\Cms\Models\Page;
 use Molitor\Cms\Observers\ContentObserver;
+use Molitor\Cms\Repositories\AuthorRepository;
+use Molitor\Cms\Repositories\AuthorRepositoryInterface;
 use Molitor\Cms\Repositories\ContentElementTypeRepository;
 use Molitor\Cms\Repositories\ContentElementTypeRepositoryInterface;
 use Molitor\Cms\Repositories\ContentElementRepository;
@@ -64,5 +66,6 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(PageRepositoryInterface::class, PageRepository::class);
         $this->app->bind(MenuRepositoryInterface::class, MenuRepository::class);
         $this->app->bind(MenuItemRepositoryInterface::class, MenuItemRepository::class);
+        $this->app->bind(AuthorRepositoryInterface::class, AuthorRepository::class);
     }
 }
