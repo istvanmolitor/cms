@@ -2,12 +2,21 @@
 
 namespace Molitor\Cms\Services;
 
+use Molitor\Cms\Exceptions\InvalidElementException;
+use Molitor\Cms\Exceptions\InvalidElementTypeNameException;
 use Molitor\Cms\Models\Content;
 use Molitor\Cms\Models\ContentElement;
 use Molitor\Cms\Models\ContentElementType;
 use Molitor\Cms\Repositories\ContentElementRepositoryInterface;
 use Molitor\Cms\Repositories\ContentElementTypeRepositoryInterface;
 use Molitor\Cms\Services\ContentElementTypes\BaseContentElementType;
+use Molitor\Cms\Services\ContentElementTypes\CodeElementType;
+use Molitor\Cms\Services\ContentElementTypes\HeadingElementType;
+use Molitor\Cms\Services\ContentElementTypes\ImageElementType;
+use Molitor\Cms\Services\ContentElementTypes\ListElementType;
+use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
+use Molitor\Cms\Services\ContentElementTypes\TextElementType;
+use Molitor\Cms\Services\ContentElementTypes\VideoElementType;
 
 class ContentHandler
 {
@@ -18,16 +27,31 @@ class ContentHandler
         private ContentElementTypeRepositoryInterface $contentElementTypeRepository,
     )
     {
+        $this->initElementTypes();
     }
 
-    public function addElementType(BaseContentElementType $elementType): void
+    public function initElementTypes(): void
+    {
+        $this->registerElementType(new TextElementType());
+        $this->registerElementType(new HeadingElementType());
+        $this->registerElementType(new ImageElementType());
+        $this->registerElementType(new VideoElementType());
+        $this->registerElementType(new CodeElementType());
+        $this->registerElementType(new QuoteElementType());
+        $this->registerElementType(new ListElementType());
+    }
+
+    public function registerElementType(BaseContentElementType $elementType): void
     {
         $this->elementTypes[$elementType->getName()] = $elementType;
     }
 
-    public function getElementType(string $type): BaseContentElementType|null
+    public function getElementType(string $type): BaseContentElementType
     {
-        return $this->elementTypes[$type] ?? null;
+        if(!array_key_exists($type, $this->elementTypes)) {
+            throw new InvalidElementTypeNameException($type);
+        }
+        return $this->elementTypes[$type];
     }
 
     public function getOptions(): array
@@ -58,36 +82,47 @@ class ContentHandler
         return $type->unserialize($contentElement->content);
     }
 
-    public function saveContentData(ContentElement $contentElement, string $typeName, array $data, int $sort): void
+    public function saveContentData(ContentElement $contentElement, string $typeName, array $settings): void
     {
         $type = $this->getElementType($typeName);
-        if(!$type) {
-            return;
+        $this->contentElementRepository->update(
+            $contentElement,
+            $this->contentElementTypeRepository->getIdByName($type->getName()),
+            $type->serialize($settings)
+        );
+    }
+
+    public function createContentElement(Content $content, string $typeName, array $settings): ContentElement
+    {
+        $type = $this->getElementType($typeName);
+
+        return $this->contentElementRepository->create(
+            $content,
+            $this->contentElementTypeRepository->getIdByName($typeName),
+            $type->serialize($settings)
+        );
+    }
+
+    private function prepareElement(mixed $element): array
+    {
+        if(!is_array($element)) {
+            throw new InvalidElementException("Element must be an array");
         }
-        $contentElementType = $this->contentElementTypeRepository->getByName($type->getName());
-        $contentElement->content_element_type_id = $contentElementType->id;
-        $contentElement->content = $type->serialize($data);
-        $contentElement->sort = $sort;
-        $contentElement->save();
-    }
 
-    public function createContentElement(Content $content, string $typeName, array $data, int $sort): ContentElement
-    {
-        $contentElement = new ContentElement();
-        $contentElement->content_id = $content->id;
-        $contentElement->sort = $sort;
-        $this->saveContentData($contentElement, $typeName, $data, $sort);
-        return $contentElement;
-    }
+        if(!array_key_exists('type', $element) || !array_key_exists($element['type'], $this->elementTypes)) {
+            throw new InvalidElementException("Element must have a valid type");
+        }
 
-    private function prepareElement(array $element): array
-    {
+        if(!array_key_exists('settings', $element) || !is_array($element['settings'])) {
+            throw new InvalidElementException("Element must have settings as an array");
+        }
+
         return [
-            'id' => $element['id'] ?? null,
-            'type' => $element['type'] ??  null,
-            'content' => $element['content'] ?? null,
+            'type' => $element['type'],
+            'settings' => $element['settings'],
         ];
     }
+
 
     public function sevaContentElements(Content $content, array $elements): void
     {
@@ -99,19 +134,23 @@ class ContentHandler
         }
         $sort = 0;
         foreach ($elements as $element) {
-            $element = $this->prepareElement($element);
+            try {
+                $element = $this->prepareElement($element);
+            }
+            catch (InvalidElementException $e) {
+                continue;
+            }
 
             if(array_key_exists($sort, $oldElements)) {
-                $this->saveContentData($oldElements[$sort], $element['type'], $element['content'], $sort);
+                $this->saveContentData($oldElements[$sort], $element['type'], $element['settings']);
             }
             else {
-                $this->createContentElement($content, $element['type'], $element['content'], $sort);
+                $this->createContentElement($content, $element['type'], $element['settings']);
             }
             $sort++;
         }
-        for ($i = count($elements); $i < count($oldElements); $i++) {
-            $this->contentElementRepository->delete($oldElements[$i]);
-        }
+
+        $this->contentElementRepository->deleteWhereSortGreaterOrEqual($content, $sort);
     }
 
     public function elementToArray(ContentElement $contentElement): ?array
@@ -127,5 +166,10 @@ class ContentHandler
             'content' => $this->getContentData($contentElement),
             'visible' => $contentElement->visible,
         ];
+    }
+
+    public function getTypeName(ContentElement $contentElement): string
+    {
+        return $this->getContentElementType($contentElement)->name;
     }
 }

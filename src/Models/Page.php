@@ -14,6 +14,7 @@ class Page extends Model
         'slug',
         'layout',
         'content_id',
+        'draft_content_id',
     ];
 
     protected $casts = [
@@ -26,7 +27,12 @@ class Page extends Model
 
     public function content(): BelongsTo
     {
-        return $this->belongsTo(Content::class);
+        return $this->belongsTo(Content::class, 'content_id');
+    }
+
+    public function draftContent(): BelongsTo
+    {
+        return $this->belongsTo(Content::class, 'draft_content_id');
     }
 }
 

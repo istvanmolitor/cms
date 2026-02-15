@@ -52,4 +52,9 @@ class ContentElementTypeRepository implements ContentElementTypeRepositoryInterf
     {
         return $this->contentElementType->all();
     }
+
+    public function getIdByName(string $name): ?int
+    {
+        return $this->getByName($name)?->id;
+    }
 }

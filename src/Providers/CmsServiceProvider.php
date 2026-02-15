@@ -2,8 +2,10 @@
 
 namespace Molitor\Cms\Providers;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Molitor\Cms\Models\ContentRegion;
+use Molitor\Cms\Models\Page;
+use Molitor\Cms\Observers\ContentObserver;
 use Molitor\Cms\Repositories\ContentElementTypeRepository;
 use Molitor\Cms\Repositories\ContentElementTypeRepositoryInterface;
 use Molitor\Cms\Repositories\ContentElementRepository;
@@ -27,11 +29,6 @@ use Molitor\Cms\Services\ContentElementTypes\ListElementType;
 use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
 use Molitor\Cms\Services\ContentElementTypes\TextElementType;
 use Molitor\Cms\Services\ContentElementTypes\VideoElementType;
-use Molitor\Cms\View\Components\Content;
-use Molitor\Cms\View\Components\ContentElement;
-use Molitor\Cms\View\Components\ContentRegion;
-use Molitor\Cms\View\Components\Menu;
-use Molitor\Cms\View\Components\MenuItem;
 use Molitor\Menu\Services\MenuManager;
 
 class CmsServiceProvider extends ServiceProvider
@@ -52,12 +49,10 @@ class CmsServiceProvider extends ServiceProvider
             __DIR__ . '/../config/cms.php', 'cms'
         );
 
-        Blade::component('content-region', ContentRegion::class);
-        Blade::component('content', Content::class);
-        Blade::component('content-element', ContentElement::class);
-        // Use a distinct alias for the CMS menu component to avoid collisions with the Menu package
-        Blade::component('cms-menu', Menu::class);
-        Blade::component('menu-item', MenuItem::class);
+        $contentObserver = new ContentObserver();
+
+        Page::observe($contentObserver);
+        ContentRegion::observe($contentObserver);
     }
 
     public function register()
@@ -69,16 +64,5 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(PageRepositoryInterface::class, PageRepository::class);
         $this->app->bind(MenuRepositoryInterface::class, MenuRepository::class);
         $this->app->bind(MenuItemRepositoryInterface::class, MenuItemRepository::class);
-
-        $handler = app(ContentHandler::class);
-        $handler->addElementType(new TextElementType());
-        $handler->addElementType(new HeadingElementType());
-        $handler->addElementType(new ImageElementType());
-        $handler->addElementType(new VideoElementType());
-        $handler->addElementType(new CodeElementType());
-        $handler->addElementType(new QuoteElementType());
-        $handler->addElementType(new ListElementType());
-
-        app(MenuManager::class)->addMenuBuilder(new CmsMenuBuilder());
     }
 }

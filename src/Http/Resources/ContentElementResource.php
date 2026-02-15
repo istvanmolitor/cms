@@ -22,13 +22,11 @@ class ContentElementResource extends JsonResource
         /** @var ContentElement $contentElement */
         $contentElement = $this->resource;
 
-        $contentData = $handler->getContentData($contentElement);
-
         return [
             'id' => $this->id,
-            'type' => $handler->getTypeName($contentElement) ?? $contentElement->type,
-            'content' => $contentData,
-            'children' => ContentElementResource::collection($this->whenLoaded('children')),
+            'type' => $handler->getTypeName($contentElement),
+            'settings' => $handler->getContentData($contentElement),
+            //'children' => ContentElementResource::collection($this->whenLoaded('children')),
             'sort' => $this->sort,
             'is_visible' => $this->is_visible,
         ];

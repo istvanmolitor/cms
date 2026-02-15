@@ -13,4 +13,6 @@ interface ContentElementTypeRepositoryInterface
     public function getByName(string $name): ?ContentElementType;
 
     public function getAll(): Collection;
+
+    public function getIdByName(string $name): ?int;
 }

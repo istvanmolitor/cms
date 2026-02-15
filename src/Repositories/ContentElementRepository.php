@@ -36,30 +36,29 @@ class ContentElementRepository implements ContentElementRepositoryInterface
         return $this->getByContentId($content->id);
     }
 
-    public function create(Content $content, string $type, string|array $data, int $sort = 0, bool $isVisible = true): ContentElement
+    public function getCountByContent(Content $content): int
     {
-        if (is_array($data)) {
-            /** @var ContentHandler $handler */
-            $handler = app(ContentHandler::class);
-            $data = $handler->serialize($type, $data);
-        }
+        return $this->contentElement->where('content_id', $content->id)->count();
+    }
 
-        /** @var ContentElementTypeRepositoryInterface $typeRepository */
-        $typeRepository = app(ContentElementTypeRepositoryInterface::class);
-        $contentElementType = $typeRepository->getByName($type);
-
+    public function create(Content $content, int $contentElementTypeId, string $settings): ContentElement
+    {
         return $this->contentElement->create([
             'content_id' => $content->id,
-            'content_element_type_id' => $contentElementType?->id,
-            'content' => $data,
-            'sort' => $sort,
-            'is_visible' => $isVisible,
+            'content_element_type_id' => $contentElementTypeId,
+            'settings' => $settings,
+            'sort' => $this->getCountByContent($content),
+            'is_visible' => true,
         ]);
     }
 
-    public function update(ContentElement $contentElement, array $data): ContentElement
+    public function update(ContentElement $contentElement, int $contentElementTypeId, string $settings): ContentElement
     {
-        $contentElement->update($data);
+        $contentElement->update([
+            'content_element_type_id' => $contentElementTypeId,
+            'settings' => $settings,
+        ]);
+
         return $contentElement->fresh();
     }
 
@@ -68,14 +67,17 @@ class ContentElementRepository implements ContentElementRepositoryInterface
         $contentElement->delete();
     }
 
-    public function getByType(string $type): Collection
-    {
-        return $this->contentElement->where('type', $type)->get();
-    }
-
     public function deleteByContent(Content $content): void
     {
         $this->contentElement->where('content_id', $content->id)->delete();
+    }
+
+    public function deleteWhereSortGreaterOrEqual(Content $content, int $sort): void
+    {
+        $this->contentElement
+            ->where('content_id', $content->id)
+            ->where('sort', '>=', $sort)
+            ->delete();
     }
 }
 

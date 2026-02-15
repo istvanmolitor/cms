@@ -38,6 +38,7 @@ class PageApiController
 
         // Load the content relationship with content elements
         $page->load('content.contentElements');
+        $page->load('draftContent.contentElements');
 
         return new PageResource($page);
     }

@@ -12,7 +12,7 @@ class ContentElement extends Model
     protected $fillable = [
         'content_id',
         'content_element_type_id',
-        'content',
+        'settings',
         'sort',
         'is_visible',
     ];
@@ -20,7 +20,7 @@ class ContentElement extends Model
     protected $casts = [
         'content_id' => 'integer',
         'content_element_type_id' => 'integer',
-        'content' => 'string',
+        'settings' => 'string',
         'sort' => 'integer',
         'is_visible' => 'boolean',
     ];

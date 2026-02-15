@@ -19,6 +19,9 @@ class CreateContentRegionsTable extends Migration
 
             $table->unsignedBigInteger('content_id');
             $table->foreign('content_id')->references('id')->on('contents');
+
+            $table->unsignedBigInteger('draft_content_id');
+            $table->foreign('draft_content_id')->references('id')->on('contents');
         });
     }
 

@@ -22,7 +22,7 @@ class CreateContentElementsTable extends Migration
             $table->unsignedBigInteger('content_element_type_id');
             $table->foreign('content_element_type_id')->references('id')->on('content_element_types');
 
-            $table->longText('content');
+            $table->longText('settings');
 
             $table->boolean('is_visible')->default(true);
             $table->integer('sort')->default(0);

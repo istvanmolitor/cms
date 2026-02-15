@@ -18,6 +18,8 @@ abstract class BaseContentElementType
      */
     abstract public function unserialize(string $content): array;
 
+    abstract public function getDefaultSettings(): array;
+
     /**
      * Get the template path for rendering this element type
      */
@@ -28,10 +30,5 @@ abstract class BaseContentElementType
      *
      * @return array<string, mixed>
      */
-    public function getValidationRules(): array
-    {
-        return [
-            'content' => 'sometimes|string',
-        ];
-    }
+    abstract public function getValidationRules(): array;
 }

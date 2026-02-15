@@ -14,6 +14,7 @@ class ContentRegion extends Model
     protected $fillable = [
         'name',
         'content_id',
+        'draft_content_id',
     ];
 
     protected $casts = [

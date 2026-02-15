@@ -19,6 +19,7 @@ class PageResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'content' => new ContentResource($this->whenLoaded('content')),
+            'draftContent' => new ContentResource($this->whenLoaded('draftContent')),
             'created_at' => $this->created_at?->toIso8601String(),
             'updated_at' => $this->updated_at?->toIso8601String(),
         ];
