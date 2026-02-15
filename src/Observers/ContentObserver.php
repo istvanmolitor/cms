@@ -14,9 +14,5 @@ class ContentObserver
         if (empty($model->content_id)) {
             $model->content_id = app(ContentRepositoryInterface::class)->create()->id;
         }
-
-        if (empty($model->draft_content_id)) {
-            $model->draft_content_id = app(ContentRepositoryInterface::class)->create()->id;
-        }
     }
 }

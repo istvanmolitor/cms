@@ -13,15 +13,17 @@ class Page extends Model
     protected $fillable = [
         'title',
         'slug',
+        'is_published',
+        'lead',
         'layout',
         'main_image_url',
         'content_id',
-        'draft_content_id',
         'language_id',
     ];
 
     protected $casts = [
         'content_id' => 'integer',
+        'is_published' => 'boolean',
     ];
 
     protected $attributes = [
@@ -31,11 +33,6 @@ class Page extends Model
     public function content(): BelongsTo
     {
         return $this->belongsTo(Content::class, 'content_id');
-    }
-
-    public function draftContent(): BelongsTo
-    {
-        return $this->belongsTo(Content::class, 'draft_content_id');
     }
 
     public function authors(): BelongsToMany

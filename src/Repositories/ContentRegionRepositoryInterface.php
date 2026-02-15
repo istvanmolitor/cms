@@ -20,7 +20,5 @@ interface ContentRegionRepositoryInterface
     public function update(ContentRegion $contentRegion, array $data): ContentRegion;
 
     public function delete(ContentRegion $contentRegion): void;
-
-    public function approveDraft(ContentRegion $contentRegion): void;
 }
 

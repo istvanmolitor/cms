@@ -37,7 +37,6 @@ class ContentRegionApiController
         }
 
         $region->load('content.contentElements');
-        $region->load('draftContent.contentElements');
 
         return new ContentRegionResource($region);
     }
@@ -63,54 +62,13 @@ class ContentRegionApiController
 
         $region->name = $request->name;
 
-        // Create draft content if it doesn't exist
-        if (!$region->draft_content_id) {
-            $draftContent = app(\Molitor\Cms\Repositories\ContentRepositoryInterface::class)->create();
-            $region->draft_content_id = $draftContent->id;
-        }
-
         $region->save();
 
-        // Update draft content instead of published content
-        $contentHandler->sevaContentElements($region->draftContent, $data['content']['content_elements'] ?? []);
+        // Update content instead of published content
+        $contentHandler->sevaContentElements($region->content, $data['content']['content_elements'] ?? []);
 
         // Reload relationships
         $region->load('content.contentElements');
-        $region->load('draftContent.contentElements');
-
-        return new ContentRegionResource($region);
-    }
-
-    public function approveDraft(int $id): JsonResponse|ContentRegionResource
-    {
-        $region = $this->contentRegionRepository->getById($id);
-
-        if (!$region) {
-            return response()->json(['error' => 'Content region not found'], 404);
-        }
-
-        $this->contentRegionRepository->approveDraft($region);
-
-        // Reload relationships
-        $region->load('content.contentElements');
-        $region->load('draftContent.contentElements');
-
-        return new ContentRegionResource($region);
-    }
-
-    public function resetDraft(int $id): JsonResponse|ContentRegionResource
-    {
-        $region = $this->contentRegionRepository->getById($id);
-
-        if (!$region) {
-            return response()->json(['error' => 'Content region not found'], 404);
-        }
-
-        $this->contentRegionRepository->resetDraft($region);
-
-        // Reload relationships
-        $region->load('content.contentElements');
-        $region->load('draftContent.contentElements');
 
         return new ContentRegionResource($region);
     }

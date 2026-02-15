@@ -19,7 +19,5 @@ interface PageRepositoryInterface
     public function update(Page $page, array $data): Page;
 
     public function delete(Page $page): void;
-
-    public function approveDraft(Page $page): void;
 }
 

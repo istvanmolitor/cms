@@ -14,7 +14,6 @@ class ContentRegion extends Model
     protected $fillable = [
         'name',
         'content_id',
-        'draft_content_id',
     ];
 
     protected $casts = [
@@ -28,10 +27,5 @@ class ContentRegion extends Model
     public function content(): BelongsTo
     {
         return $this->belongsTo(Content::class);
-    }
-
-    public function draftContent(): BelongsTo
-    {
-        return $this->belongsTo(Content::class, 'draft_content_id');
     }
 }

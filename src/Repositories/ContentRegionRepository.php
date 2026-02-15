@@ -91,36 +91,4 @@ class ContentRegionRepository implements ContentRegionRepositoryInterface
     {
         $contentRegion->delete();
     }
-
-    public function approveDraft(ContentRegion $contentRegion): void
-    {
-        if (!$contentRegion->draft_content_id) {
-            return;
-        }
-
-        $draftContent = $contentRegion->draftContent;
-        $publishedContent = $contentRegion->content;
-
-        if (!$draftContent || !$publishedContent) {
-            return;
-        }
-
-        $this->contentHandler->copyContentElements($draftContent, $publishedContent);
-    }
-
-    public function resetDraft(ContentRegion $contentRegion): void
-    {
-        if (!$contentRegion->draft_content_id) {
-            return;
-        }
-
-        $draftContent = $contentRegion->draftContent;
-        $publishedContent = $contentRegion->content;
-
-        if (!$draftContent || !$publishedContent) {
-            return;
-        }
-
-        $this->contentHandler->copyContentElements($publishedContent, $draftContent);
-    }
 }
