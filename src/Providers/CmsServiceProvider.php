@@ -20,6 +20,8 @@ use Molitor\Cms\Repositories\MenuItemRepository;
 use Molitor\Cms\Repositories\MenuItemRepositoryInterface;
 use Molitor\Cms\Repositories\MenuRepository;
 use Molitor\Cms\Repositories\MenuRepositoryInterface;
+use Molitor\Cms\Repositories\PageGroupRepository;
+use Molitor\Cms\Repositories\PageGroupRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
 use Molitor\Cms\Services\CmsMenuBuilder;
@@ -67,5 +69,6 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(MenuRepositoryInterface::class, MenuRepository::class);
         $this->app->bind(MenuItemRepositoryInterface::class, MenuItemRepository::class);
         $this->app->bind(AuthorRepositoryInterface::class, AuthorRepository::class);
+        $this->app->bind(PageGroupRepositoryInterface::class, PageGroupRepository::class);
     }
 }
