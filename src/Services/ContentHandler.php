@@ -79,7 +79,7 @@ class ContentHandler
         if(!$type) {
             return[];
         }
-        return $type->unserialize($contentElement->content);
+        return $type->unserialize($contentElement->settings);
     }
 
     public function saveContentData(ContentElement $contentElement, string $typeName, array $settings): void
