@@ -7,12 +7,14 @@ namespace Molitor\Cms\Repositories;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Molitor\Cms\Models\Page;
+use Molitor\Cms\Services\ContentHandler;
 
 class PageRepository implements PageRepositoryInterface
 {
     public function __construct(
         private Page $page,
-        private ContentRepositoryInterface $contentRepository
+        private ContentRepositoryInterface $contentRepository,
+        private ContentHandler $contentHandler
     ) {
     }
 
@@ -50,8 +52,6 @@ class PageRepository implements PageRepositoryInterface
                         $content,
                         $elementData['type'],
                         $elementData['content'],
-                        $elementData['sort'] ?? 0,
-                        $elementData['is_visible'] ?? true
                     );
                 }
             }
@@ -76,6 +76,22 @@ class PageRepository implements PageRepositoryInterface
         if ($content) {
             $this->contentRepository->delete($content);
         }
+    }
+
+    public function approveDraft(Page $page): void
+    {
+        if (!$page->draft_content_id) {
+            return;
+        }
+
+        $draftContent = $page->draftContent;
+        $publishedContent = $page->content;
+
+        if (!$draftContent || !$publishedContent) {
+            return;
+        }
+
+        $this->contentHandler->copyContentElements($draftContent, $publishedContent);
     }
 }
 

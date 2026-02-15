@@ -1,6 +1,6 @@
 @php
-    $text = is_array($content) ? ($content['text'] ?? '') : $content;
-    $level = is_array($content) ? ($content['level'] ?? 2) : 2;
+    $text = $settings['text'] ?? '';
+    $level = $settings['level'] ?? 2;
     $tagName = 'h' . $level;
     $class = match($level) {
         1 => 'text-3xl lg:text-4xl font-extrabold text-gray-900 mt-10 mb-6 first:mt-0',
@@ -12,16 +12,16 @@
 
 <div class="content-element content-element-heading mb-6">
     @if($level == 1)
-        <h1 class="{{ $class }}">{!! $text !!}</h1>
+        <h1 class="{{ $class }}">{{ $text }}</h1>
     @elseif($level == 3)
-        <h3 class="{{ $class }}">{!! $text !!}</h3>
+        <h3 class="{{ $class }}">{{ $text }}</h3>
     @elseif($level == 4)
-        <h4 class="{{ $class }}">{!! $text !!}</h4>
+        <h4 class="{{ $class }}">{{ $text }}</h4>
     @elseif($level == 5)
-        <h5 class="{{ $class }}">{!! $text !!}</h5>
+        <h5 class="{{ $class }}">{{ $text }}</h5>
     @elseif($level == 6)
-        <h6 class="{{ $class }}">{!! $text !!}</h6>
+        <h6 class="{{ $class }}">{{ $text }}</h6>
     @else
-        <h2 class="{{ $class }}">{!! $text !!}</h2>
+        <h2 class="{{ $class }}">{{ $text }}</h2>
     @endif
 </div>

@@ -17,7 +17,8 @@ class TextElementType extends BaseContentElementType
     public function serialize(array $data): string
     {
         return serialize([
-            'text' => $data['text'] ?? ''
+            'text' => $data['text'] ?? '',
+            'align' => $data['align'] ?? 'left'
         ]);
     }
 
@@ -33,6 +34,7 @@ class TextElementType extends BaseContentElementType
             $data = json_decode($content, true);
             return [
                 'text' => $data['text'] ?? '',
+                'align' => $data['align'] ?? 'left',
             ];
         }
 
@@ -47,6 +49,7 @@ class TextElementType extends BaseContentElementType
 
         return [
             'text' => $data['text'] ?? '',
+            'align' => $data['align'] ?? 'left',
         ];
     }
 
@@ -66,6 +69,7 @@ class TextElementType extends BaseContentElementType
     {
         return [
             'text' => '',
+            'align' => 'left',
         ];
     }
 
@@ -78,6 +82,7 @@ class TextElementType extends BaseContentElementType
     {
         return [
             'text' => 'required|string',
+            'align' => 'required|string|in:left,center,right,justify',
         ];
     }
 }

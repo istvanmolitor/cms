@@ -172,4 +172,50 @@ class ContentHandler
     {
         return $this->getContentElementType($contentElement)->name;
     }
+
+    public function copyContentElements(Content $sourceContent, Content $targetContent): void
+    {
+        // Get all elements from source and target content
+        $sourceElements = $this->contentElementRepository->getByContent($sourceContent);
+        $targetElements = [];
+        $i = 0;
+        foreach ($this->contentElementRepository->getByContent($targetContent) as $element) {
+            $targetElements[$i] = $element;
+            $i++;
+        }
+
+        // Copy each element from source to target
+        $sort = 0;
+        foreach ($sourceElements as $sourceElement) {
+            $contentElementType = $this->getContentElementType($sourceElement);
+            if (!$contentElementType) {
+                continue;
+            }
+
+            $type = $this->getElementType($contentElementType->name);
+            if (!$type) {
+                continue;
+            }
+
+            // If target element exists at this position, update it
+            if (array_key_exists($sort, $targetElements)) {
+                $this->saveContentData(
+                    $targetElements[$sort],
+                    $contentElementType->name,
+                    $type->unserialize($sourceElement->settings)
+                );
+            } else {
+                // Otherwise create new element
+                $this->createContentElement(
+                    $targetContent,
+                    $contentElementType->name,
+                    $type->unserialize($sourceElement->settings)
+                );
+            }
+            $sort++;
+        }
+
+        // Delete extra elements from target if it has more elements than source
+        $this->contentElementRepository->deleteWhereSortGreaterOrEqual($targetContent, $sort);
+    }
 }

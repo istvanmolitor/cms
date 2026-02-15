@@ -29,4 +29,9 @@ class ContentRegion extends Model
     {
         return $this->belongsTo(Content::class);
     }
+
+    public function draftContent(): BelongsTo
+    {
+        return $this->belongsTo(Content::class, 'draft_content_id');
+    }
 }
