@@ -22,7 +22,7 @@ class ContentRegion extends Component
     {
         $region = $this->contentRegionRepository->getByName($this->name);
         if(!$region) {
-            $region = $this->contentRegionRepository->create($this->name);
+            $region = $this->contentRegionRepository->create(['name' => $this->name]);
         }
 
         return view('cms::components.content-region', [

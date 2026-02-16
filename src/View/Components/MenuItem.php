@@ -6,11 +6,12 @@ namespace Molitor\Cms\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Molitor\Menu\Services\MenuItem as MenuItemService;
 
 class MenuItem extends Component
 {
     public function __construct(
-        public \Molitor\Cms\Models\MenuItem $item
+        public MenuItemService $item
     ) {
     }
 

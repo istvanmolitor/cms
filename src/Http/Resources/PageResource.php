@@ -18,6 +18,7 @@ class PageResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
+            'url' => route('cms.page.show', ['slug' => $this->slug]),
             'is_published' => $this->is_published,
             'lead' => $this->lead,
             'layout' => $this->layout,

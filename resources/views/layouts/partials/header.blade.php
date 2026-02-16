@@ -35,6 +35,6 @@
 
     {{-- Content Region for custom header content --}}
     <div class="border-t border-gray-100">
-        <x-content-region name="header" />
+        <x-cms-content-region name="header" />
     </div>
 </header>

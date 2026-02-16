@@ -7,7 +7,7 @@
                 @yield('content')
             </div>
             <aside class="w-full lg:w-1/4 bg-white rounded-lg shadow-sm p-6">
-                <x-content-region name="sidebar" />
+                <x-cms-content-region name="sidebar" />
             </aside>
         </div>
     </div>

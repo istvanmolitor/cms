@@ -1,6 +1,6 @@
 @if($isEditable)
     <a href=""></a>
 @endif
-    
-    
-<x-content :content="$region->content" />
+
+
+<x-cms-content :content="$region->content" />

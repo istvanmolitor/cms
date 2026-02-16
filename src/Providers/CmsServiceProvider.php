@@ -2,10 +2,16 @@
 
 namespace Molitor\Cms\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Molitor\Cms\Models\ContentRegion;
 use Molitor\Cms\Models\Page;
 use Molitor\Cms\Observers\ContentObserver;
+use Molitor\Cms\View\Components\Content;
+use Molitor\Cms\View\Components\ContentElement;
+use Molitor\Cms\View\Components\ContentRegion as ContentRegionComponent;
+use Molitor\Cms\View\Components\Menu;
+use Molitor\Cms\View\Components\MenuItem;
 use Molitor\Cms\Repositories\AuthorRepository;
 use Molitor\Cms\Repositories\AuthorRepositoryInterface;
 use Molitor\Cms\Repositories\ContentElementTypeRepository;
@@ -52,6 +58,13 @@ class CmsServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../config/cms.php', 'cms'
         );
+
+        // Register Blade components
+        Blade::component('cms-content', Content::class);
+        Blade::component('cms-content-element', ContentElement::class);
+        Blade::component('cms-content-region', ContentRegionComponent::class);
+        Blade::component('cms-menu', Menu::class);
+        Blade::component('cms-menu-item', MenuItem::class);
 
         $contentObserver = new ContentObserver();
 

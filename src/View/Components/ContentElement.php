@@ -12,7 +12,7 @@ use Molitor\Cms\Services\ContentHandler;
 class ContentElement extends Component
 {
     public function __construct(
-        private ContentHandler     $contentElementHandler,
+        private ContentHandler     $contentHandler,
         public ContentElementModel $element,
     ) {
 
@@ -20,7 +20,7 @@ class ContentElement extends Component
 
     public function render(): View
     {
-        $content = $this->contentElementHandler->render($this->element);
+        $content = $this->contentHandler->renderElement($this->element);
 
         return view('cms::components.content-element', [
             'element' => $this->element,

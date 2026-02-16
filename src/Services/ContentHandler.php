@@ -218,4 +218,26 @@ class ContentHandler
         // Delete extra elements from target if it has more elements than source
         $this->contentElementRepository->deleteWhereSortGreaterOrEqual($targetContent, $sort);
     }
+
+    public function renderElement(ContentElement $element): string
+    {
+        $contentElementType = $this->getContentElementType($element);
+        if (!$contentElementType) {
+            return '';
+        }
+
+        try {
+            $type = $this->getElementType($contentElementType->name);
+        } catch (InvalidElementTypeNameException $e) {
+            return '';
+        }
+
+        $settings = $type->unserialize($element->settings);
+
+        return view($type->getTemplate(), [
+            'element' => $element,
+            'content' => $element->settings,
+            'settings' => $settings,
+        ])->render();
+    }
 }
