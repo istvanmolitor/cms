@@ -18,7 +18,7 @@ class CreatePagesTable extends Migration
             $table->boolean('is_published')->default(false);
             $table->string('title');
             $table->string('slug');
-            $table->string('lead')->nullable();
+            $table->text('lead')->nullable();
             $table->string('layout')->default('default');
             $table->string('main_image_url')->nullable();
 
