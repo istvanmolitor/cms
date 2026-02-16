@@ -35,6 +35,8 @@ class PageGroupApiController
             ], 404);
         }
 
+        $pageGroup->load('pages');
+
         return new PageGroupResource($pageGroup);
     }
 
