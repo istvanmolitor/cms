@@ -12,6 +12,7 @@ use Molitor\Cms\Repositories\ContentElementTypeRepositoryInterface;
 use Molitor\Cms\Services\ContentElementTypes\BaseContentElementType;
 use Molitor\Cms\Services\ContentElementTypes\CodeElementType;
 use Molitor\Cms\Services\ContentElementTypes\HeadingElementType;
+use Molitor\Cms\Services\ContentElementTypes\IframeElementType;
 use Molitor\Cms\Services\ContentElementTypes\ImageElementType;
 use Molitor\Cms\Services\ContentElementTypes\ListElementType;
 use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
@@ -36,6 +37,7 @@ class ContentHandler
         $this->registerElementType(new HeadingElementType());
         $this->registerElementType(new ImageElementType());
         $this->registerElementType(new VideoElementType());
+        $this->registerElementType(new IframeElementType());
         $this->registerElementType(new CodeElementType());
         $this->registerElementType(new QuoteElementType());
         $this->registerElementType(new ListElementType());
@@ -236,7 +238,6 @@ class ContentHandler
 
         return view($type->getTemplate(), [
             'element' => $element,
-            'content' => $element->settings,
             'settings' => $settings,
         ])->render();
     }
