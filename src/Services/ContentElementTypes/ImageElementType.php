@@ -21,6 +21,7 @@ class ImageElementType extends BaseContentElementType
             'alt' => isset($data['alt']) ? (string)$data['alt'] : '',
             'width' => isset($data['width']) ? (string)$data['width'] : null,
             'height' => isset($data['height']) ? (string)$data['height'] : null,
+            'alignment' => isset($data['alignment']) ? (string)$data['alignment'] : 'left',
         ]);
     }
 
@@ -39,6 +40,7 @@ class ImageElementType extends BaseContentElementType
                 'alt' => isset($data['alt']) ? (string)$data['alt'] : '',
                 'width' => isset($data['width']) ? (string)$data['width'] : null,
                 'height' => isset($data['height']) ? (string)$data['height'] : null,
+                'alignment' => isset($data['alignment']) ? (string)$data['alignment'] : 'left',
             ];
         }
 
@@ -56,6 +58,7 @@ class ImageElementType extends BaseContentElementType
             'alt' => isset($data['alt']) ? (string)$data['alt'] : '',
             'width' => isset($data['width']) ? (string)$data['width'] : null,
             'height' => isset($data['height']) ? (string)$data['height'] : null,
+            'alignment' => isset($data['alignment']) ? (string)$data['alignment'] : 'left',
         ];
     }
 
@@ -67,6 +70,7 @@ class ImageElementType extends BaseContentElementType
             'alt' => '',
             'width' => null,
             'height' => null,
+            'alignment' => 'left',
         ];
     }
 
@@ -77,6 +81,7 @@ class ImageElementType extends BaseContentElementType
             'alt' => 'string',
             'width' => 'nullable|integer',
             'height' => 'nullable|integer',
+            'alignment' => 'string|in:left,center,right',
         ];
     }
 
