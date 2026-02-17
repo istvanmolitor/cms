@@ -19,7 +19,7 @@ class UpdatePageRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('id');
+        $id = $this->route('page');
 
         return [
             'title' => 'sometimes|required|string|max:255',
