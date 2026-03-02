@@ -28,18 +28,11 @@ use Molitor\Cms\Repositories\MenuRepository;
 use Molitor\Cms\Repositories\MenuRepositoryInterface;
 use Molitor\Cms\Repositories\PageGroupRepository;
 use Molitor\Cms\Repositories\PageGroupRepositoryInterface;
+use Molitor\Cms\Repositories\PageMetaRepository;
+use Molitor\Cms\Repositories\PageMetaRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
 use Molitor\Cms\Services\CmsMenuBuilder;
-use Molitor\Cms\Services\ContentHandler;
-use Molitor\Cms\Services\ContentElementTypes\CodeElementType;
-use Molitor\Cms\Services\ContentElementTypes\HeadingElementType;
-use Molitor\Cms\Services\ContentElementTypes\ImageElementType;
-use Molitor\Cms\Services\ContentElementTypes\ListElementType;
-use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
-use Molitor\Cms\Services\ContentElementTypes\TextElementType;
-use Molitor\Cms\Services\ContentElementTypes\VideoElementType;
-use Molitor\Menu\Services\MenuManager;
 
 class CmsServiceProvider extends ServiceProvider
 {
@@ -83,5 +76,6 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(MenuItemRepositoryInterface::class, MenuItemRepository::class);
         $this->app->bind(AuthorRepositoryInterface::class, AuthorRepository::class);
         $this->app->bind(PageGroupRepositoryInterface::class, PageGroupRepository::class);
+        $this->app->bind(PageMetaRepositoryInterface::class, PageMetaRepository::class);
     }
 }
