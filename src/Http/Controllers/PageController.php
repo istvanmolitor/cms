@@ -7,21 +7,22 @@ namespace Molitor\Cms\Http\Controllers;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
+use Molitor\Cms\Services\LayoutService;
 
 class PageController
 {
     public function __construct(
-        private PageRepositoryInterface $pageRepository
+        private PageRepositoryInterface $pageRepository,
+        private LayoutService $layoutService
     ) {
     }
 
     public function index(): View|Response
     {
-        $layout = config('cms.default_layout', 'default');
-        $layout = config('cms.layouts.' . $layout . '.template');
+        $layout = $this->layoutService->getLayoutTemplate(null);
 
         return view('cms::page.index', [
-            'layout' => $layout ?? 'cms::layouts.default',
+            'layout' => $layout,
         ]);
     }
 
@@ -35,10 +36,10 @@ class PageController
 
         $page->load('content.contentElements');
 
-        $layout = config('cms.layouts.' . $page->layout . '.template');
+        $layout = $this->layoutService->getLayoutTemplate($page->layout);
 
         return view('cms::page.show', [
-            'layout' => $layout ?? 'cms::layouts.default',
+            'layout' => $layout,
             'page' => $page,
         ]);
     }

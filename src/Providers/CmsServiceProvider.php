@@ -33,6 +33,7 @@ use Molitor\Cms\Repositories\PageMetaRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
 use Molitor\Cms\Services\CmsMenuBuilder;
+use Molitor\Cms\Services\LayoutService;
 
 class CmsServiceProvider extends ServiceProvider
 {
