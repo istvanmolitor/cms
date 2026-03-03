@@ -24,6 +24,11 @@ class PageGroupRepository implements PageGroupRepositoryInterface
         return $this->pageGroup->find($id);
     }
 
+    public function getBySlug(string $slug): PageGroup|null
+    {
+        return $this->pageGroup->where('slug', $slug)->first();
+    }
+
     public function create(array $data): PageGroup
     {
         return $this->pageGroup->create($data);

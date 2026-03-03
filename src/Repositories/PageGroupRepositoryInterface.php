@@ -11,6 +11,7 @@ interface PageGroupRepositoryInterface
     public function getAll(): \Illuminate\Support\Collection;
 
     public function getById(int $id): ?PageGroup;
+    public function getBySlug(string $slug): ?PageGroup;
 
     public function create(array $data): PageGroup;
 
