@@ -12,6 +12,7 @@ class PageGroup extends Model
     protected $fillable = [
         'name',
         'slug',
+        'layout',
     ];
 
     protected $casts = [

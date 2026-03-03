@@ -27,6 +27,7 @@ class UpdatePageGroupRequest extends FormRequest
                 'max:255',
                 Rule::unique('page_groups', 'slug')->ignore($this->route('page_group')),
             ],
+            'layout' => 'nullable|string|max:255',
         ];
     }
 }

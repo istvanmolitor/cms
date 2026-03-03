@@ -18,6 +18,7 @@ class PageGroupResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
+            'layout' => $this->layout,
             'pages' => $this->whenLoaded('pages', function () {
                 return PageResource::collection($this->pages);
             }),

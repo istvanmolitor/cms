@@ -17,6 +17,7 @@ class CreatePageGroupsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('layout')->nullable();
             $table->timestamps();
         });
     }

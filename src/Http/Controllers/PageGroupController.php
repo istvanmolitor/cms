@@ -26,7 +26,7 @@ class PageGroupController
         }
 
         $pages = $pageGroup->pages()->paginate(10);
-        $layout = $this->layoutService->getLayoutTemplate(null);
+        $layout = $this->layoutService->getLayoutTemplate($pageGroup->layout);
 
         return view('cms::page-group.show', [
             'layout' => $layout,
