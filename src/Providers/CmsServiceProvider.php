@@ -4,6 +4,9 @@ namespace Molitor\Cms\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+use Molitor\Cms\Http\Controllers\PageController;
+use Molitor\Cms\Http\Controllers\PageGroupController;
 use Molitor\Cms\Models\ContentRegion;
 use Molitor\Cms\Models\Page;
 use Molitor\Cms\Observers\ContentObserver;
@@ -64,6 +67,17 @@ class CmsServiceProvider extends ServiceProvider
 
         Page::observe($contentObserver);
         ContentRegion::observe($contentObserver);
+        $this->registerRouteMacros();
+    }
+
+    protected function registerRouteMacros()
+    {
+        Route::macro('cms', function () {
+            Route::get('/', [PageController::class, 'homepage'])->name('cms.homepage');
+            Route::get('/page', [PageController::class, 'index'])->name('cms.index');
+            Route::get('/page/{slug}', [PageController::class, 'show'])->name('cms.page.show');
+            Route::get('/page-group/{slug}', [PageGroupController::class, 'show'])->name('cms.page-group.show');
+        });
     }
 
     public function register()
