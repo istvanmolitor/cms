@@ -7,7 +7,7 @@
         </h1>
 
         <div class="prose prose-lg max-w-none">
-            <x-content :content="$page->content" />
+            <x-cms-content :content="$page->content" />
         </div>
     </article>
 @endsection
