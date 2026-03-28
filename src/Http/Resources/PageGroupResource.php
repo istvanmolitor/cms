@@ -22,8 +22,8 @@ class PageGroupResource extends JsonResource
             'pages' => $this->whenLoaded('pages', function () {
                 return PageResource::collection($this->pages);
             }),
-            'created_at' => $this->created_at?->toIso8601String(),
-            'updated_at' => $this->updated_at?->toIso8601String(),
+            'created_at' => $this->created_at?->toDateTimeString(),
+            'updated_at' => $this->updated_at?->toDateTimeString(),
         ];
     }
 }

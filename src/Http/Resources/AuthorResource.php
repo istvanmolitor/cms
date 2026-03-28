@@ -18,8 +18,8 @@ class AuthorResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'profile_url' => $this->profile_url,
-            'created_at' => $this->created_at?->toIso8601String(),
-            'updated_at' => $this->updated_at?->toIso8601String(),
+            'created_at' => $this->created_at?->toDateTimeString(),
+            'updated_at' => $this->updated_at?->toDateTimeString(),
         ];
     }
 }

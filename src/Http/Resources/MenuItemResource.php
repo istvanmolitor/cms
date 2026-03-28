@@ -24,8 +24,8 @@ class MenuItemResource extends JsonResource
             'icon' => $this->icon,
             'parent_id' => $this->parent_id,
             'children' => MenuItemResource::collection($this->whenLoaded('children')),
-            'created_at' => $this->created_at?->toIso8601String(),
-            'updated_at' => $this->updated_at?->toIso8601String(),
+            'created_at' => $this->created_at?->toDateTimeString(),
+            'updated_at' => $this->updated_at?->toDateTimeString(),
         ];
     }
 }
