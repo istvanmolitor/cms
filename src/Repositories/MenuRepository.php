@@ -15,17 +15,17 @@ class MenuRepository implements MenuRepositoryInterface
 
     public function getById(int $id): ?Menu
     {
-        return $this->menu->find($id);
+        return $this->menu->with('language')->find($id);
     }
 
     public function getByName(string $name): ?Menu
     {
-        return $this->menu->where('name', $name)->first();
+        return $this->menu->with('language')->where('name', $name)->first();
     }
 
     public function getAll(): Collection
     {
-        return $this->menu->all();
+        return $this->menu->with('language')->get();
     }
 
     public function create(string $name, int $languageId): Menu
