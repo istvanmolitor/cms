@@ -14,20 +14,19 @@ class ContentRegionRepository implements ContentRegionRepositoryInterface
         private ContentRegion $contentRegion,
         private ContentRepositoryInterface $contentRepository,
         private ContentHandler $contentHandler
-    ) {
-    }
+    ) {}
 
     public function getAll(): Collection
     {
         return $this->contentRegion->all();
     }
 
-    public function getById(int $id): ContentRegion|null
+    public function getById(int $id): ?ContentRegion
     {
         return $this->contentRegion->find($id);
     }
 
-    public function getByName(string $name): ContentRegion|null
+    public function getByName(string $name): ?ContentRegion
     {
         return $this->contentRegion->where('name', $name)->first();
     }

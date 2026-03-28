@@ -11,18 +11,15 @@ class LayoutApiController
 {
     public function __construct(
         private LayoutService $layoutService
-    ) {
-    }
+    ) {}
 
     /**
      * Get all available layouts.
-     *
-     * @return JsonResponse
      */
     public function index(): JsonResponse
     {
         return response()->json([
-            'data' => $this->layoutService->getLayouts()
+            'data' => $this->layoutService->getLayouts(),
         ]);
     }
 }

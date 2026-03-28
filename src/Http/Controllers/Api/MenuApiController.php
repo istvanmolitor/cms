@@ -15,8 +15,7 @@ class MenuApiController
 {
     public function __construct(
         private MenuRepositoryInterface $menuRepository
-    ) {
-    }
+    ) {}
 
     public function index(): AnonymousResourceCollection
     {
@@ -29,9 +28,9 @@ class MenuApiController
     {
         $menu = $this->menuRepository->getById($id);
 
-        if (!$menu) {
+        if (! $menu) {
             return response()->json([
-                'error' => 'Menu not found'
+                'error' => 'Menu not found',
             ], 404);
         }
 
@@ -40,7 +39,11 @@ class MenuApiController
 
     public function store(StoreMenuRequest $request): MenuResource
     {
-        $menu = $this->menuRepository->create($request->validated()['name']);
+        $validated = $request->validated();
+        $menu = $this->menuRepository->create(
+            $validated['name'],
+            $validated['language_id']
+        );
 
         return new MenuResource($menu);
     }
@@ -49,7 +52,7 @@ class MenuApiController
     {
         $menu = $this->menuRepository->getById($id);
 
-        if (!$menu) {
+        if (! $menu) {
             return response()->json(['error' => 'Menu not found'], 404);
         }
 
@@ -62,7 +65,7 @@ class MenuApiController
     {
         $menu = $this->menuRepository->getById($id);
 
-        if (!$menu) {
+        if (! $menu) {
             return response()->json(['error' => 'Menu not found'], 404);
         }
 

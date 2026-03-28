@@ -26,4 +26,3 @@ class PageMeta extends Model
         return $this->belongsTo(Page::class, 'page_id');
     }
 }
-

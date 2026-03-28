@@ -10,14 +10,14 @@ use Molitor\Cms\Models\ContentElementType;
 class ContentElementTypeRepository implements ContentElementTypeRepositoryInterface
 {
     private array $nameCache = [];
+
     private array $idCache = [];
 
     public function __construct(
         private ContentElementType $contentElementType
-    ) {
-    }
+    ) {}
 
-    public function addCache(ContentElementType|null $elementType): void
+    public function addCache(?ContentElementType $elementType): void
     {
         $this->idCache[$elementType->id] = $elementType;
         $this->nameCache[$elementType->name] = $elementType;
@@ -25,9 +25,10 @@ class ContentElementTypeRepository implements ContentElementTypeRepositoryInterf
 
     public function getById(int $id): ?ContentElementType
     {
-        if(!array_key_exists($id, $this->idCache)) {
+        if (! array_key_exists($id, $this->idCache)) {
             $this->addCache($this->contentElementType->find($id));
         }
+
         return $this->idCache[$id];
     }
 
@@ -38,13 +39,14 @@ class ContentElementTypeRepository implements ContentElementTypeRepositoryInterf
 
     public function getByName(string $name): ?ContentElementType
     {
-        if(!array_key_exists($name, $this->nameCache)) {
+        if (! array_key_exists($name, $this->nameCache)) {
             $contentElementType = $this->contentElementType->where('name', $name)->first();
-            if(!$contentElementType) {
+            if (! $contentElementType) {
                 $contentElementType = $this->create($name);
             }
             $this->addCache($contentElementType);
         }
+
         return $this->nameCache[$name];
     }
 

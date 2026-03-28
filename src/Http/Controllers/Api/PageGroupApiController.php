@@ -15,8 +15,7 @@ class PageGroupApiController
 {
     public function __construct(
         private PageGroupRepositoryInterface $pageGroupRepository
-    ) {
-    }
+    ) {}
 
     public function index(): AnonymousResourceCollection
     {
@@ -29,9 +28,9 @@ class PageGroupApiController
     {
         $pageGroup = $this->pageGroupRepository->getById($id);
 
-        if (!$pageGroup) {
+        if (! $pageGroup) {
             return response()->json([
-                'error' => 'Page group not found'
+                'error' => 'Page group not found',
             ], 404);
         }
 
@@ -51,7 +50,7 @@ class PageGroupApiController
     {
         $pageGroup = $this->pageGroupRepository->getById($id);
 
-        if (!$pageGroup) {
+        if (! $pageGroup) {
             return response()->json(['error' => 'Page group not found'], 404);
         }
 
@@ -64,7 +63,7 @@ class PageGroupApiController
     {
         $pageGroup = $this->pageGroupRepository->getById($id);
 
-        if (!$pageGroup) {
+        if (! $pageGroup) {
             return response()->json(['error' => 'Page group not found'], 404);
         }
 
@@ -73,4 +72,3 @@ class PageGroupApiController
         return response()->json(null, 204);
     }
 }
-

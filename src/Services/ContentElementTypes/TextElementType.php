@@ -18,7 +18,7 @@ class TextElementType extends BaseContentElementType
     {
         return serialize([
             'text' => $data['text'] ?? '',
-            'align' => $data['align'] ?? 'left'
+            'align' => $data['align'] ?? 'left',
         ]);
     }
 
@@ -32,6 +32,7 @@ class TextElementType extends BaseContentElementType
         // Check if content is JSON (for backward compatibility or migration)
         if ($this->isJson($content)) {
             $data = json_decode($content, true);
+
             return [
                 'text' => $data['text'] ?? '',
                 'align' => $data['align'] ?? 'left',
@@ -43,7 +44,8 @@ class TextElementType extends BaseContentElementType
 
         // If unserialize failed, try to handle gracefully
         if ($data === false && $content !== serialize(false)) {
-            error_log("Failed to unserialize content in TextElementType: " . $content);
+            error_log('Failed to unserialize content in TextElementType: '.$content);
+
             return $this->getDefaultSettings();
         }
 
@@ -52,7 +54,6 @@ class TextElementType extends BaseContentElementType
             'align' => $data['align'] ?? 'left',
         ];
     }
-
 
     public function getDefaultSettings(): array
     {
@@ -75,4 +76,3 @@ class TextElementType extends BaseContentElementType
         ];
     }
 }
-

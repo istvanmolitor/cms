@@ -11,15 +11,14 @@ class AuthorRepository implements AuthorRepositoryInterface
 {
     public function __construct(
         private Author $author
-    ) {
-    }
+    ) {}
 
     public function getAll(): Collection
     {
         return $this->author->all();
     }
 
-    public function getById(int $id): Author|null
+    public function getById(int $id): ?Author
     {
         return $this->author->find($id);
     }
@@ -32,6 +31,7 @@ class AuthorRepository implements AuthorRepositoryInterface
     public function update(Author $author, array $data): Author
     {
         $author->update($data);
+
         return $author;
     }
 
@@ -40,4 +40,3 @@ class AuthorRepository implements AuthorRepositoryInterface
         $author->delete();
     }
 }
-

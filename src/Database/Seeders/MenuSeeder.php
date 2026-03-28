@@ -5,13 +5,26 @@ namespace Molitor\Cms\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Molitor\Cms\Models\Menu;
 use Molitor\Cms\Models\MenuItem;
+use Molitor\Language\Models\Language;
 
 class MenuSeeder extends Seeder
 {
     public function run(): void
     {
+        // Get the first enabled language (or create a default one)
+        $language = Language::where('enabled', true)->first();
+
+        if (! $language) {
+            $this->command->warn('No enabled language found. Please seed languages first.');
+
+            return;
+        }
+
         // Create main menu
-        $mainMenu = Menu::firstOrCreate(['name' => 'main']);
+        $mainMenu = Menu::firstOrCreate(
+            ['name' => 'main', 'language_id' => $language->id],
+            ['name' => 'main', 'language_id' => $language->id]
+        );
 
         // Clear existing items
         $mainMenu->menuItems()->delete();
@@ -99,4 +112,3 @@ class MenuSeeder extends Seeder
         $this->command->info('Main menu created successfully with multi-level items!');
     }
 }
-

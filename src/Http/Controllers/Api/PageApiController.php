@@ -17,8 +17,7 @@ class PageApiController
 {
     public function __construct(
         private PageRepositoryInterface $pageRepository
-    ) {
-    }
+    ) {}
 
     public function index(): AnonymousResourceCollection
     {
@@ -31,9 +30,9 @@ class PageApiController
     {
         $page = $this->pageRepository->getById($id);
 
-        if (!$page) {
+        if (! $page) {
             return response()->json([
-                'error' => 'Page not found'
+                'error' => 'Page not found',
             ], 404);
         }
 
@@ -83,7 +82,7 @@ class PageApiController
         } catch (\Exception $e) {
             Log::error('Error creating page', [
                 'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
             ]);
             throw $e;
         }
@@ -93,7 +92,7 @@ class PageApiController
     {
         $page = $this->pageRepository->getById($id);
 
-        if (!$page) {
+        if (! $page) {
             return response()->json(['error' => 'Page not found'], 404);
         }
 
@@ -135,7 +134,7 @@ class PageApiController
     {
         $page = $this->pageRepository->getById($id);
 
-        if (!$page) {
+        if (! $page) {
             return response()->json(['error' => 'Page not found'], 404);
         }
 
@@ -148,7 +147,7 @@ class PageApiController
     {
         $page = $this->pageRepository->getBySlug($slug);
 
-        if (!$page) {
+        if (! $page) {
             return response()->json(['error' => 'Page not found'], 404);
         }
 
@@ -160,4 +159,3 @@ class PageApiController
         return new PageResource($page);
     }
 }
-

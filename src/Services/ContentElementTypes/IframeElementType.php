@@ -35,12 +35,13 @@ class IframeElementType extends BaseContentElementType
         // Check if content is JSON (for backward compatibility or migration)
         if ($this->isJson($content)) {
             $data = json_decode($content, true);
+
             return [
-                'url' => isset($data['url']) ? (string)$data['url'] : '',
-                'width' => isset($data['width']) ? (string)$data['width'] : '100%',
-                'height' => isset($data['height']) ? (string)$data['height'] : '450px',
-                'title' => isset($data['title']) ? (string)$data['title'] : '',
-                'allowFullscreen' => isset($data['allowFullscreen']) ? (bool)$data['allowFullscreen'] : true,
+                'url' => isset($data['url']) ? (string) $data['url'] : '',
+                'width' => isset($data['width']) ? (string) $data['width'] : '100%',
+                'height' => isset($data['height']) ? (string) $data['height'] : '450px',
+                'title' => isset($data['title']) ? (string) $data['title'] : '',
+                'allowFullscreen' => isset($data['allowFullscreen']) ? (bool) $data['allowFullscreen'] : true,
             ];
         }
 
@@ -49,16 +50,17 @@ class IframeElementType extends BaseContentElementType
 
         // If unserialize failed, try to handle gracefully
         if ($data === false && $content !== serialize(false)) {
-            error_log("Failed to unserialize content in IframeElementType: " . $content);
+            error_log('Failed to unserialize content in IframeElementType: '.$content);
+
             return $this->getDefaultSettings();
         }
 
         return [
-            'url' => isset($data['url']) ? (string)$data['url'] : '',
-            'width' => isset($data['width']) ? (string)$data['width'] : '100%',
-            'height' => isset($data['height']) ? (string)$data['height'] : '450px',
-            'title' => isset($data['title']) ? (string)$data['title'] : '',
-            'allowFullscreen' => isset($data['allowFullscreen']) ? (bool)$data['allowFullscreen'] : true,
+            'url' => isset($data['url']) ? (string) $data['url'] : '',
+            'width' => isset($data['width']) ? (string) $data['width'] : '100%',
+            'height' => isset($data['height']) ? (string) $data['height'] : '450px',
+            'title' => isset($data['title']) ? (string) $data['title'] : '',
+            'allowFullscreen' => isset($data['allowFullscreen']) ? (bool) $data['allowFullscreen'] : true,
         ];
     }
 
@@ -89,4 +91,3 @@ class IframeElementType extends BaseContentElementType
         ];
     }
 }
-

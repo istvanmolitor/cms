@@ -19,4 +19,3 @@ class CodeElementType extends TextElementType
         return 'cms::components.content-elements.code';
     }
 }
-

@@ -26,21 +26,20 @@ class ContentHandler
     public function __construct(
         private ContentElementRepositoryInterface $contentElementRepository,
         private ContentElementTypeRepositoryInterface $contentElementTypeRepository,
-    )
-    {
+    ) {
         $this->initElementTypes();
     }
 
     public function initElementTypes(): void
     {
-        $this->registerElementType(new TextElementType());
-        $this->registerElementType(new HeadingElementType());
-        $this->registerElementType(new ImageElementType());
-        $this->registerElementType(new VideoElementType());
-        $this->registerElementType(new IframeElementType());
-        $this->registerElementType(new CodeElementType());
-        $this->registerElementType(new QuoteElementType());
-        $this->registerElementType(new ListElementType());
+        $this->registerElementType(new TextElementType);
+        $this->registerElementType(new HeadingElementType);
+        $this->registerElementType(new ImageElementType);
+        $this->registerElementType(new VideoElementType);
+        $this->registerElementType(new IframeElementType);
+        $this->registerElementType(new CodeElementType);
+        $this->registerElementType(new QuoteElementType);
+        $this->registerElementType(new ListElementType);
     }
 
     public function registerElementType(BaseContentElementType $elementType): void
@@ -50,9 +49,10 @@ class ContentHandler
 
     public function getElementType(string $type): BaseContentElementType
     {
-        if(!array_key_exists($type, $this->elementTypes)) {
+        if (! array_key_exists($type, $this->elementTypes)) {
             throw new InvalidElementTypeNameException($type);
         }
+
         return $this->elementTypes[$type];
     }
 
@@ -63,6 +63,7 @@ class ContentHandler
         foreach ($this->elementTypes as $elementType) {
             $options[$elementType->getName()] = $elementType->getLabel();
         }
+
         return $options;
     }
 
@@ -74,13 +75,14 @@ class ContentHandler
     public function getContentData(ContentElement $contentElement): array
     {
         $contentElementType = $this->getContentElementType($contentElement);
-        if(!$contentElementType) {
+        if (! $contentElementType) {
             return [];
         }
         $type = $this->getElementType($contentElementType->name);
-        if(!$type) {
-            return[];
+        if (! $type) {
+            return [];
         }
+
         return $type->unserialize($contentElement->settings);
     }
 
@@ -107,16 +109,16 @@ class ContentHandler
 
     private function prepareElement(mixed $element): array
     {
-        if(!is_array($element)) {
-            throw new InvalidElementException("Element must be an array");
+        if (! is_array($element)) {
+            throw new InvalidElementException('Element must be an array');
         }
 
-        if(!array_key_exists('type', $element) || !array_key_exists($element['type'], $this->elementTypes)) {
-            throw new InvalidElementException("Element must have a valid type");
+        if (! array_key_exists('type', $element) || ! array_key_exists($element['type'], $this->elementTypes)) {
+            throw new InvalidElementException('Element must have a valid type');
         }
 
-        if(!array_key_exists('settings', $element) || !is_array($element['settings'])) {
-            throw new InvalidElementException("Element must have settings as an array");
+        if (! array_key_exists('settings', $element) || ! is_array($element['settings'])) {
+            throw new InvalidElementException('Element must have settings as an array');
         }
 
         return [
@@ -124,7 +126,6 @@ class ContentHandler
             'settings' => $element['settings'],
         ];
     }
-
 
     public function sevaContentElements(Content $content, array $elements): void
     {
@@ -138,15 +139,13 @@ class ContentHandler
         foreach ($elements as $element) {
             try {
                 $element = $this->prepareElement($element);
-            }
-            catch (InvalidElementException $e) {
+            } catch (InvalidElementException $e) {
                 continue;
             }
 
-            if(array_key_exists($sort, $oldElements)) {
+            if (array_key_exists($sort, $oldElements)) {
                 $this->saveContentData($oldElements[$sort], $element['type'], $element['settings']);
-            }
-            else {
+            } else {
                 $this->createContentElement($content, $element['type'], $element['settings']);
             }
             $sort++;
@@ -158,7 +157,7 @@ class ContentHandler
     public function elementToArray(ContentElement $contentElement): ?array
     {
         $contentElementType = $this->getContentElementType($contentElement);
-        if(!$contentElementType) {
+        if (! $contentElementType) {
             return null;
         }
 
@@ -190,12 +189,12 @@ class ContentHandler
         $sort = 0;
         foreach ($sourceElements as $sourceElement) {
             $contentElementType = $this->getContentElementType($sourceElement);
-            if (!$contentElementType) {
+            if (! $contentElementType) {
                 continue;
             }
 
             $type = $this->getElementType($contentElementType->name);
-            if (!$type) {
+            if (! $type) {
                 continue;
             }
 
@@ -224,7 +223,7 @@ class ContentHandler
     public function renderElement(ContentElement $element): string
     {
         $contentElementType = $this->getContentElementType($element);
-        if (!$contentElementType) {
+        if (! $contentElementType) {
             return '';
         }
 

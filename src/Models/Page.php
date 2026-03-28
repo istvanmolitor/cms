@@ -56,4 +56,3 @@ class Page extends Model
         return $this->hasMany(PageMeta::class, 'page_id');
     }
 }
-

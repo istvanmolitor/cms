@@ -36,6 +36,7 @@ class ListElementType extends BaseContentElementType
         // Check if content is JSON (for backward compatibility or migration)
         if ($this->isJson($content)) {
             $data = json_decode($content, true);
+
             return [
                 'items' => $data['items'] ?? [],
             ];
@@ -46,7 +47,8 @@ class ListElementType extends BaseContentElementType
 
         // If unserialize failed, try to handle gracefully
         if ($data === false && $content !== serialize(false)) {
-            error_log("Failed to unserialize content in ListElementType: " . $content);
+            error_log('Failed to unserialize content in ListElementType: '.$content);
+
             return $this->getDefaultSettings();
         }
 
@@ -54,7 +56,6 @@ class ListElementType extends BaseContentElementType
             'items' => $data['items'] ?? [],
         ];
     }
-
 
     public function getDefaultSettings(): array
     {
@@ -70,4 +71,3 @@ class ListElementType extends BaseContentElementType
         ];
     }
 }
-

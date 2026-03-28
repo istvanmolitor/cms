@@ -30,7 +30,7 @@ class StorePageRequest extends FormRequest
             'content' => 'required|array',
             'content.content_elements' => 'required|array|min:1',
             'content.content_elements.*.type' => 'required|string|max:255',
-            'content.content_elements.*.settings' => ['required', 'array', new ContentElementValidator()],
+            'content.content_elements.*.settings' => ['required', 'array', new ContentElementValidator],
             'content.content_elements.*.sort' => 'required|integer',
             'content.content_elements.*.is_visible' => 'required|boolean',
             'author_ids' => 'nullable|array',

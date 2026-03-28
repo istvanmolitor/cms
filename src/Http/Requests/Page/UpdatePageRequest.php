@@ -23,7 +23,7 @@ class UpdatePageRequest extends FormRequest
 
         return [
             'title' => 'sometimes|required|string|max:255',
-            'slug' => 'sometimes|required|string|max:255|unique:pages,slug,' . $id,
+            'slug' => 'sometimes|required|string|max:255|unique:pages,slug,'.$id,
             'is_published' => 'nullable|boolean',
             'lead' => 'nullable|string|max:255',
             'layout' => 'nullable|string|max:255',
@@ -32,7 +32,7 @@ class UpdatePageRequest extends FormRequest
             'content' => 'sometimes|required|array',
             'content.content_elements' => 'sometimes|required|array|min:1',
             'content.content_elements.*.type' => 'required|string|max:255',
-            'content.content_elements.*.settings' => ['required', 'array', new ContentElementValidator()],
+            'content.content_elements.*.settings' => ['required', 'array', new ContentElementValidator],
             'content.content_elements.*.sort' => 'required|integer',
             'content.content_elements.*.is_visible' => 'required|boolean',
             'author_ids' => 'nullable|array',

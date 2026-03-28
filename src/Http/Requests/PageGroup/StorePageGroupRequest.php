@@ -25,4 +25,3 @@ class StorePageGroupRequest extends FormRequest
         ];
     }
 }
-

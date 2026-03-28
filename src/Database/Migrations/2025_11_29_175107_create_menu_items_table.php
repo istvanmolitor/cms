@@ -19,6 +19,8 @@ class CreateMenuItemsTable extends Migration
             $table->unsignedBigInteger('menu_id');
             $table->foreign('menu_id')->references('id')->on('menus');
 
+            $table->string('label');
+            $table->string('url');
             $table->integer('sort')->default(0);
             $table->boolean('is_external')->default(false);
             $table->string('icon')->nullable();

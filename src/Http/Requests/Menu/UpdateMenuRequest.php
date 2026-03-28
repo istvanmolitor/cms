@@ -20,6 +20,7 @@ class UpdateMenuRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'language_id' => 'required|integer|exists:languages,id',
         ];
     }
 }

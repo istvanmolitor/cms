@@ -3,24 +3,19 @@
 namespace Molitor\Cms\Providers;
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
 use Molitor\Cms\Http\Controllers\PageController;
 use Molitor\Cms\Http\Controllers\PageGroupController;
 use Molitor\Cms\Models\ContentRegion;
 use Molitor\Cms\Models\Page;
 use Molitor\Cms\Observers\ContentObserver;
-use Molitor\Cms\View\Components\Content;
-use Molitor\Cms\View\Components\ContentElement;
-use Molitor\Cms\View\Components\ContentRegion as ContentRegionComponent;
-use Molitor\Cms\View\Components\Menu;
-use Molitor\Cms\View\Components\MenuItem;
 use Molitor\Cms\Repositories\AuthorRepository;
 use Molitor\Cms\Repositories\AuthorRepositoryInterface;
-use Molitor\Cms\Repositories\ContentElementTypeRepository;
-use Molitor\Cms\Repositories\ContentElementTypeRepositoryInterface;
 use Molitor\Cms\Repositories\ContentElementRepository;
 use Molitor\Cms\Repositories\ContentElementRepositoryInterface;
+use Molitor\Cms\Repositories\ContentElementTypeRepository;
+use Molitor\Cms\Repositories\ContentElementTypeRepositoryInterface;
 use Molitor\Cms\Repositories\ContentRegionRepository;
 use Molitor\Cms\Repositories\ContentRegionRepositoryInterface;
 use Molitor\Cms\Repositories\ContentRepository;
@@ -35,25 +30,28 @@ use Molitor\Cms\Repositories\PageMetaRepository;
 use Molitor\Cms\Repositories\PageMetaRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
-use Molitor\Cms\Services\CmsMenuBuilder;
-use Molitor\Cms\Services\LayoutService;
+use Molitor\Cms\View\Components\Content;
+use Molitor\Cms\View\Components\ContentElement;
+use Molitor\Cms\View\Components\ContentRegion as ContentRegionComponent;
+use Molitor\Cms\View\Components\Menu;
+use Molitor\Cms\View\Components\MenuItem;
 
 class CmsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'cms');
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'cms');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cms');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'cms');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         $this->publishes([
-            __DIR__ . '/../config/cms.php' => config_path('cms.php'),
+            __DIR__.'/../config/cms.php' => config_path('cms.php'),
         ], 'cms-config');
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/cms.php', 'cms'
+            __DIR__.'/../config/cms.php', 'cms'
         );
 
         // Register Blade components
@@ -63,7 +61,7 @@ class CmsServiceProvider extends ServiceProvider
         Blade::component('cms-menu', Menu::class);
         Blade::component('cms-menu-item', MenuItem::class);
 
-        $contentObserver = new ContentObserver();
+        $contentObserver = new ContentObserver;
 
         Page::observe($contentObserver);
         ContentRegion::observe($contentObserver);

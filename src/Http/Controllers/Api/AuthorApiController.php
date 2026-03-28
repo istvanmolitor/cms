@@ -15,8 +15,7 @@ class AuthorApiController
 {
     public function __construct(
         private AuthorRepositoryInterface $authorRepository
-    ) {
-    }
+    ) {}
 
     public function index(): AnonymousResourceCollection
     {
@@ -29,9 +28,9 @@ class AuthorApiController
     {
         $author = $this->authorRepository->getById($id);
 
-        if (!$author) {
+        if (! $author) {
             return response()->json([
-                'error' => 'Author not found'
+                'error' => 'Author not found',
             ], 404);
         }
 
@@ -49,7 +48,7 @@ class AuthorApiController
     {
         $author = $this->authorRepository->getById($id);
 
-        if (!$author) {
+        if (! $author) {
             return response()->json(['error' => 'Author not found'], 404);
         }
 
@@ -62,7 +61,7 @@ class AuthorApiController
     {
         $author = $this->authorRepository->getById($id);
 
-        if (!$author) {
+        if (! $author) {
             return response()->json(['error' => 'Author not found'], 404);
         }
 
@@ -71,4 +70,3 @@ class AuthorApiController
         return response()->json(null, 204);
     }
 }
-

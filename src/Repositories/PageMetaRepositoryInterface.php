@@ -21,4 +21,3 @@ interface PageMetaRepositoryInterface
 
     public function delete(PageMeta $pageMeta): void;
 }
-

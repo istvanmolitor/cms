@@ -7,7 +7,6 @@ namespace Molitor\Cms\Repositories;
 use Illuminate\Database\Eloquent\Collection;
 use Molitor\Cms\Models\Content;
 use Molitor\Cms\Models\ContentElement;
-use Molitor\Cms\Services\ContentHandler;
 
 class ContentElementRepository implements ContentElementRepositoryInterface
 {
@@ -15,14 +14,14 @@ class ContentElementRepository implements ContentElementRepositoryInterface
 
     public function __construct(
         private ContentElement $contentElement
-    ) {
-    }
+    ) {}
 
     public function getById(int $id): ?ContentElement
     {
-        if(!array_key_exists($id, $this->cache)) {
+        if (! array_key_exists($id, $this->cache)) {
             $this->cache[$id] = $this->contentElement->find($id);
         }
+
         return $this->cache[$id];
     }
 
@@ -80,4 +79,3 @@ class ContentElementRepository implements ContentElementRepositoryInterface
             ->delete();
     }
 }
-

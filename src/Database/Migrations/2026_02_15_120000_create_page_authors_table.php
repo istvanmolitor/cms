@@ -34,4 +34,3 @@ class CreatePageAuthorsTable extends Migration
         Schema::dropIfExists('page_authors');
     }
 }
-

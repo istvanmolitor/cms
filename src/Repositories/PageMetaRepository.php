@@ -11,20 +11,19 @@ class PageMetaRepository implements PageMetaRepositoryInterface
 {
     public function __construct(
         private PageMeta $pageMeta
-    ) {
-    }
+    ) {}
 
     public function getAllForPage(int $pageId): Collection
     {
         return $this->pageMeta->where('page_id', $pageId)->get();
     }
 
-    public function getById(int $id): PageMeta|null
+    public function getById(int $id): ?PageMeta
     {
         return $this->pageMeta->find($id);
     }
 
-    public function getByPageIdAndName(int $pageId, string $name): PageMeta|null
+    public function getByPageIdAndName(int $pageId, string $name): ?PageMeta
     {
         return $this->pageMeta->where('page_id', $pageId)->where('name', $name)->first();
     }
@@ -37,6 +36,7 @@ class PageMetaRepository implements PageMetaRepositoryInterface
     public function update(PageMeta $pageMeta, array $data): PageMeta
     {
         $pageMeta->update($data);
+
         return $pageMeta;
     }
 
@@ -45,4 +45,3 @@ class PageMetaRepository implements PageMetaRepositoryInterface
         $pageMeta->delete();
     }
 }
-

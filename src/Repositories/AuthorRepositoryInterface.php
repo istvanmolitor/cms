@@ -18,4 +18,3 @@ interface AuthorRepositoryInterface
 
     public function delete(Author $author): void;
 }
-

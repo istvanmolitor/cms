@@ -15,8 +15,7 @@ class MenuItemApiController
 {
     public function __construct(
         private MenuItemRepositoryInterface $menuItemRepository
-    ) {
-    }
+    ) {}
 
     public function index(): AnonymousResourceCollection
     {
@@ -24,7 +23,7 @@ class MenuItemApiController
         // Itt most egy egyszerű listát adunk vissza, vagy a kérés alapján szűrhetünk
         $menuId = request()->query('menu_id');
         if ($menuId) {
-            $menuItems = $this->menuItemRepository->getByMenuId((int)$menuId);
+            $menuItems = $this->menuItemRepository->getByMenuId((int) $menuId);
         } else {
             // Ha nincs menu_id, akkor pl. az összeset, bár ez ritka
             return MenuItemResource::collection([]);
@@ -37,9 +36,9 @@ class MenuItemApiController
     {
         $menuItem = $this->menuItemRepository->getById($id);
 
-        if (!$menuItem) {
+        if (! $menuItem) {
             return response()->json([
-                'error' => 'Menu item not found'
+                'error' => 'Menu item not found',
             ], 404);
         }
 
@@ -57,7 +56,7 @@ class MenuItemApiController
     {
         $menuItem = $this->menuItemRepository->getById($id);
 
-        if (!$menuItem) {
+        if (! $menuItem) {
             return response()->json(['error' => 'Menu item not found'], 404);
         }
 
@@ -70,7 +69,7 @@ class MenuItemApiController
     {
         $menuItem = $this->menuItemRepository->getById($id);
 
-        if (!$menuItem) {
+        if (! $menuItem) {
             return response()->json(['error' => 'Menu item not found'], 404);
         }
 

@@ -25,4 +25,3 @@ class PageGroup extends Model
         return $this->belongsToMany(Page::class, 'page_page_groups', 'page_group_id', 'page_id');
     }
 }
-

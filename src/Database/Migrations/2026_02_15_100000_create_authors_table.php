@@ -31,4 +31,3 @@ class CreateAuthorsTable extends Migration
         Schema::dropIfExists('authors');
     }
 }
-

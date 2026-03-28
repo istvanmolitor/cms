@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Molitor\Cms\Repositories;
 
-use Molitor\Cms\Models\Menu;
-use Molitor\Cms\Models\MenuItem;
 use Illuminate\Database\Eloquent\Collection;
+use Molitor\Cms\Models\MenuItem;
 
 class MenuItemRepository implements MenuItemRepositoryInterface
 {
     public function __construct(
         private MenuItem $menuItem
-    ) {
-    }
+    ) {}
 
     public function getById(int $id): ?MenuItem
     {
@@ -44,6 +42,7 @@ class MenuItemRepository implements MenuItemRepositoryInterface
     public function update(MenuItem $menuItem, array $data): MenuItem
     {
         $menuItem->update($data);
+
         return $menuItem->fresh();
     }
 
@@ -57,6 +56,7 @@ class MenuItemRepository implements MenuItemRepositoryInterface
     public function updateSort(MenuItem $menuItem, int $sort): MenuItem
     {
         $menuItem->update(['sort' => $sort]);
+
         return $menuItem->fresh();
     }
 
@@ -65,4 +65,3 @@ class MenuItemRepository implements MenuItemRepositoryInterface
         return $this->menuItem->all()->pluck('label', 'id')->toArray();
     }
 }
-

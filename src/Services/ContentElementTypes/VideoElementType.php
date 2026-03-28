@@ -33,10 +33,11 @@ class VideoElementType extends BaseContentElementType
         // Check if content is JSON (for backward compatibility or migration)
         if ($this->isJson($content)) {
             $data = json_decode($content, true);
+
             return [
-                'url' => isset($data['url']) ? (string)$data['url'] : '',
-                'width' => isset($data['width']) ? (string)$data['width'] : '300px',
-                'height' => isset($data['height']) ? (string)$data['height'] : '450px',
+                'url' => isset($data['url']) ? (string) $data['url'] : '',
+                'width' => isset($data['width']) ? (string) $data['width'] : '300px',
+                'height' => isset($data['height']) ? (string) $data['height'] : '450px',
             ];
         }
 
@@ -45,14 +46,15 @@ class VideoElementType extends BaseContentElementType
 
         // If unserialize failed, try to handle gracefully
         if ($data === false && $content !== serialize(false)) {
-            error_log("Failed to unserialize content in VideoElementType: " . $content);
+            error_log('Failed to unserialize content in VideoElementType: '.$content);
+
             return $this->getDefaultSettings();
         }
 
         return [
-            'url' => isset($data['url']) ? (string)$data['url'] : '',
-            'width' => isset($data['width']) ? (string)$data['width'] : '300px',
-            'height' => isset($data['height']) ? (string)$data['height'] : '450px',
+            'url' => isset($data['url']) ? (string) $data['url'] : '',
+            'width' => isset($data['width']) ? (string) $data['width'] : '300px',
+            'height' => isset($data['height']) ? (string) $data['height'] : '450px',
         ];
     }
 
@@ -79,4 +81,3 @@ class VideoElementType extends BaseContentElementType
         ];
     }
 }
-

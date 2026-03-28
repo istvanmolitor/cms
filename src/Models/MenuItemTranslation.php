@@ -6,7 +6,6 @@ use Molitor\Language\Models\TranslationModel;
 
 class MenuItemTranslation extends TranslationModel
 {
-
     public function getTranslatableModelClass(): string
     {
         return MenuItem::class;

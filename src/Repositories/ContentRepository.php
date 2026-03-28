@@ -11,8 +11,7 @@ class ContentRepository implements ContentRepositoryInterface
     public function __construct(
         private Content $content,
         private ContentElementRepositoryInterface $contentElementRepository
-    ) {
-    }
+    ) {}
 
     public function getById(int $id): ?Content
     {

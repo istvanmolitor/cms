@@ -24,4 +24,3 @@ class Author extends Model
         return $this->belongsToMany(Page::class, 'page_authors', 'author_id', 'page_id');
     }
 }
-

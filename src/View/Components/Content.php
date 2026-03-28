@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace Molitor\Cms\View\Components;
 
-use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 use Molitor\Cms\Models\Content as ContentModel;
 
 class Content extends Component
 {
     public function __construct(
         public ContentModel $content,
-    ) {
-
-    }
+    ) {}
 
     public function render(): View
     {
@@ -23,4 +21,3 @@ class Content extends Component
         ]);
     }
 }
-

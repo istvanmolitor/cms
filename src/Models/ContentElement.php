@@ -30,4 +30,3 @@ class ContentElement extends Model
         return $this->belongsTo(Content::class);
     }
 }
-

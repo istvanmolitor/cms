@@ -20,4 +20,3 @@ interface PageRepositoryInterface
 
     public function delete(Page $page): void;
 }
-

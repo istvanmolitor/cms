@@ -38,5 +38,3 @@ class CmsMenuBuilder extends MenuBuilder
         }
     }
 }
-
-

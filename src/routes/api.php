@@ -10,12 +10,12 @@ use Molitor\Cms\Http\Controllers\Api\PageApiController;
 use Molitor\Cms\Http\Controllers\Api\PageGroupApiController;
 
 Route::prefix('api/cms')->group(function () {
-    Route::resource('pages', PageApiController::class);
+    Route::apiResource('pages', PageApiController::class);
     Route::get('/slug/{slug}', [PageApiController::class, 'getBySlug'])->name('cms.api.pages.getBySlug');
-    Route::resource('regions', ContentRegionApiController::class);
-    Route::resource('authors', AuthorApiController::class);
-    Route::resource('page-groups', PageGroupApiController::class);
-    Route::resource('menus', MenuApiController::class);
-    Route::resource('menu-items', MenuItemApiController::class);
+    Route::apiResource('regions', ContentRegionApiController::class);
+    Route::apiResource('authors', AuthorApiController::class);
+    Route::apiResource('page-groups', PageGroupApiController::class);
+    Route::apiResource('menus', MenuApiController::class);
+    Route::apiResource('menu-items', MenuItemApiController::class);
     Route::get('layouts', [LayoutApiController::class, 'index'])->name('cms.api.layouts.index');
 });

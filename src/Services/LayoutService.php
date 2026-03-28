@@ -10,8 +10,6 @@ class LayoutService
 {
     /**
      * Get all available layouts.
-     *
-     * @return Collection
      */
     public function getLayouts(): Collection
     {
@@ -20,13 +18,10 @@ class LayoutService
 
     /**
      * Get the template for a specific layout.
-     *
-     * @param string|null $layoutKey
-     * @return string
      */
     public function getLayoutTemplate(?string $layoutKey): string
     {
-        if (!$layoutKey) {
+        if (! $layoutKey) {
             $layoutKey = config('cms.default_layout', 'default');
         }
 

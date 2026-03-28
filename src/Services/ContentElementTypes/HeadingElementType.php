@@ -17,8 +17,8 @@ class HeadingElementType extends BaseContentElementType
     public function serialize(array $data): string
     {
         return serialize([
-            'text' => isset($data['text']) ? (string)$data[ 'text'] : '',
-            'level' => isset($data['level']) ? (int)$data['level'] : 1,
+            'text' => isset($data['text']) ? (string) $data['text'] : '',
+            'level' => isset($data['level']) ? (int) $data['level'] : 1,
         ]);
     }
 
@@ -32,9 +32,10 @@ class HeadingElementType extends BaseContentElementType
         // Check if content is JSON (for backward compatibility or migration)
         if ($this->isJson($content)) {
             $data = json_decode($content, true);
+
             return [
                 'text' => $data['text'] ?? '',
-                'level' => $data['level'] ?? 1
+                'level' => $data['level'] ?? 1,
             ];
         }
 
@@ -44,16 +45,16 @@ class HeadingElementType extends BaseContentElementType
         // If unserialize failed, try to handle gracefully
         if ($data === false && $content !== serialize(false)) {
             // Log the error or handle it as needed
-            error_log("Failed to unserialize content in HeadingElementType: " . $content);
+            error_log('Failed to unserialize content in HeadingElementType: '.$content);
+
             return $this->getDefaultSettings();
         }
 
         return [
             'text' => $data['text'] ?? '',
-            'level' => $data['level'] ?? 1
+            'level' => $data['level'] ?? 1,
         ];
     }
-
 
     public function getValidationRules(): array
     {
@@ -76,4 +77,3 @@ class HeadingElementType extends BaseContentElementType
         ];
     }
 }
-

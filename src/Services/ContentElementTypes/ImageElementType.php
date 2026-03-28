@@ -17,11 +17,11 @@ class ImageElementType extends BaseContentElementType
     public function serialize(array $data): string
     {
         return serialize([
-            'src' => isset($data['src']) ? (string)$data[ 'src'] : '',
-            'alt' => isset($data['alt']) ? (string)$data['alt'] : '',
-            'width' => isset($data['width']) ? (string)$data['width'] : null,
-            'height' => isset($data['height']) ? (string)$data['height'] : null,
-            'alignment' => isset($data['alignment']) ? (string)$data['alignment'] : 'left',
+            'src' => isset($data['src']) ? (string) $data['src'] : '',
+            'alt' => isset($data['alt']) ? (string) $data['alt'] : '',
+            'width' => isset($data['width']) ? (string) $data['width'] : null,
+            'height' => isset($data['height']) ? (string) $data['height'] : null,
+            'alignment' => isset($data['alignment']) ? (string) $data['alignment'] : 'left',
         ]);
     }
 
@@ -35,12 +35,13 @@ class ImageElementType extends BaseContentElementType
         // Check if content is JSON (for backward compatibility or migration)
         if ($this->isJson($content)) {
             $data = json_decode($content, true);
+
             return [
-                'src' => isset($data['src']) ? (string)$data['src'] : '',
-                'alt' => isset($data['alt']) ? (string)$data['alt'] : '',
-                'width' => isset($data['width']) ? (string)$data['width'] : null,
-                'height' => isset($data['height']) ? (string)$data['height'] : null,
-                'alignment' => isset($data['alignment']) ? (string)$data['alignment'] : 'left',
+                'src' => isset($data['src']) ? (string) $data['src'] : '',
+                'alt' => isset($data['alt']) ? (string) $data['alt'] : '',
+                'width' => isset($data['width']) ? (string) $data['width'] : null,
+                'height' => isset($data['height']) ? (string) $data['height'] : null,
+                'alignment' => isset($data['alignment']) ? (string) $data['alignment'] : 'left',
             ];
         }
 
@@ -49,19 +50,19 @@ class ImageElementType extends BaseContentElementType
 
         // If unserialize failed, try to handle gracefully
         if ($data === false && $content !== serialize(false)) {
-            error_log("Failed to unserialize content in ImageElementType: " . $content);
+            error_log('Failed to unserialize content in ImageElementType: '.$content);
+
             return $this->getDefaultSettings();
         }
 
         return [
-            'src' => isset($data['src']) ? (string)$data['src'] : '',
-            'alt' => isset($data['alt']) ? (string)$data['alt'] : '',
-            'width' => isset($data['width']) ? (string)$data['width'] : null,
-            'height' => isset($data['height']) ? (string)$data['height'] : null,
-            'alignment' => isset($data['alignment']) ? (string)$data['alignment'] : 'left',
+            'src' => isset($data['src']) ? (string) $data['src'] : '',
+            'alt' => isset($data['alt']) ? (string) $data['alt'] : '',
+            'width' => isset($data['width']) ? (string) $data['width'] : null,
+            'height' => isset($data['height']) ? (string) $data['height'] : null,
+            'alignment' => isset($data['alignment']) ? (string) $data['alignment'] : 'left',
         ];
     }
-
 
     public function getDefaultSettings(): array
     {
@@ -90,4 +91,3 @@ class ImageElementType extends BaseContentElementType
         return 'cms::components.content-elements.image';
     }
 }
-

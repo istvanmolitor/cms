@@ -10,7 +10,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Validator;
 use Molitor\Cms\Services\ContentHandler;
 
-class ContentElementValidator implements ValidationRule, DataAwareRule
+class ContentElementValidator implements DataAwareRule, ValidationRule
 {
     /**
      * All of the data under validation.
@@ -48,7 +48,7 @@ class ContentElementValidator implements ValidationRule, DataAwareRule
         $typePath = "content.content_elements.{$index}.type";
         $type = data_get($this->data, $typePath);
 
-        if (!$type) {
+        if (! $type) {
             return;
         }
 
@@ -56,8 +56,9 @@ class ContentElementValidator implements ValidationRule, DataAwareRule
         $handler = app(ContentHandler::class);
         $elementType = $handler->getElementType($type);
 
-        if (!$elementType) {
+        if (! $elementType) {
             $fail(__('The selected content element type is invalid.'));
+
             return;
         }
 

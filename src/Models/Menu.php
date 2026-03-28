@@ -27,5 +27,9 @@ class Menu extends Model
             ->whereNull('parent_id')
             ->orderBy('sort');
     }
-}
 
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class);
+    }
+}

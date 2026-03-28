@@ -19,4 +19,3 @@ class QuoteElementType extends TextElementType
         return 'cms::components.content-elements.quote';
     }
 }
-

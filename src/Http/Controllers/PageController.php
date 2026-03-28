@@ -14,8 +14,7 @@ class PageController
     public function __construct(
         private PageRepositoryInterface $pageRepository,
         private LayoutService $layoutService
-    ) {
-    }
+    ) {}
 
     public function index(): View|Response
     {
@@ -39,7 +38,7 @@ class PageController
     {
         $page = $this->pageRepository->getBySlug($slug);
 
-        if (!$page) {
+        if (! $page) {
             abort(404);
         }
 
@@ -53,4 +52,3 @@ class PageController
         ]);
     }
 }
-

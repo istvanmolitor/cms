@@ -11,20 +11,19 @@ class PageGroupRepository implements PageGroupRepositoryInterface
 {
     public function __construct(
         private PageGroup $pageGroup
-    ) {
-    }
+    ) {}
 
     public function getAll(): Collection
     {
         return $this->pageGroup->all();
     }
 
-    public function getById(int $id): PageGroup|null
+    public function getById(int $id): ?PageGroup
     {
         return $this->pageGroup->find($id);
     }
 
-    public function getBySlug(string $slug): PageGroup|null
+    public function getBySlug(string $slug): ?PageGroup
     {
         return $this->pageGroup->where('slug', $slug)->first();
     }
@@ -37,6 +36,7 @@ class PageGroupRepository implements PageGroupRepositoryInterface
     public function update(PageGroup $pageGroup, array $data): PageGroup
     {
         $pageGroup->update($data);
+
         return $pageGroup;
     }
 
@@ -45,4 +45,3 @@ class PageGroupRepository implements PageGroupRepositoryInterface
         $pageGroup->delete();
     }
 }
-

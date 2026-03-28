@@ -31,4 +31,3 @@ class UpdatePageGroupRequest extends FormRequest
         ];
     }
 }
-

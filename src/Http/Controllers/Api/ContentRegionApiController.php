@@ -16,8 +16,7 @@ class ContentRegionApiController
 {
     public function __construct(
         private ContentRegionRepositoryInterface $contentRegionRepository
-    ) {
-    }
+    ) {}
 
     public function index(): AnonymousResourceCollection
     {
@@ -30,9 +29,9 @@ class ContentRegionApiController
     {
         $region = $this->contentRegionRepository->getById($id);
 
-        if (!$region) {
+        if (! $region) {
             return response()->json([
-                'error' => 'Content region not found'
+                'error' => 'Content region not found',
             ], 404);
         }
 
@@ -54,7 +53,7 @@ class ContentRegionApiController
     {
         $region = $this->contentRegionRepository->getById($id);
 
-        if (!$region) {
+        if (! $region) {
             return response()->json(['error' => 'Content region not found'], 404);
         }
 
@@ -77,7 +76,7 @@ class ContentRegionApiController
     {
         $region = $this->contentRegionRepository->getById($id);
 
-        if (!$region) {
+        if (! $region) {
             return response()->json(['error' => 'Content region not found'], 404);
         }
 

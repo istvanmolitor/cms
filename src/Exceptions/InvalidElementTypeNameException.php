@@ -11,4 +11,3 @@ class InvalidElementTypeNameException extends Exception
         parent::__construct("Invalid element type name: {$typeName}");
     }
 }
-

@@ -14,14 +14,13 @@ class PageGroupController
     public function __construct(
         private PageGroupRepositoryInterface $pageGroupRepository,
         private LayoutService $layoutService
-    ) {
-    }
+    ) {}
 
     public function show(string $slug): View|Response
     {
         $pageGroup = $this->pageGroupRepository->getBySlug($slug);
 
-        if (!$pageGroup) {
+        if (! $pageGroup) {
             abort(404);
         }
 

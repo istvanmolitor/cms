@@ -19,10 +19,8 @@ class UpdateMenuItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'label' => 'sometimes|array',
-            'label.*' => 'required|string|max:255',
-            'url' => 'sometimes|array',
-            'url.*' => 'nullable|string|max:255',
+            'label' => 'sometimes|string|max:255',
+            'url' => 'sometimes|string|max:255',
             'sort' => 'sometimes|integer',
             'is_external' => 'sometimes|boolean',
             'icon' => 'nullable|string|max:255',

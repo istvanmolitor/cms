@@ -20,10 +20,8 @@ class StoreMenuItemRequest extends FormRequest
     {
         return [
             'menu_id' => 'required|exists:menus,id',
-            'label' => 'required|array',
-            'label.*' => 'required|string|max:255',
-            'url' => 'nullable|array',
-            'url.*' => 'nullable|string|max:255',
+            'label' => 'required|string|max:255',
+            'url' => 'nullable|string|max:255',
             'sort' => 'integer',
             'is_external' => 'boolean',
             'icon' => 'nullable|string|max:255',

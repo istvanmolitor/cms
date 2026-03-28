@@ -11,9 +11,9 @@ interface ContentRegionRepositoryInterface
 {
     public function getAll(): Collection;
 
-    public function getById(int $id): ContentRegion|null;
+    public function getById(int $id): ?ContentRegion;
 
-    public function getByName(string $name): ContentRegion|null;
+    public function getByName(string $name): ?ContentRegion;
 
     public function create(array $data): ContentRegion;
 
@@ -21,4 +21,3 @@ interface ContentRegionRepositoryInterface
 
     public function delete(ContentRegion $contentRegion): void;
 }
-

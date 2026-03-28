@@ -32,4 +32,3 @@ class CreatePageGroupsTable extends Migration
         Schema::dropIfExists('page_groups');
     }
 }
-

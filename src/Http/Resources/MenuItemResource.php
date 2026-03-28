@@ -17,8 +17,8 @@ class MenuItemResource extends JsonResource
         return [
             'id' => $this->id,
             'menu_id' => $this->menu_id,
-            'label' => $this->getTranslations('label'),
-            'url' => $this->getTranslations('url'),
+            'label' => $this->label,
+            'url' => $this->url,
             'sort' => $this->sort,
             'is_external' => $this->is_external,
             'icon' => $this->icon,

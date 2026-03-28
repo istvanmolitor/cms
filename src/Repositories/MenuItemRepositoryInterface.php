@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Molitor\Cms\Repositories;
 
-use Molitor\Cms\Models\MenuItem;
 use Illuminate\Database\Eloquent\Collection;
+use Molitor\Cms\Models\MenuItem;
 
 interface MenuItemRepositoryInterface
 {
@@ -25,5 +25,3 @@ interface MenuItemRepositoryInterface
 
     public function getOptions(): array;
 }
-
-

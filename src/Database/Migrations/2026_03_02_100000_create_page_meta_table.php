@@ -34,4 +34,3 @@ class CreatePageMetaTable extends Migration
         Schema::dropIfExists('page_meta');
     }
 }
-

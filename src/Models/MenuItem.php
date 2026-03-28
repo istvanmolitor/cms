@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Molitor\Cms\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Molitor\Language\Models\TranslatableModel;
 
-class MenuItem extends TranslatableModel
+class MenuItem extends Model
 {
     protected $fillable = [
         'menu_id',
@@ -16,6 +16,8 @@ class MenuItem extends TranslatableModel
         'is_external',
         'icon',
         'parent_id',
+        'label',
+        'url',
     ];
 
     protected $casts = [
@@ -29,11 +31,6 @@ class MenuItem extends TranslatableModel
         'sort' => 0,
         'is_external' => false,
     ];
-
-    public function getTranslationModelClass(): string
-    {
-        return MenuItemTranslation::class;
-    }
 
     public function menu(): BelongsTo
     {
@@ -67,4 +64,3 @@ class MenuItem extends TranslatableModel
         return $this->children()->with('descendants');
     }
 }
-

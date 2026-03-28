@@ -26,7 +26,7 @@ class ContentElementResource extends JsonResource
             'id' => $this->id,
             'type' => $handler->getTypeName($contentElement),
             'settings' => $handler->getContentData($contentElement),
-            //'children' => ContentElementResource::collection($this->whenLoaded('children')),
+            // 'children' => ContentElementResource::collection($this->whenLoaded('children')),
             'sort' => $this->sort,
             'is_visible' => $this->is_visible,
         ];
