@@ -21,6 +21,11 @@ class Menu extends Model
         return $this->hasMany(MenuItem::class, 'menu_id');
     }
 
+    public function items(): HasMany
+    {
+        return $this->menuItems();
+    }
+
     /**
      * Get only top-level menu items (no parent)
      */

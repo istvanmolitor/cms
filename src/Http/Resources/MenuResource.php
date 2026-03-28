@@ -6,7 +6,7 @@ namespace Molitor\Cms\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Molitor\Language\Http\Resources\LanguageResource;
+use Molitor\Language\Http\Resources\SimpleLanguageResource;
 
 class MenuResource extends JsonResource
 {
@@ -18,7 +18,8 @@ class MenuResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'language' => new LanguageResource($this->whenLoaded('language')),
+            'language_id' => $this->language_id,
+            'language' => new SimpleLanguageResource($this->whenLoaded('language')),
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
         ];
