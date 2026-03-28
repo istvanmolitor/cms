@@ -22,8 +22,14 @@ class MenuItemApiController
         // Alapvetően minden menüpontot visszaadhatunk, de általában menu_id alapján szűrünk
         // Itt most egy egyszerű listát adunk vissza, vagy a kérés alapján szűrhetünk
         $menuId = request()->query('menu_id');
+        $tree = request()->query('tree', false);
+
         if ($menuId) {
-            $menuItems = $this->menuItemRepository->getByMenuId((int) $menuId);
+            if ($tree) {
+                $menuItems = $this->menuItemRepository->getTreeByMenuId((int) $menuId);
+            } else {
+                $menuItems = $this->menuItemRepository->getByMenuId((int) $menuId);
+            }
         } else {
             // Ha nincs menu_id, akkor pl. az összeset, bár ez ritka
             return MenuItemResource::collection([]);

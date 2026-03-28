@@ -13,6 +13,8 @@ interface MenuItemRepositoryInterface
 
     public function getByMenuId(int $menuId): Collection;
 
+    public function getTreeByMenuId(int $menuId): Collection;
+
     public function getByParentId(?int $parentId): Collection;
 
     public function create(array $data): MenuItem;

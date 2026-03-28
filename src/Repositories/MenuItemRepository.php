@@ -26,6 +26,16 @@ class MenuItemRepository implements MenuItemRepositoryInterface
             ->get();
     }
 
+    public function getTreeByMenuId(int $menuId): Collection
+    {
+        return $this->menuItem
+            ->with('children.children.children.children.children')
+            ->where('menu_id', $menuId)
+            ->whereNull('parent_id')
+            ->orderBy('sort')
+            ->get();
+    }
+
     public function getByParentId(?int $parentId): Collection
     {
         return $this->menuItem
