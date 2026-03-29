@@ -6,12 +6,13 @@ namespace Molitor\Cms\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Molitor\Cms\Models\Menu;
+use Molitor\Language\Models\Language;
 
 interface MenuRepositoryInterface
 {
     public function getById(int $id): ?Menu;
 
-    public function getByName(string $name): ?Menu;
+    public function getByName(string $name, Language $language): ?Menu;
 
     public function getAll(): Collection;
 

@@ -6,6 +6,7 @@ namespace Molitor\Cms\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Molitor\Cms\Models\Menu;
+use Molitor\Language\Models\Language;
 
 class MenuRepository implements MenuRepositoryInterface
 {
@@ -18,9 +19,12 @@ class MenuRepository implements MenuRepositoryInterface
         return $this->menu->with('language')->find($id);
     }
 
-    public function getByName(string $name): ?Menu
+    public function getByName(string $name, Language $language): ?Menu
     {
-        return $this->menu->with('language')->where('name', $name)->first();
+        return $this->menu
+            ->where('name', $name)
+            ->where('language_id', $language->id)
+            ->first();
     }
 
     public function getAll(): Collection

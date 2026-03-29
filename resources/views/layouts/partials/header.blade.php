@@ -9,12 +9,16 @@
             </div>
 
             {{-- Desktop Navigation --}}
-            <nav class="hidden md:flex space-x-8">
-                <x-cms-menu name="main" />
-            </nav>
+            <div class="hidden md:flex items-center space-x-4">
+                <nav class="flex space-x-8">
+                    <x-cms-menu name="main" />
+                </nav>
+                <x-language-switcher />
+            </div>
 
-            {{-- Mobile menu button --}}
-            <div class="md:hidden">
+            {{-- Mobile menu button and Language Switcher --}}
+            <div class="md:hidden flex items-center space-x-2">
+                <x-language-switcher />
                 <button type="button"
                         class="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500 p-2"
                         onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
