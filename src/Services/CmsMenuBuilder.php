@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Molitor\Cms\Services;
 
+use Molitor\Cms\Models\MenuItem;
 use Molitor\Cms\Repositories\MenuItemRepositoryInterface;
 use Molitor\Cms\Repositories\MenuRepositoryInterface;
 use Molitor\Language\Repositories\LanguageRepositoryInterface;
 use Molitor\Language\Services\LanguageService;
 use Molitor\Menu\Services\Menu;
 use Molitor\Menu\Services\MenuBuilder;
+use Molitor\Menu\Services\TreeHelper;
 
 class CmsMenuBuilder extends MenuBuilder
 {
@@ -45,21 +47,34 @@ class CmsMenuBuilder extends MenuBuilder
         $languageService = app(LanguageService::class);
 
         $language = $languageService->getCurrentLanguage();
+
         if(!$language) {
             return;
         }
 
         /** @var MenuRepositoryInterface $menuRepository */
         $menuRepository = app(MenuRepositoryInterface::class);
-        $menu = $menuRepository->getByName($name, $language);
+        $menuRecord = $menuRepository->getByName($name, $language);
 
-        if(!$menu) {
+        if(!$menuRecord) {
             return;
         }
 
         /** @var MenuItemRepositoryInterface $menuItemRepository */
         $menuItemRepository = app(MenuItemRepositoryInterface::class);
 
-        $items = $menuItemRepository->getByMenuName($name, $language);
+        $items = $menuItemRepository->getByMenuId($menuRecord->id);
+
+        $tree = new TreeHelper($menu);
+
+
+        /** @var MenuItem $item */
+        foreach($items as $item) {
+            $menuItem = new \Molitor\Menu\Services\MenuItem($item->label);
+            $menuItem->setUrl($item->url);
+            $menuItem->setIcon($item->icon);
+            $tree->addItem($item->id, $item->parent_id, $menuItem);
+        }
+
     }
 }
