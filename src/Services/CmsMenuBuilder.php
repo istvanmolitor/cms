@@ -7,7 +7,6 @@ namespace Molitor\Cms\Services;
 use Molitor\Cms\Models\MenuItem;
 use Molitor\Cms\Repositories\MenuItemRepositoryInterface;
 use Molitor\Cms\Repositories\MenuRepositoryInterface;
-use Molitor\Language\Repositories\LanguageRepositoryInterface;
 use Molitor\Language\Services\LanguageService;
 use Molitor\Menu\Services\Menu;
 use Molitor\Menu\Services\MenuBuilder;
@@ -40,6 +39,7 @@ class CmsMenuBuilder extends MenuBuilder
                     ->setName('cms.page-groups')
                     ->setIcon('layer-group');
             }
+
             return;
         }
 
@@ -48,7 +48,7 @@ class CmsMenuBuilder extends MenuBuilder
 
         $language = $languageService->getCurrentLanguage();
 
-        if(!$language) {
+        if (! $language) {
             return;
         }
 
@@ -56,7 +56,7 @@ class CmsMenuBuilder extends MenuBuilder
         $menuRepository = app(MenuRepositoryInterface::class);
         $menuRecord = $menuRepository->getByName($name, $language);
 
-        if(!$menuRecord) {
+        if (! $menuRecord) {
             return;
         }
 
@@ -67,9 +67,8 @@ class CmsMenuBuilder extends MenuBuilder
 
         $tree = new TreeHelper($menu);
 
-
         /** @var MenuItem $item */
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $menuItem = new \Molitor\Menu\Services\MenuItem($item->label);
             $menuItem->setUrl($item->url);
             $menuItem->setIcon($item->icon);
