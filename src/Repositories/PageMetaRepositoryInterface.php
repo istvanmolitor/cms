@@ -15,6 +15,8 @@ interface PageMetaRepositoryInterface
 
     public function getByPageIdAndName(int $pageId, string $name): ?PageMeta;
 
+    public function getByValue(string $value, ?string $name = null): ?PageMeta;
+
     public function create(array $data): PageMeta;
 
     public function update(PageMeta $pageMeta, array $data): PageMeta;

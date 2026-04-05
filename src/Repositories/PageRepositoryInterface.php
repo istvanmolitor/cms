@@ -14,6 +14,10 @@ interface PageRepositoryInterface
 
     public function getBySlug(string $slug): ?Page;
 
+    public function existsBySlug(string $slug): bool;
+
+    public function generateUniqueSlug(string $title, string $fallback = 'page'): string;
+
     public function create(array $data): Page;
 
     public function update(Page $page, array $data): Page;

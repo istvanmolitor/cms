@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Repositories;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Molitor\Cms\Models\Page;
 
 class PageRepository implements PageRepositoryInterface
@@ -27,6 +28,27 @@ class PageRepository implements PageRepositoryInterface
     public function getBySlug(string $slug): ?Page
     {
         return $this->page->where('slug', $slug)->first();
+    }
+
+    public function existsBySlug(string $slug): bool
+    {
+        return $this->page->where('slug', $slug)->exists();
+    }
+
+    public function generateUniqueSlug(string $title, string $fallback = 'page'): string
+    {
+        $baseSlug = Str::slug($title);
+        $baseSlug = $baseSlug !== '' ? $baseSlug : $fallback;
+
+        $slug = $baseSlug;
+        $counter = 1;
+
+        while ($this->existsBySlug($slug)) {
+            $slug = $baseSlug.'-'.$counter;
+            $counter++;
+        }
+
+        return $slug;
     }
 
     public function create(array $data): Page

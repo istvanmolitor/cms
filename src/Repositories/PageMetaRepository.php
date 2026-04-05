@@ -28,6 +28,17 @@ class PageMetaRepository implements PageMetaRepositoryInterface
         return $this->pageMeta->where('page_id', $pageId)->where('name', $name)->first();
     }
 
+    public function getByValue(string $value, ?string $name = null): ?PageMeta
+    {
+        $query = $this->pageMeta->where('meta_data', $value);
+
+        if ($name !== null) {
+            $query->where('name', $name);
+        }
+
+        return $query->first();
+    }
+
     public function create(array $data): PageMeta
     {
         return $this->pageMeta->create($data);
