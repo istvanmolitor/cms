@@ -28,7 +28,6 @@ class ContentElementResource extends JsonResource
             'settings' => $handler->getContentData($contentElement),
             // 'children' => ContentElementResource::collection($this->whenLoaded('children')),
             'sort' => $this->sort,
-            'is_visible' => $this->is_visible,
         ];
     }
 }

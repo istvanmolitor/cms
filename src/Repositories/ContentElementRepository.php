@@ -47,7 +47,6 @@ class ContentElementRepository implements ContentElementRepositoryInterface
             'content_element_type_id' => $contentElementTypeId,
             'settings' => $settings,
             'sort' => $this->getCountByContent($content),
-            'is_visible' => true,
         ]);
     }
 

@@ -74,8 +74,7 @@ class ContentRegionRepository implements ContentRegionRepositoryInterface
                         $content,
                         $elementData['type'],
                         $elementData['settings'],  // Use 'settings' instead of 'content'
-                        $elementData['sort'] ?? 0,
-                        $elementData['is_visible'] ?? true
+                        $elementData['sort'] ?? 0
                     );
                 }
             }

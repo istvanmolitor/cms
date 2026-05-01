@@ -28,7 +28,6 @@ class UpdateContentRegionRequest extends FormRequest
             'content.content_elements.*.type' => 'required|string|max:255',
             'content.content_elements.*.settings' => ['required', 'array', new ContentElementValidator],
             'content.content_elements.*.sort' => 'required|integer',
-            'content.content_elements.*.is_visible' => 'required|boolean',
         ];
     }
 }

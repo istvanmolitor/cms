@@ -51,7 +51,6 @@ class ContentElementDto
             'type' => $this->type,
             'settings' => $this->settings,
             'sort' => $this->sort,
-            'is_visible' => $this->isVisible,
         ];
     }
 

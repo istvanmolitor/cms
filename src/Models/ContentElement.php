@@ -16,7 +16,6 @@ class ContentElement extends Model
         'parent_id',
         'settings',
         'sort',
-        'is_visible',
     ];
 
     protected $casts = [
@@ -24,7 +23,6 @@ class ContentElement extends Model
         'content_element_type_id' => 'integer',
         'settings' => 'string',
         'sort' => 'integer',
-        'is_visible' => 'boolean',
     ];
 
     public function content(): BelongsTo
