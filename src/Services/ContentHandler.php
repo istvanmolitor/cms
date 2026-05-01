@@ -14,6 +14,7 @@ use Molitor\Cms\Repositories\ContentElementTypeRepositoryInterface;
 use Molitor\Cms\Repositories\ContentRepositoryInterface;
 use Molitor\Cms\Services\ContentElementTypes\BaseContentElementType;
 use Molitor\Cms\Services\ContentElementTypes\CodeElementType;
+use Molitor\Cms\Services\ContentElementTypes\ColumnsElementType;
 use Molitor\Cms\Services\ContentElementTypes\HeadingElementType;
 use Molitor\Cms\Services\ContentElementTypes\IframeElementType;
 use Molitor\Cms\Services\ContentElementTypes\ImageElementType;
@@ -44,6 +45,7 @@ class ContentHandler
         $this->registerElementType(new CodeElementType);
         $this->registerElementType(new QuoteElementType);
         $this->registerElementType(new ListElementType);
+        $this->registerElementType(new ColumnsElementType);
     }
 
     public function registerElementType(BaseContentElementType $elementType): void
@@ -160,10 +162,9 @@ class ContentHandler
 
     public function saveContentDto(ContentDto $contentDto): void
     {
-        if($contentDto->id) {
+        if ($contentDto->id) {
             $content = $this->contentRepository->getById($contentDto->id);
-        }
-        else {
+        } else {
             $content = $this->contentRepository->create();
         }
 

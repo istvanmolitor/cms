@@ -23,6 +23,9 @@ class CmsSeeder extends Seeder
             $this->command->error($e->getMessage());
         }
 
+        // Seed content element types
+        $this->call(ContentElementTypeSeeder::class);
+
         // Seed menu data
         $this->call(MenuSeeder::class);
     }

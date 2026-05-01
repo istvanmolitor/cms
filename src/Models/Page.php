@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Molitor\Language\Models\Language;
 
 class Page extends Model
 {
@@ -48,7 +49,7 @@ class Page extends Model
 
     public function language(): BelongsTo
     {
-        return $this->belongsTo(\Molitor\Language\Models\Language::class, 'language_id');
+        return $this->belongsTo(Language::class, 'language_id');
     }
 
     public function metaData(): HasMany
