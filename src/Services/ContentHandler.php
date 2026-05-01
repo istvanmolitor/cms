@@ -78,7 +78,7 @@ class ContentHandler
         return $this->contentElementTypeRepository->getById($contentElement->content_element_type_id);
     }
 
-    public function getContentData(ContentElement $contentElement): array
+    public function getSettings(ContentElement $contentElement): array
     {
         $contentElementType = $this->getContentElementType($contentElement);
         if (! $contentElementType) {
@@ -160,14 +160,8 @@ class ContentHandler
         $this->contentElementRepository->deleteWhereSortGreaterOrEqual($content, $sort);
     }
 
-    public function saveContentDto(ContentDto $contentDto): void
+    public function saveContentDto(Content $content, ContentDto $contentDto): Content
     {
-        if ($contentDto->id) {
-            $content = $this->contentRepository->getById($contentDto->id);
-        } else {
-            $content = $this->contentRepository->create();
-        }
-
         $existingElements = [];
         $i = 0;
         foreach ($this->contentElementRepository->getByContent($content) as $element) {
@@ -201,6 +195,12 @@ class ContentHandler
         }
 
         $this->contentElementRepository->deleteWhereSortGreaterOrEqual($content, $position);
+        return $content;
+    }
+
+    public function saveContentElementDto(ContentElement $contentElement, ContentElementDto $elementDto): ContentElement
+    {
+
     }
 
     public function elementToArray(ContentElement $contentElement): ?array
@@ -213,8 +213,9 @@ class ContentHandler
         return [
             'id' => $contentElement->id,
             'type' => $contentElementType->name,
-            'content' => $this->getContentData($contentElement),
-            'visible' => $contentElement->visible,
+            'content' => $this->getSettings($contentElement),
+            'sort' => $contentElement->sort,
+            'content_elements' => $this->contentElementRepository->getByContent($contentElement->content),
         ];
     }
 

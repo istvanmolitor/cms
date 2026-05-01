@@ -16,6 +16,8 @@ interface ContentElementRepositoryInterface
 
     public function getByContent(Content $content): Collection;
 
+    public function getByContentElement(ContentElement $contentElement): Collection;
+
     public function getCountByContent(Content $content): int;
 
     public function create(Content $content, int $contentElementTypeId, string $settings): ContentElement;

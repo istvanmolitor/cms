@@ -73,8 +73,7 @@ class ContentRegionRepository implements ContentRegionRepositoryInterface
                     $elementRepository->create(
                         $content,
                         $elementData['type'],
-                        $elementData['settings'],  // Use 'settings' instead of 'content'
-                        $elementData['sort'] ?? 0
+                        $elementData['settings'],
                     );
                 }
             }

@@ -27,7 +27,10 @@ class ContentElementRepository implements ContentElementRepositoryInterface
 
     public function getByContentId(int $contentId): Collection
     {
-        return $this->contentElement->where('content_id', $contentId)->orderBy('sort', 'asc')->get();
+        return $this->contentElement
+            ->where('content_id', $contentId)
+            ->orderBy('sort', 'asc')
+            ->get();
     }
 
     public function getByContent(Content $content): Collection
@@ -76,5 +79,13 @@ class ContentElementRepository implements ContentElementRepositoryInterface
             ->where('content_id', $content->id)
             ->where('sort', '>=', $sort)
             ->delete();
+    }
+
+    public function getByContentElement(ContentElement $contentElement): Collection
+    {
+        return $this->contentElement
+            ->where('content_element_id', $contentElement->id)
+            ->orderBy('sort', 'asc')
+            ->get();
     }
 }
