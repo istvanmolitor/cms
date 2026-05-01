@@ -18,9 +18,26 @@ interface PageRepositoryInterface
 
     public function generateUniqueSlug(string $title, string $fallback = 'page'): string;
 
-    public function create(array $data): Page;
+    public function create(
+        string $title,
+        string $slug,
+        ?bool $isPublished = null,
+        ?string $lead = null,
+        ?string $layout = null,
+        ?string $mainImageUrl = null,
+        ?int $languageId = null
+    ): Page;
 
-    public function update(Page $page, array $data): Page;
+    public function update(
+        Page $page,
+        ?string $title = null,
+        ?string $slug = null,
+        ?bool $isPublished = null,
+        ?string $lead = null,
+        ?string $layout = null,
+        ?string $mainImageUrl = null,
+        ?int $languageId = null
+    ): Page;
 
     public function delete(Page $page): void;
 }

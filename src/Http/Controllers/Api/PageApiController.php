@@ -7,6 +7,7 @@ namespace Molitor\Cms\Http\Controllers\Api;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Log;
+use Molitor\Cms\Data\ContentDto;
 use Molitor\Cms\Http\Requests\Page\StorePageRequest;
 use Molitor\Cms\Http\Requests\Page\UpdatePageRequest;
 use Molitor\Cms\Http\Resources\PageResource;
@@ -50,20 +51,22 @@ class PageApiController
         try {
             $data = $request->all();
 
-            Log::info('Creating page with data', ['data' => $data]);
-
-            $page = $this->pageRepository->create($data);
-
-            Log::info('Page created', ['page_id' => $page->id, 'content_id' => $page->content_id]);
+            $page = $this->pageRepository->create(
+                title: $data['title'],
+                slug: $data['slug'],
+                isPublished: $data['is_published'] ?? null,
+                lead: $data['lead'] ?? null,
+                layout: $data['layout'],
+                mainImageUrl: $data['main_image_url'] ?? null,
+                languageId: $data['language_id']
+            );
 
             // Load the content relationship
             $page->load('content');
 
-            Log::info('Content loaded', ['content' => $page->content ? 'exists' : 'null']);
-
-            if ($page->content && isset($data['content']['content_elements'])) {
-                Log::info('Saving content elements', ['elements' => $data['content']['content_elements']]);
-                $contentHandler->sevaContentElements($page->content, $data['content']['content_elements']);
+            if ($page->content && isset($data['content'])) {
+                $contentDto = ContentDto::fromArray($data['content']);
+                $contentHandler->saveContentDto($contentDto);
             }
 
             // Sync authors if provided
@@ -112,7 +115,10 @@ class PageApiController
         $page = $this->pageRepository->update($page, $updateData);
 
         // Update draft content instead of published content
-        $contentHandler->sevaContentElements($page->content, $data['content']['content_elements'] ?? []);
+        if (isset($data['content'])) {
+            $contentDto = ContentDto::fromArray($data['content']);
+            $contentHandler->saveContentDto($page->content, $contentDto);
+        }
 
         // Sync authors if provided
         if (isset($data['author_ids'])) {

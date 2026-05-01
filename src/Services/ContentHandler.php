@@ -2,6 +2,8 @@
 
 namespace Molitor\Cms\Services;
 
+use Molitor\Cms\Data\ContentDto;
+use Molitor\Cms\Data\ContentElementDto;
 use Molitor\Cms\Exceptions\InvalidElementException;
 use Molitor\Cms\Exceptions\InvalidElementTypeNameException;
 use Molitor\Cms\Models\Content;
@@ -9,6 +11,7 @@ use Molitor\Cms\Models\ContentElement;
 use Molitor\Cms\Models\ContentElementType;
 use Molitor\Cms\Repositories\ContentElementRepositoryInterface;
 use Molitor\Cms\Repositories\ContentElementTypeRepositoryInterface;
+use Molitor\Cms\Repositories\ContentRepositoryInterface;
 use Molitor\Cms\Services\ContentElementTypes\BaseContentElementType;
 use Molitor\Cms\Services\ContentElementTypes\CodeElementType;
 use Molitor\Cms\Services\ContentElementTypes\HeadingElementType;
@@ -24,6 +27,7 @@ class ContentHandler
     private array $elementTypes = [];
 
     public function __construct(
+        private ContentRepositoryInterface $contentRepository,
         private ContentElementRepositoryInterface $contentElementRepository,
         private ContentElementTypeRepositoryInterface $contentElementTypeRepository,
     ) {
@@ -127,7 +131,7 @@ class ContentHandler
         ];
     }
 
-    public function sevaContentElements(Content $content, array $elements): void
+    public function saveContentElements(Content $content, array $elements): void
     {
         $oldElements = [];
         $i = 0;
@@ -152,6 +156,50 @@ class ContentHandler
         }
 
         $this->contentElementRepository->deleteWhereSortGreaterOrEqual($content, $sort);
+    }
+
+    public function saveContentDto(ContentDto $contentDto): void
+    {
+        if($contentDto->id) {
+            $content = $this->contentRepository->getById($contentDto->id);
+        }
+        else {
+            $content = $this->contentRepository->create();
+        }
+
+        $existingElements = [];
+        $i = 0;
+        foreach ($this->contentElementRepository->getByContent($content) as $element) {
+            $existingElements[$i] = $element;
+            $i++;
+        }
+
+        $position = 0;
+        /** @var ContentElementDto $elementDto */
+        foreach ($contentDto->getContentElements() as $elementDto) {
+            try {
+                $elementType = $this->getElementType($elementDto->type);
+            } catch (InvalidElementTypeNameException $e) {
+                continue;
+            }
+
+            if (array_key_exists($position, $existingElements)) {
+                $this->saveContentData(
+                    $existingElements[$position],
+                    $elementDto->type,
+                    $elementDto->settings
+                );
+            } else {
+                $this->createContentElement(
+                    $content,
+                    $elementDto->type,
+                    $elementDto->settings
+                );
+            }
+            $position++;
+        }
+
+        $this->contentElementRepository->deleteWhereSortGreaterOrEqual($content, $position);
     }
 
     public function elementToArray(ContentElement $contentElement): ?array

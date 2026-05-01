@@ -51,10 +51,39 @@ class PageRepository implements PageRepositoryInterface
         return $slug;
     }
 
-    public function create(array $data): Page
-    {
-        if (! isset($data['content_id'])) {
-            $data['content_id'] = $this->contentRepository->create()->id;
+    public function create(
+        string $title,
+        string $slug,
+        ?bool $isPublished = null,
+        ?string $lead = null,
+        ?string $layout = null,
+        ?string $mainImageUrl = null,
+        ?int $languageId = null,
+    ): Page {
+        $data = [
+            'title' => $title,
+            'slug' => $slug,
+            'content_id' => $this->contentRepository->create()->id,
+        ];
+
+        if ($isPublished !== null) {
+            $data['is_published'] = $isPublished;
+        }
+
+        if ($lead !== null) {
+            $data['lead'] = $lead;
+        }
+
+        if ($layout !== null) {
+            $data['layout'] = $layout;
+        }
+
+        if ($mainImageUrl !== null) {
+            $data['main_image_url'] = $mainImageUrl;
+        }
+
+        if ($languageId !== null) {
+            $data['language_id'] = $languageId;
         }
 
         $page = $this->page->create($data);
@@ -62,8 +91,45 @@ class PageRepository implements PageRepositoryInterface
         return $page;
     }
 
-    public function update(Page $page, array $data): Page
-    {
+    public function update(
+        Page $page,
+        ?string $title = null,
+        ?string $slug = null,
+        ?bool $isPublished = null,
+        ?string $lead = null,
+        ?string $layout = null,
+        ?string $mainImageUrl = null,
+        ?int $languageId = null
+    ): Page {
+        $data = [];
+
+        if ($title !== null) {
+            $data['title'] = $title;
+        }
+
+        if ($slug !== null) {
+            $data['slug'] = $slug;
+        }
+
+        if ($isPublished !== null) {
+            $data['is_published'] = $isPublished;
+        }
+
+        if ($lead !== null) {
+            $data['lead'] = $lead;
+        }
+
+        if ($layout !== null) {
+            $data['layout'] = $layout;
+        }
+
+        if ($mainImageUrl !== null) {
+            $data['main_image_url'] = $mainImageUrl;
+        }
+
+        if ($languageId !== null) {
+            $data['language_id'] = $languageId;
+        }
 
         $page->update($data);
 

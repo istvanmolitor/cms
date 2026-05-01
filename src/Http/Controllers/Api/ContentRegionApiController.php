@@ -6,6 +6,7 @@ namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Molitor\Cms\Data\ContentDto;
 use Molitor\Cms\Http\Requests\ContentRegion\StoreContentRegionRequest;
 use Molitor\Cms\Http\Requests\ContentRegion\UpdateContentRegionRequest;
 use Molitor\Cms\Http\Resources\ContentRegionResource;
@@ -64,7 +65,10 @@ class ContentRegionApiController
         $region->save();
 
         // Update content instead of published content
-        $contentHandler->sevaContentElements($region->content, $data['content']['content_elements'] ?? []);
+        if (isset($data['content'])) {
+            $contentDto = ContentDto::fromArray($data['content']);
+            $contentHandler->saveContentDto($region->content, $contentDto);
+        }
 
         // Reload relationships
         $region->load('content.contentElements');
