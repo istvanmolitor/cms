@@ -24,13 +24,21 @@ class ContentElementDto
      */
     public static function fromArray(array $data): self
     {
-        return new self(
+        $contentElement = new self(
             id: $data['id'] ?? null,
             type: $data['type'],
             settings: $data['settings'],
             sort: $data['sort'],
             isVisible: $data['is_visible'],
         );
+
+        if (isset($data['content_elements']) && is_array($data['content_elements'])) {
+            foreach ($data['content_elements'] as $element) {
+                $contentElement->addChild(ContentElementDto::fromArray($element));
+            }
+        }
+
+        return $contentElement;
     }
 
     /**

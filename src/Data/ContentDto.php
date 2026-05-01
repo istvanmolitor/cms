@@ -6,12 +6,13 @@ namespace Molitor\Cms\Data;
 
 class ContentDto
 {
+    private array $contentElements = [];
+
     /**
      * @param  array<int, ContentElementDto>  $contentElements
      */
     public function __construct(
-        public ?int $id,
-        private array $contentElements,
+        public ?int $id
     ) {}
 
     /**
@@ -32,18 +33,17 @@ class ContentDto
      */
     public static function fromArray(array $data): self
     {
-        $contentElements = [];
+        $content = new self(
+            id: $data['id'] ?? null,
+        );
 
         if (isset($data['content_elements']) && is_array($data['content_elements'])) {
             foreach ($data['content_elements'] as $element) {
-                $contentElements[] = ContentElementDto::fromArray($element);
+                $content->addContentElement(ContentElementDto::fromArray($element));
             }
         }
 
-        return new self(
-            id: $data['id'] ?? null,
-            contentElements: $contentElements,
-        );
+        return $content;
     }
 
     /**

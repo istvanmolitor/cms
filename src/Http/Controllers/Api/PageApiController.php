@@ -51,6 +51,10 @@ class PageApiController
         try {
             $data = $request->all();
 
+            $contentDto = ContentDto::fromArray($data['content']);
+            dd($contentDto);
+
+
             $page = $this->pageRepository->create(
                 title: $data['title'],
                 slug: $data['slug'],
