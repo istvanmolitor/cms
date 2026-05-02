@@ -15,8 +15,7 @@ class ContentElementDto
         public ?int $id,
         public string $type,
         public array $settings,
-        public int $sort,
-        public bool $isVisible,
+        public int $sort
     ) {}
 
     /**
@@ -29,7 +28,6 @@ class ContentElementDto
             type: $data['type'],
             settings: $data['settings'],
             sort: $data['sort'],
-            isVisible: $data['is_visible'],
         );
 
         if (isset($data['content_elements']) && is_array($data['content_elements'])) {

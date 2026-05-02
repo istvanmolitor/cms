@@ -41,9 +41,8 @@ class PageApiController
 
     public function store(StorePageRequest $request, ContentHandler $contentHandler): PageResource
     {
-        dd($request->all());
-
         try {
+            $content = ContentDto::fromArray($request->content);
             $page = $this->pageRepository->create(
                 title: $request->title,
                 slug: $request->slug,
@@ -54,7 +53,7 @@ class PageApiController
                 languageId: $request->language_id
             );
 
-            $contentHandler->saveContentDto($page->content, ContentDto::fromArray($request->content_element));
+            $contentHandler->saveContentDto($page->content, $content);
 
             // Sync authors if provided
             if (isset($data['author_ids'])) {
@@ -88,20 +87,20 @@ class PageApiController
             languageId: $request->language_id
         );
 
-        $contentHandler->saveContentDto($page->content, ContentDto::fromArray($request->content_element));
+        $contentHandler->saveContentDto($page->content, ContentDto::fromArray($request->content));
 
         // Sync authors if provided
-        if (isset($data['author_ids'])) {
-            $page->authors()->sync($data['author_ids']);
+        if (isset($request->author_ids)) {
+            $page->authors()->sync($request->author_ids);
         }
 
         // Sync page groups if provided
-        if (isset($data['page_group_ids'])) {
-            $page->pageGroups()->sync($data['page_group_ids']);
+        if (isset($request->page_group_ids)) {
+            $page->pageGroups()->sync($request->page_group_ids);
         }
 
         // Reload relationships
-        $page->load('content.contentElements');
+        $page->load('content.contentElements', 'authors', 'pageGroups');
 
         return new PageResource($page);
     }
