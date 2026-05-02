@@ -30,8 +30,8 @@ class PageApiController
 
     public function show(Page $page): PageResource
     {
-        // Load the content relationship with content elements
-        $page->load('content.contentElements');
+        // Load the content relationship with content elements and their children
+        $page->load('content.contentElements.children');
         $page->load('authors');
         $page->load('pageGroups');
         $page->load('language');
@@ -100,7 +100,7 @@ class PageApiController
         }
 
         // Reload relationships
-        $page->load('content.contentElements', 'authors', 'pageGroups');
+        $page->load('content.contentElements.children', 'authors', 'pageGroups');
 
         return new PageResource($page);
     }
@@ -120,7 +120,7 @@ class PageApiController
             return response()->json(['error' => 'Page not found'], 404);
         }
 
-        $page->load('content.contentElements');
+        $page->load('content.contentElements.children');
         $page->load('authors');
         $page->load('pageGroups');
         $page->load('language');

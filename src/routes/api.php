@@ -9,7 +9,7 @@ use Molitor\Cms\Http\Controllers\Api\MenuItemApiController;
 use Molitor\Cms\Http\Controllers\Api\PageApiController;
 use Molitor\Cms\Http\Controllers\Api\PageGroupApiController;
 
-Route::prefix('api/cms')->group(function () {
+Route::prefix('api/cms')->middleware(['api'])->group(function () {
     Route::apiResource('pages', PageApiController::class);
     Route::get('/slug/{slug}', [PageApiController::class, 'getBySlug'])->name('cms.api.pages.getBySlug');
     Route::apiResource('regions', ContentRegionApiController::class);
