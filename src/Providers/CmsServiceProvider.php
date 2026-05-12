@@ -47,11 +47,11 @@ class CmsServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         $this->publishes([
-            __DIR__.'/../config/cms.php' => config_path('cms.php'),
+            __DIR__ . '/../config/cms.php' => config_path('cms.php'),
         ], 'cms-config');
 
         $this->mergeConfigFrom(
-            __DIR__.'/../config/cms.php', 'cms'
+            __DIR__ . '/../config/cms.php', 'cms'
         );
 
         // Register Blade components

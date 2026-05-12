@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
-use Molitor\Cms\Services\LayoutService;
+use Molitor\Theme\Services\LayoutService;
 
 class LayoutApiController
 {

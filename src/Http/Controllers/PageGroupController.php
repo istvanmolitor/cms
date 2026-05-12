@@ -7,7 +7,7 @@ namespace Molitor\Cms\Http\Controllers;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Molitor\Cms\Repositories\PageGroupRepositoryInterface;
-use Molitor\Cms\Services\LayoutService;
+use Molitor\Theme\Services\LayoutService;
 
 class PageGroupController
 {

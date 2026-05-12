@@ -7,7 +7,7 @@ namespace Molitor\Cms\Http\Controllers;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
-use Molitor\Cms\Services\LayoutService;
+use Molitor\Theme\Services\LayoutService;
 
 class PageController
 {
@@ -18,7 +18,7 @@ class PageController
 
     public function index(): View|Response
     {
-        $layout = $this->layoutService->getLayoutTemplate(null);
+        $layout = $this->layoutService->getLayoutTemplate();
 
         return view('cms::page.index', [
             'layout' => $layout,
@@ -27,7 +27,7 @@ class PageController
 
     public function homepage(): View|Response
     {
-        $layout = $this->layoutService->getLayoutTemplate(null);
+        $layout = $this->layoutService->getLayoutTemplate();
 
         return view('cms::page.homepage', [
             'layout' => $layout,
