@@ -19,7 +19,7 @@ class UpdateContentRegionRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('id');
+        $id = $this->route('region') ?: $this->route('id');
 
         return [
             'name' => 'sometimes|required|string|max:255|unique:content_regions,name,'.$id,
