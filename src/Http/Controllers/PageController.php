@@ -25,15 +25,6 @@ class PageController
         ]);
     }
 
-    public function homepage(): View|Response
-    {
-        $layout = $this->layoutService->getLayoutTemplate();
-
-        return view('cms::page.homepage', [
-            'layout' => $layout,
-        ]);
-    }
-
     public function show(string $slug): View|Response
     {
         $page = $this->pageRepository->getBySlug($slug);

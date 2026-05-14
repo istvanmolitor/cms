@@ -65,17 +65,6 @@ class CmsServiceProvider extends ServiceProvider
 
         Page::observe($contentObserver);
         ContentRegion::observe($contentObserver);
-        $this->registerRouteMacros();
-    }
-
-    protected function registerRouteMacros()
-    {
-        Route::macro('cms', function () {
-            Route::get('/', [PageController::class, 'homepage'])->name('cms.homepage');
-            Route::get('/page', [PageController::class, 'index'])->name('cms.index');
-            Route::get('/page/{slug}', [PageController::class, 'show'])->name('cms.page.show');
-            Route::get('/page-group/{slug}', [PageGroupController::class, 'show'])->name('cms.page-group.show');
-        });
     }
 
     public function register()
