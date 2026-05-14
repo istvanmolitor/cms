@@ -33,6 +33,16 @@ abstract class BaseContentElementType
     abstract public function getValidationRules(): array;
 
     /**
+     * Prepare data for the view
+     */
+    public function prepare(array $settings): array
+    {
+        return [
+            'settings' => $settings,
+        ];
+    }
+
+    /**
      * Check if a string is valid JSON
      */
     protected function isJson(string $string): bool
