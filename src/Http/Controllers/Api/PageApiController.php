@@ -56,13 +56,13 @@ class PageApiController
             $contentHandler->saveContentDto($page->content, $content);
 
             // Sync authors if provided
-            if (isset($data['author_ids'])) {
-                $page->authors()->sync($data['author_ids']);
+            if (isset($request->author_ids)) {
+                $page->authors()->sync($request->author_ids);
             }
 
             // Sync page groups if provided
-            if (isset($data['page_group_ids'])) {
-                $page->pageGroups()->sync($data['page_group_ids']);
+            if (isset($request->page_group_ids)) {
+                $page->pageGroups()->sync($request->page_group_ids);
             }
 
             return new PageResource($page);

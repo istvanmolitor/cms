@@ -19,7 +19,8 @@ class UpdatePageRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('page');
+        $page = $this->route('page');
+        $id = $page instanceof \Molitor\Cms\Models\Page ? $page->id : $page;
 
         return [
             'title' => 'sometimes|required|string|max:255',
