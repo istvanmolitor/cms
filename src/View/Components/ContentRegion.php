@@ -19,6 +19,7 @@ class ContentRegion extends Component
     public function render(): View
     {
         $region = $this->contentRegionRepository->getByName($this->name);
+
         if (! $region) {
             $region = $this->contentRegionRepository->create(['name' => $this->name]);
         }
