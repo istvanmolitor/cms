@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Requests\Page;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Molitor\Cms\Models\Page;
 use Molitor\Cms\Rules\ContentElementValidator;
 
 class UpdatePageRequest extends FormRequest
@@ -20,7 +21,7 @@ class UpdatePageRequest extends FormRequest
     public function rules(): array
     {
         $page = $this->route('page');
-        $id = $page instanceof \Molitor\Cms\Models\Page ? $page->id : $page;
+        $id = $page instanceof Page ? $page->id : $page;
 
         return [
             'title' => 'sometimes|required|string|max:255',
@@ -35,10 +36,6 @@ class UpdatePageRequest extends FormRequest
             'content.content_elements.*.type' => 'required|string|max:255',
             'content.content_elements.*.settings' => ['required', 'array', new ContentElementValidator],
             'content.content_elements.*.sort' => 'required|integer',
-            'author_ids' => 'nullable|array',
-            'author_ids.*' => 'exists:authors,id',
-            'page_group_ids' => 'nullable|array',
-            'page_group_ids.*' => 'exists:page_groups,id',
         ];
     }
 }

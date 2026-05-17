@@ -34,10 +34,6 @@ class CmsMenuBuilder extends MenuBuilder
                 $cmsGroup->addItem('Authors', route('authors.index'))
                     ->setName('cms.authors')
                     ->setIcon('user-edit');
-
-                $cmsGroup->addItem('Page Groups', route('page-groups.index'))
-                    ->setName('cms.page-groups')
-                    ->setIcon('layer-group');
             }
 
             return;

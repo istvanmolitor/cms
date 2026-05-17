@@ -26,8 +26,6 @@ class PageResource extends JsonResource
             'language_id' => $this->language_id,
             'language' => $this->whenLoaded('language'),
             'content' => new ContentResource($this->whenLoaded('content')),
-            'authors' => AuthorResource::collection($this->whenLoaded('authors')),
-            'pageGroups' => PageGroupResource::collection($this->whenLoaded('pageGroups')),
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
         ];

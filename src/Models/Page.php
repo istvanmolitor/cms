@@ -6,7 +6,6 @@ namespace Molitor\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Molitor\Language\Models\Language;
 
@@ -35,16 +34,6 @@ class Page extends Model
     public function content(): BelongsTo
     {
         return $this->belongsTo(Content::class, 'content_id');
-    }
-
-    public function authors(): BelongsToMany
-    {
-        return $this->belongsToMany(Author::class, 'page_authors', 'page_id', 'author_id');
-    }
-
-    public function pageGroups(): BelongsToMany
-    {
-        return $this->belongsToMany(PageGroup::class, 'page_page_groups', 'page_id', 'page_group_id');
     }
 
     public function language(): BelongsTo

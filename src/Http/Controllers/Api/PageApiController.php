@@ -32,8 +32,6 @@ class PageApiController
     {
         // Load the content relationship with content elements and their children
         $page->load('content.contentElements.children');
-        $page->load('authors');
-        $page->load('pageGroups');
         $page->load('language');
 
         return new PageResource($page);
@@ -54,16 +52,6 @@ class PageApiController
             );
 
             $contentHandler->saveContentDto($page->content, $content);
-
-            // Sync authors if provided
-            if (isset($request->author_ids)) {
-                $page->authors()->sync($request->author_ids);
-            }
-
-            // Sync page groups if provided
-            if (isset($request->page_group_ids)) {
-                $page->pageGroups()->sync($request->page_group_ids);
-            }
 
             return new PageResource($page);
         } catch (\Exception $e) {
@@ -89,18 +77,8 @@ class PageApiController
 
         $contentHandler->saveContentDto($page->content, ContentDto::fromArray($request->content));
 
-        // Sync authors if provided
-        if (isset($request->author_ids)) {
-            $page->authors()->sync($request->author_ids);
-        }
-
-        // Sync page groups if provided
-        if (isset($request->page_group_ids)) {
-            $page->pageGroups()->sync($request->page_group_ids);
-        }
-
         // Reload relationships
-        $page->load('content.contentElements.children', 'authors', 'pageGroups');
+        $page->load('content.contentElements.children');
 
         return new PageResource($page);
     }
@@ -121,8 +99,6 @@ class PageApiController
         }
 
         $page->load('content.contentElements.children');
-        $page->load('authors');
-        $page->load('pageGroups');
         $page->load('language');
 
         return new PageResource($page);

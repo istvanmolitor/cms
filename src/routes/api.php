@@ -7,7 +7,6 @@ use Molitor\Cms\Http\Controllers\Api\LayoutApiController;
 use Molitor\Cms\Http\Controllers\Api\MenuApiController;
 use Molitor\Cms\Http\Controllers\Api\MenuItemApiController;
 use Molitor\Cms\Http\Controllers\Api\PageApiController;
-use Molitor\Cms\Http\Controllers\Api\PageGroupApiController;
 use Molitor\Cms\Http\Controllers\Api\PostApiController;
 use Molitor\Cms\Http\Controllers\Api\PostGroupApiController;
 
@@ -18,7 +17,6 @@ Route::prefix('api/cms')->middleware(['api'])->group(function () {
     Route::get('/post/slug/{slug}', [PostApiController::class, 'getBySlug'])->name('cms.api.posts.getBySlug');
     Route::apiResource('regions', ContentRegionApiController::class);
     Route::apiResource('authors', AuthorApiController::class);
-    Route::apiResource('page-groups', PageGroupApiController::class);
     Route::apiResource('post-groups', PostGroupApiController::class);
     Route::apiResource('menus', MenuApiController::class);
     Route::apiResource('menu-items', MenuItemApiController::class);

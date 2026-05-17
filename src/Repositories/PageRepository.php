@@ -17,7 +17,7 @@ class PageRepository implements PageRepositoryInterface
 
     public function getAll(): Collection
     {
-        return $this->page->with(['pageGroups'])->get();
+        return $this->page->get();
     }
 
     public function getById(int $id): ?Page

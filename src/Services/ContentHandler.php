@@ -19,7 +19,6 @@ use Molitor\Cms\Services\ContentElementTypes\HeadingElementType;
 use Molitor\Cms\Services\ContentElementTypes\IframeElementType;
 use Molitor\Cms\Services\ContentElementTypes\ImageElementType;
 use Molitor\Cms\Services\ContentElementTypes\ListElementType;
-use Molitor\Cms\Services\ContentElementTypes\PageGroupElementType;
 use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
 use Molitor\Cms\Services\ContentElementTypes\TextElementType;
 use Molitor\Cms\Services\ContentElementTypes\VideoElementType;
@@ -47,7 +46,6 @@ class ContentHandler
         $this->registerElementType(new QuoteElementType);
         $this->registerElementType(new ListElementType);
         $this->registerElementType(new ColumnsElementType);
-        $this->registerElementType(new PageGroupElementType);
     }
 
     public function registerElementType(BaseContentElementType $elementType): void
@@ -197,13 +195,11 @@ class ContentHandler
         }
 
         $this->contentElementRepository->deleteWhereSortGreaterOrEqual($content, $position);
+
         return $content;
     }
 
-    public function saveContentElementDto(ContentElement $contentElement, ContentElementDto $elementDto): ContentElement
-    {
-
-    }
+    public function saveContentElementDto(ContentElement $contentElement, ContentElementDto $elementDto): ContentElement {}
 
     public function elementToArray(ContentElement $contentElement): ?array
     {
