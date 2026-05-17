@@ -9,6 +9,7 @@ use Molitor\Cms\Http\Controllers\PageController;
 use Molitor\Cms\Http\Controllers\PageGroupController;
 use Molitor\Cms\Models\ContentRegion;
 use Molitor\Cms\Models\Page;
+use Molitor\Cms\Models\Post;
 use Molitor\Cms\Observers\ContentObserver;
 use Molitor\Cms\Repositories\AuthorRepository;
 use Molitor\Cms\Repositories\AuthorRepositoryInterface;
@@ -30,6 +31,10 @@ use Molitor\Cms\Repositories\PageMetaRepository;
 use Molitor\Cms\Repositories\PageMetaRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
+use Molitor\Cms\Repositories\PostGroupRepository;
+use Molitor\Cms\Repositories\PostGroupRepositoryInterface;
+use Molitor\Cms\Repositories\PostRepository;
+use Molitor\Cms\Repositories\PostRepositoryInterface;
 use Molitor\Cms\View\Components\Content;
 use Molitor\Cms\View\Components\ContentElement;
 use Molitor\Cms\View\Components\ContentRegion as ContentRegionComponent;
@@ -64,6 +69,7 @@ class CmsServiceProvider extends ServiceProvider
         $contentObserver = new ContentObserver;
 
         Page::observe($contentObserver);
+        Post::observe($contentObserver);
         ContentRegion::observe($contentObserver);
     }
 
@@ -74,10 +80,12 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(ContentElementTypeRepositoryInterface::class, ContentElementTypeRepository::class);
         $this->app->bind(ContentRegionRepositoryInterface::class, ContentRegionRepository::class);
         $this->app->bind(PageRepositoryInterface::class, PageRepository::class);
+        $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
         $this->app->bind(MenuRepositoryInterface::class, MenuRepository::class);
         $this->app->bind(MenuItemRepositoryInterface::class, MenuItemRepository::class);
         $this->app->bind(AuthorRepositoryInterface::class, AuthorRepository::class);
         $this->app->bind(PageGroupRepositoryInterface::class, PageGroupRepository::class);
+        $this->app->bind(PostGroupRepositoryInterface::class, PostGroupRepository::class);
         $this->app->bind(PageMetaRepositoryInterface::class, PageMetaRepository::class);
     }
 }

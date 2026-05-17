@@ -7,11 +7,12 @@ namespace Molitor\Cms\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Author extends Model
+class PostGroup extends Model
 {
     protected $fillable = [
         'name',
-        'profile_url',
+        'slug',
+        'layout',
     ];
 
     protected $casts = [
@@ -19,13 +20,8 @@ class Author extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function pages(): BelongsToMany
-    {
-        return $this->belongsToMany(Page::class, 'page_authors', 'author_id', 'page_id');
-    }
-
     public function posts(): BelongsToMany
     {
-        return $this->belongsToMany(Post::class, 'post_authors', 'author_id', 'post_id');
+        return $this->belongsToMany(Post::class, 'post_post_groups', 'post_group_id', 'post_id');
     }
 }
