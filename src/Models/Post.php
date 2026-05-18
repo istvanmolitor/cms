@@ -7,6 +7,7 @@ namespace Molitor\Cms\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Molitor\Language\Models\Language;
 
 class Post extends Model
@@ -49,5 +50,10 @@ class Post extends Model
     public function language(): BelongsTo
     {
         return $this->belongsTo(Language::class, 'language_id');
+    }
+
+    public function postMeta(): HasMany
+    {
+        return $this->hasMany(PostMeta::class, 'post_id');
     }
 }
