@@ -15,9 +15,29 @@ class PostRepository implements PostRepositoryInterface
         private ContentRepositoryInterface $contentRepository
     ) {}
 
-    public function getAll(): Collection
+    public function getAll(array $params = []): mixed
     {
-        return $this->post->with(['postGroups'])->get();
+        $query = $this->post->with(['postGroups']);
+
+        if (isset($params['search']) && $params['search']) {
+            $query->where(function ($q) use ($params) {
+                $q->where('title', 'like', "%{$params['search']}%")
+                    ->orWhere('lead', 'like', "%{$params['search']}%");
+            });
+        }
+
+        if (isset($params['sort']) && $params['sort']) {
+            $direction = $params['direction'] ?? 'asc';
+            $query->orderBy($params['sort'], $direction);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        if (isset($params['paginate']) && $params['paginate']) {
+            return $query->paginate((int) ($params['per_page'] ?? 10));
+        }
+
+        return $query->get();
     }
 
     public function getById(int $id): ?Post

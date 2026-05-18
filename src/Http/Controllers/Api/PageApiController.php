@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Log;
+use Molitor\Admin\Traits\HasAdminFilters;
 use Molitor\Cms\Data\ContentDto;
 use Molitor\Cms\Http\Requests\Page\StorePageRequest;
 use Molitor\Cms\Http\Requests\Page\UpdatePageRequest;
@@ -17,13 +19,30 @@ use Molitor\Cms\Services\ContentHandler;
 
 class PageApiController
 {
+    use HasAdminFilters;
+
     public function __construct(
         private PageRepositoryInterface $pageRepository
     ) {}
 
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection|JsonResponse
     {
-        $pages = $this->pageRepository->getAll();
+        $params = $request->only(['search', 'sort', 'direction', 'page', 'per_page']);
+        $params['paginate'] = true;
+
+        $pages = $this->pageRepository->getAll($params);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return PageResource::collection($pages)->additional([
+                'meta' => [
+                    'current_page' => $pages->currentPage(),
+                    'last_page' => $pages->lastPage(),
+                    'per_page' => $pages->perPage(),
+                    'total' => $pages->total(),
+                ],
+                'filters' => $request->only(['search', 'sort', 'direction']),
+            ]);
+        }
 
         return PageResource::collection($pages);
     }

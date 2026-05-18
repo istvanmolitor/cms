@@ -14,7 +14,7 @@ interface MenuRepositoryInterface
 
     public function getByName(string $name, Language $language): ?Menu;
 
-    public function getAll(): Collection;
+    public function getAll(array $params = []): mixed;
 
     public function create(string $name, int $languageId): Menu;
 

@@ -9,7 +9,7 @@ use Molitor\Cms\Models\Author;
 
 interface AuthorRepositoryInterface
 {
-    public function getAll(): Collection;
+    public function getAll(array $params = []): mixed;
 
     public function getById(int $id): ?Author;
 

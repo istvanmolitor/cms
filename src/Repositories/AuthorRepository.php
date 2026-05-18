@@ -13,9 +13,29 @@ class AuthorRepository implements AuthorRepositoryInterface
         private Author $author
     ) {}
 
-    public function getAll(): Collection
+    public function getAll(array $params = []): mixed
     {
-        return $this->author->all();
+        $query = $this->author->query();
+
+        if (isset($params['search']) && $params['search']) {
+            $query->where(function ($q) use ($params) {
+                $q->where('name', 'like', "%{$params['search']}%")
+                    ->orWhere('email', 'like', "%{$params['search']}%");
+            });
+        }
+
+        if (isset($params['sort']) && $params['sort']) {
+            $direction = $params['direction'] ?? 'asc';
+            $query->orderBy($params['sort'], $direction);
+        } else {
+            $query->orderBy('name', 'asc');
+        }
+
+        if (isset($params['paginate']) && $params['paginate']) {
+            return $query->paginate((int) ($params['per_page'] ?? 10));
+        }
+
+        return $query->get();
     }
 
     public function getById(int $id): ?Author
