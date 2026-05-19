@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Repositories;
 
 use Illuminate\Support\Collection;
+use Molitor\Cms\Models\Post;
 use Molitor\Cms\Models\PostMeta;
 
 interface PostMetaRepositoryInterface
@@ -22,4 +23,8 @@ interface PostMetaRepositoryInterface
     public function update(PostMeta $postMeta, array $data): PostMeta;
 
     public function delete(PostMeta $postMeta): void;
+
+    public function exists(Post $post, string $name): bool;
+
+    public function save(Post $post, string $name, string $value): PostMeta;
 }

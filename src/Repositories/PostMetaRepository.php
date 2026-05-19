@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Repositories;
 
 use Illuminate\Support\Collection;
+use Molitor\Cms\Models\Post;
 use Molitor\Cms\Models\PostMeta;
 
 class PostMetaRepository implements PostMetaRepositoryInterface
@@ -54,5 +55,31 @@ class PostMetaRepository implements PostMetaRepositoryInterface
     public function delete(PostMeta $postMeta): void
     {
         $postMeta->delete();
+    }
+
+    public function exists(Post $post, string $name): bool
+    {
+        return $this->postMeta->where('post_id', $post->id)->where('name', $name)->exists();
+    }
+
+    public function save(Post $post, string $name, string $value): PostMeta
+    {
+        if($this->exists($post, $name)) {
+            $postMeta = $this->getByPostIdAndName($post->id, $name);
+            if (empty($value)) {
+                $this->delete($postMeta);
+                return $postMeta;
+            }
+            else {
+                return $this->update($postMeta, ['meta_data' => $value]);
+            }
+        }
+        else {
+            return $this->create([
+                'post_id' => $post->id,
+                'name' => $name,
+                'meta_data' => $value,
+            ]);
+        }
     }
 }
