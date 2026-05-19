@@ -37,6 +37,7 @@ use Molitor\Cms\View\Components\ContentElement;
 use Molitor\Cms\View\Components\ContentRegion as ContentRegionComponent;
 use Molitor\Cms\View\Components\Menu;
 use Molitor\Cms\View\Components\MenuItem;
+use Molitor\Cms\View\Components\PostList;
 
 class CmsServiceProvider extends ServiceProvider
 {
@@ -62,6 +63,7 @@ class CmsServiceProvider extends ServiceProvider
         Blade::component('cms-content-region', ContentRegionComponent::class);
         Blade::component('cms-menu', Menu::class);
         Blade::component('cms-menu-item', MenuItem::class);
+        Blade::component('cms-post-list', PostList::class);
 
         $contentObserver = new ContentObserver;
         Page::observe($contentObserver);
