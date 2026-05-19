@@ -16,6 +16,17 @@ class PostGroupController
         private LayoutService $layoutService
     ) {}
 
+    public function index(): View|Response
+    {
+        $postGroups = $this->postGroupRepository->getAll();
+        $layout = $this->layoutService->getLayoutTemplate();
+
+        return view('cms::post-group.index', [
+            'layout' => $layout,
+            'postGroups' => $postGroups,
+        ]);
+    }
+
     public function show(string $slug): View|Response
     {
         $postGroup = $this->postGroupRepository->getBySlug($slug);
