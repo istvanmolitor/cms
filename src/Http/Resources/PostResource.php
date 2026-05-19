@@ -29,6 +29,7 @@ class PostResource extends JsonResource
             'content' => new ContentResource($this->whenLoaded('content')),
             'authors' => AuthorResource::collection($this->whenLoaded('authors')),
             'postGroups' => PostGroupResource::collection($this->whenLoaded('postGroups')),
+            'post_meta' => PostMetaResource::collection($this->whenLoaded('postMeta')),
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
         ];

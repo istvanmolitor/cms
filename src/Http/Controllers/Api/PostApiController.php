@@ -52,6 +52,7 @@ class PostApiController
         $post->load('content.contentElements.children');
         $post->load('authors');
         $post->load('postGroups');
+        $post->load('postMeta');
         $post->load('language');
 
         return new PostResource($post);
@@ -113,7 +114,7 @@ class PostApiController
             $post->postGroups()->sync($request->post_group_ids);
         }
 
-        $post->load('content.contentElements.children', 'authors', 'postGroups');
+        $post->load('content.contentElements.children', 'authors', 'postGroups', 'postMeta');
 
         return new PostResource($post);
     }
@@ -136,6 +137,7 @@ class PostApiController
         $post->load('content.contentElements.children');
         $post->load('authors');
         $post->load('postGroups');
+        $post->load('postMeta');
         $post->load('language');
 
         return new PostResource($post);

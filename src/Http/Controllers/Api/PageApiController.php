@@ -51,6 +51,7 @@ class PageApiController
     {
         // Load the content relationship with content elements and their children
         $page->load('content.contentElements.children');
+        $page->load('metaData');
         $page->load('language');
 
         return new PageResource($page);
@@ -98,6 +99,7 @@ class PageApiController
 
         // Reload relationships
         $page->load('content.contentElements.children');
+        $page->load('metaData');
 
         return new PageResource($page);
     }
@@ -118,6 +120,7 @@ class PageApiController
         }
 
         $page->load('content.contentElements.children');
+        $page->load('metaData');
         $page->load('language');
 
         return new PageResource($page);

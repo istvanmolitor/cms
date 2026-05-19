@@ -26,6 +26,18 @@ class PageResource extends JsonResource
             'language_id' => $this->language_id,
             'language' => $this->whenLoaded('language'),
             'content' => new ContentResource($this->whenLoaded('content')),
+            'meta_data' => $this->whenLoaded('metaData', function (): array {
+                return $this->metaData
+                    ->map(fn ($meta): array => [
+                        'id' => $meta->id,
+                        'page_id' => $meta->page_id,
+                        'name' => $meta->name,
+                        'meta_data' => $meta->meta_data,
+                        'created_at' => $meta->created_at?->toDateTimeString(),
+                        'updated_at' => $meta->updated_at?->toDateTimeString(),
+                    ])
+                    ->all();
+            }),
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
         ];
