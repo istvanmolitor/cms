@@ -6,11 +6,13 @@ namespace Molitor\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Str;
 
 class Author extends Model
 {
     protected $fillable = [
         'name',
+        'slug',
         'profile_url',
     ];
 
@@ -18,6 +20,26 @@ class Author extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (Author $author) {
+            if (empty($author->slug)) {
+                $baseSlug = Str::slug($author->name);
+                $baseSlug = $baseSlug !== '' ? $baseSlug : 'author';
+
+                $slug = $baseSlug;
+                $counter = 1;
+
+                while (static::where('slug', $slug)->exists()) {
+                    $slug = $baseSlug . '-' . $counter;
+                    $counter++;
+                }
+
+                $author->slug = $slug;
+            }
+        });
+    }
 
     public function posts(): BelongsToMany
     {

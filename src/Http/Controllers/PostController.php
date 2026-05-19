@@ -33,7 +33,7 @@ class PostController
             abort(404);
         }
 
-        $post->load('content.contentElements');
+        $post->load(['content.contentElements', 'authors', 'postGroups']);
 
         $layout = $this->layoutService->getLayoutTemplate($post->layout);
 

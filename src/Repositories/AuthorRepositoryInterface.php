@@ -13,6 +13,12 @@ interface AuthorRepositoryInterface
 
     public function getById(int $id): ?Author;
 
+    public function getBySlug(string $slug): ?Author;
+
+    public function existsBySlug(string $slug): bool;
+
+    public function generateUniqueSlug(string $name, string $fallback = 'author'): string;
+
     public function create(array $data): Author;
 
     public function update(Author $author, array $data): Author;

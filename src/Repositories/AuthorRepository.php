@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Repositories;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Molitor\Cms\Models\Author;
 
 class AuthorRepository implements AuthorRepositoryInterface
@@ -41,6 +42,32 @@ class AuthorRepository implements AuthorRepositoryInterface
     public function getById(int $id): ?Author
     {
         return $this->author->find($id);
+    }
+
+    public function getBySlug(string $slug): ?Author
+    {
+        return $this->author->where('slug', $slug)->first();
+    }
+
+    public function existsBySlug(string $slug): bool
+    {
+        return $this->author->where('slug', $slug)->exists();
+    }
+
+    public function generateUniqueSlug(string $name, string $fallback = 'author'): string
+    {
+        $baseSlug = Str::slug($name);
+        $baseSlug = $baseSlug !== '' ? $baseSlug : $fallback;
+
+        $slug = $baseSlug;
+        $counter = 1;
+
+        while ($this->existsBySlug($slug)) {
+            $slug = $baseSlug.'-'.$counter;
+            $counter++;
+        }
+
+        return $slug;
     }
 
     public function create(array $data): Author
