@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Molitor\Cms\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
 use Molitor\Cms\Models\Menu;
 use Molitor\Language\Models\Language;
 

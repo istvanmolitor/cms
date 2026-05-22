@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Molitor\Cms\Repositories;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Molitor\Cms\Models\Post;
 

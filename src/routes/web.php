@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Molitor\Cms\Http\Controllers\AuthorController;
 use Molitor\Cms\Http\Controllers\HomepageController;
 use Molitor\Cms\Http\Controllers\PageController;
 use Molitor\Cms\Http\Controllers\PostController;
 use Molitor\Cms\Http\Controllers\PostGroupController;
-use Molitor\Cms\Http\Controllers\AuthorController;
 
 Route::get('/', [HomepageController::class, 'index'])->name('cms.homepage');
 Route::get('/page', [PageController::class, 'index'])->name('cms.page.index');

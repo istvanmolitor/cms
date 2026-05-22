@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Requests\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Molitor\Cms\Models\Post;
 use Molitor\Cms\Rules\ContentElementValidator;
 
 class UpdatePostRequest extends FormRequest
@@ -20,7 +21,7 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         $post = $this->route('post');
-        $id = $post instanceof \Molitor\Cms\Models\Post ? $post->id : $post;
+        $id = $post instanceof Post ? $post->id : $post;
 
         return [
             'title' => 'sometimes|required|string|max:255',

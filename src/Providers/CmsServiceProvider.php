@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Molitor\Cms\Models\ContentRegion;
 use Molitor\Cms\Models\Page;
-use Molitor\Cms\Models\Post;
 use Molitor\Cms\Observers\ContentObserver;
 use Molitor\Cms\Repositories\AuthorRepository;
 use Molitor\Cms\Repositories\AuthorRepositoryInterface;
@@ -24,12 +23,12 @@ use Molitor\Cms\Repositories\MenuRepository;
 use Molitor\Cms\Repositories\MenuRepositoryInterface;
 use Molitor\Cms\Repositories\PageMetaRepository;
 use Molitor\Cms\Repositories\PageMetaRepositoryInterface;
-use Molitor\Cms\Repositories\PostMetaRepository;
-use Molitor\Cms\Repositories\PostMetaRepositoryInterface;
 use Molitor\Cms\Repositories\PageRepository;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
 use Molitor\Cms\Repositories\PostGroupRepository;
 use Molitor\Cms\Repositories\PostGroupRepositoryInterface;
+use Molitor\Cms\Repositories\PostMetaRepository;
+use Molitor\Cms\Repositories\PostMetaRepositoryInterface;
 use Molitor\Cms\Repositories\PostRepository;
 use Molitor\Cms\Repositories\PostRepositoryInterface;
 use Molitor\Cms\View\Components\Content;
@@ -50,11 +49,11 @@ class CmsServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         $this->publishes([
-            __DIR__ . '/../config/cms.php' => config_path('cms.php'),
+            __DIR__.'/../config/cms.php' => config_path('cms.php'),
         ], 'cms-config');
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/cms.php', 'cms'
+            __DIR__.'/../config/cms.php', 'cms'
         );
 
         // Register Blade components

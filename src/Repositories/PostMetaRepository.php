@@ -64,17 +64,16 @@ class PostMetaRepository implements PostMetaRepositoryInterface
 
     public function save(Post $post, string $name, string $value): PostMeta
     {
-        if($this->exists($post, $name)) {
+        if ($this->exists($post, $name)) {
             $postMeta = $this->getByPostIdAndName($post->id, $name);
             if (empty($value)) {
                 $this->delete($postMeta);
+
                 return $postMeta;
-            }
-            else {
+            } else {
                 return $this->update($postMeta, ['meta_data' => $value]);
             }
-        }
-        else {
+        } else {
             return $this->create([
                 'post_id' => $post->id,
                 'name' => $name,
