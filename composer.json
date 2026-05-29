@@ -1,6 +1,6 @@
 {
     "name": "istvanmolitor/cms",
-    "description": "CMS package for filament 4 applications.",
+    "description": "CMS package.",
     "type": "library",
     "license": "MIT",
     "authors": [
