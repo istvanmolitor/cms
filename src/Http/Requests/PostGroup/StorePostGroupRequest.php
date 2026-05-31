@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Requests\PostGroup;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class StorePostGroupRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('acl', 'cms');
     }
 
     /**

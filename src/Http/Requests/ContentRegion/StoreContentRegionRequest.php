@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Requests\ContentRegion;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 use Molitor\Cms\Rules\ContentElementValidator;
 
 class StoreContentRegionRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('acl', 'cms');
     }
 
     /**

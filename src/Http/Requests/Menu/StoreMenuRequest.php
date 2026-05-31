@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Requests\Menu;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class StoreMenuRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('acl', 'cms');
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Requests\Page;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 use Molitor\Cms\Models\Page;
 use Molitor\Cms\Rules\ContentElementValidator;
 
@@ -12,7 +13,7 @@ class UpdatePageRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('acl', 'cms');
     }
 
     /**
