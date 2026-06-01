@@ -13,8 +13,7 @@ use Molitor\Cms\Http\Controllers\Api\PostMetaApiController;
 
 Route::prefix('api/cms')->middleware(['api', 'auth:sanctum'])->group(function () {
     Route::apiResource('pages', PageApiController::class)->middleware('permission:cms_page');
-    Route::get('/slug/{slug}', [PageApiController::class, 'getBySlug'])
-        ->name('cms.api.pages.getBySlug');
+    Route::get('/slug/{slug}', [PageApiController::class, 'getBySlug'])->name('cms.api.pages.getBySlug')->middleware('permission:cms_page');
 
     Route::apiResource('posts', PostApiController::class)->middleware('permission:cms_post');
     Route::get('/post/slug/{slug}', [PostApiController::class, 'getBySlug'])->name('cms.api.posts.getBySlug')->middleware('permission:cms_post');

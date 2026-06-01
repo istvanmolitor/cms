@@ -18,11 +18,13 @@ class CmsSeeder extends Seeder
         try {
             /** @var AclManagementService $aclService */
             $aclService = app(AclManagementService::class);
-            $aclService->createPermission('cms_page', 'CMS tartalmak kezelése', 'admin');
-            $aclService->createPermission('cms_post', 'CMS tartalmak kezelése', 'admin');
-            $aclService->createPermission('cms_region', 'CMS tartalmak kezelése', 'admin');
-            $aclService->createPermission('cms_author', 'CMS tartalmak kezelése', 'admin');
-            $aclService->createPermission('cms_menu', 'CMS tartalmak kezelése', 'admin');
+            $permissionGroupName = 'CMS';
+
+            $aclService->createPermission('cms_page', 'Oldalak kezelése', 'admin', $permissionGroupName);
+            $aclService->createPermission('cms_post', 'Bejegytések kezelése', 'admin', $permissionGroupName);
+            $aclService->createPermission('cms_region', 'Tartalom régiók kezelése', 'admin', $permissionGroupName);
+            $aclService->createPermission('cms_author', 'Szerzők kezelése', 'admin', $permissionGroupName);
+            $aclService->createPermission('cms_menu', 'Menük kezelése', 'admin', $permissionGroupName);
         } catch (PermissionException $e) {
             $this->command->error($e->getMessage());
         }
