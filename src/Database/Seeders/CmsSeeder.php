@@ -18,7 +18,11 @@ class CmsSeeder extends Seeder
         try {
             /** @var AclManagementService $aclService */
             $aclService = app(AclManagementService::class);
-            $aclService->createPermission('cms', 'CMS tartalmak kezelése', 'admin');
+            $aclService->createPermission('cms_page', 'CMS tartalmak kezelése', 'admin');
+            $aclService->createPermission('cms_post', 'CMS tartalmak kezelése', 'admin');
+            $aclService->createPermission('cms_region', 'CMS tartalmak kezelése', 'admin');
+            $aclService->createPermission('cms_author', 'CMS tartalmak kezelése', 'admin');
+            $aclService->createPermission('cms_menu', 'CMS tartalmak kezelése', 'admin');
         } catch (PermissionException $e) {
             $this->command->error($e->getMessage());
         }
