@@ -8,10 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Molitor\Cms\Events\Post\PostCreated;
+use Molitor\Cms\Events\Post\PostDeleted;
+use Molitor\Cms\Events\Post\PostUpdated;
 use Molitor\Language\Models\Language;
 
 class Post extends Model
 {
+    protected $dispatchesEvents = [
+        'created' => PostCreated::class,
+        'updated' => PostUpdated::class,
+        'deleted' => PostDeleted::class,
+    ];
+
     protected $fillable = [
         'title',
         'slug',
