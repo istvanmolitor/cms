@@ -23,7 +23,7 @@ class StorePostRequest extends FormRequest
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:posts,slug',
             'is_published' => 'nullable|boolean',
-            'lead' => 'nullable|string|max:255',
+            'lead' => 'nullable|string',
             'layout' => 'nullable|string|max:255',
             'main_image_url' => 'nullable|string|max:2048',
             'language_id' => 'nullable|exists:languages,id',
