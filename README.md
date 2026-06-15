@@ -194,3 +194,21 @@ A csomag repository pattern-t használ:
 - `ContentRepository` / `ContentRepositoryInterface`
 - `ContentElementRepository` / `ContentElementRepositoryInterface`
 
+
+## Seeder regisztrálása
+
+A jogosultságok és kezdeti adatok beállításához regisztráld a seedert a `database/seeders/DatabaseSeeder.php` fájlban:
+
+```php
+use Molitor\Cms\Database\Seeders\CmsSeeder;
+
+class DatabaseSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $this->call([
+            CmsSeeder::class,
+        ]);
+    }
+}
+```
