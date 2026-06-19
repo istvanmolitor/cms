@@ -36,7 +36,7 @@ class PostController
         $post->load(['content.contentElements', 'authors', 'postGroups']);
 
         $layout = $this->layoutService->getLayoutTemplate($post->layout);
-
+        
         return view('cms::post.show', [
             'layout' => $layout,
             'post' => $post,
