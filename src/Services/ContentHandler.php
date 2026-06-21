@@ -22,6 +22,7 @@ use Molitor\Cms\Services\ContentElementTypes\ListElementType;
 use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
 use Molitor\Cms\Services\ContentElementTypes\TextElementType;
 use Molitor\Cms\Services\ContentElementTypes\VideoElementType;
+use Molitor\Theme\Services\ThemeHelper;
 
 class ContentHandler
 {
@@ -31,6 +32,7 @@ class ContentHandler
         private ContentRepositoryInterface $contentRepository,
         private ContentElementRepositoryInterface $contentElementRepository,
         private ContentElementTypeRepositoryInterface $contentElementTypeRepository,
+        private ThemeHelper $themeHelper
     ) {
         $this->initElementTypes();
     }
@@ -285,6 +287,8 @@ class ContentHandler
         $data = $type->prepare($settings);
         $data['element'] = $element;
 
-        return view($type->getTemplate(), $data)->render();
+        $view = $this->themeHelper->getRealView($type->getTemplate());
+        
+        return view($view, $data)->render();
     }
 }
