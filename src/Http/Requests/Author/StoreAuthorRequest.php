@@ -21,6 +21,11 @@ class StoreAuthorRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'nickname' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:50',
+            'position' => 'nullable|string|max:255',
+            'bio' => 'nullable|string',
             'profile_url' => 'nullable|string|max:255',
         ];
     }

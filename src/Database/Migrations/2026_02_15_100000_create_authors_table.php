@@ -17,6 +17,11 @@ class CreateAuthorsTable extends Migration
             $table->id();
             $table->string('slug')->unique();
             $table->string('name');
+            $table->string('nickname')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('position')->nullable();
+            $table->text('bio')->nullable();
             $table->string('profile_url')->nullable();
             $table->timestamps();
         });
