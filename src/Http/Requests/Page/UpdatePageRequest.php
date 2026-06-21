@@ -31,6 +31,7 @@ class UpdatePageRequest extends FormRequest
             'lead' => 'nullable|string',
             'layout' => 'nullable|string|max:255',
             'main_image_url' => 'nullable|string|max:2048',
+            'keywords' => 'nullable|string|max:1000',
             'language_id' => 'nullable|exists:languages,id',
             'content' => 'sometimes|required|array',
             'content.content_elements' => 'sometimes|required|array|min:1',

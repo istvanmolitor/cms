@@ -28,6 +28,7 @@ class Post extends Model
         'lead',
         'layout',
         'main_image_url',
+        'keywords',
         'content_id',
         'language_id',
     ];

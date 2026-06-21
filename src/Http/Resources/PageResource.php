@@ -23,6 +23,7 @@ class PageResource extends JsonResource
             'lead' => $this->lead,
             'layout' => $this->layout,
             'main_image_url' => $this->main_image_url,
+            'keywords' => $this->keywords,
             'language_id' => $this->language_id,
             'language' => $this->whenLoaded('language'),
             'content' => new ContentResource($this->whenLoaded('content')),

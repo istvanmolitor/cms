@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->text('lead')->nullable();
             $table->string('layout')->default('default');
             $table->string('main_image_url')->nullable();
+            $table->string('keywords')->nullable();
 
             $table->unsignedBigInteger('content_id');
             $table->foreign('content_id')->references('id')->on('contents');

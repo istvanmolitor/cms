@@ -18,6 +18,7 @@ class Page extends Model
         'lead',
         'layout',
         'main_image_url',
+        'keywords',
         'content_id',
         'language_id',
     ];
