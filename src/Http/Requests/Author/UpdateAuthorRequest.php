@@ -6,6 +6,7 @@ namespace Molitor\Cms\Http\Requests\Author;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class UpdateAuthorRequest extends FormRequest
 {
@@ -21,6 +22,7 @@ class UpdateAuthorRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'slug' => ['required', 'string', 'max:255', Rule::unique('authors', 'slug')->ignore($this->route('author'))],
             'nickname' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:50',
