@@ -25,7 +25,8 @@ interface PostRepositoryInterface
         ?string $lead = null,
         ?string $layout = null,
         ?string $mainImageUrl = null,
-        ?int $languageId = null
+        ?int $languageId = null,
+        ?int $postTypeId = null
     ): Post;
 
     public function update(
@@ -36,7 +37,8 @@ interface PostRepositoryInterface
         ?string $lead = null,
         ?string $layout = null,
         ?string $mainImageUrl = null,
-        ?int $languageId = null
+        ?int $languageId = null,
+        ?int $postTypeId = null
     ): Post;
 
     public function delete(Post $post): void;

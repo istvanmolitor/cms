@@ -42,6 +42,7 @@ class UpdatePostRequest extends FormRequest
             'author_ids.*' => 'exists:authors,id',
             'post_group_ids' => 'nullable|array',
             'post_group_ids.*' => 'exists:post_groups,id',
+            'post_type_id' => 'nullable|exists:post_types,id',
         ];
     }
 }

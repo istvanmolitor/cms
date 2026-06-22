@@ -54,6 +54,7 @@ class PostApiController
         $post->load('postGroups');
         $post->load('postMeta');
         $post->load('language');
+        $post->load('postType');
 
         return new PostResource($post);
     }
@@ -69,7 +70,8 @@ class PostApiController
                 lead: $request->lead,
                 layout: $request->layout,
                 mainImageUrl: $request->main_image_url,
-                languageId: $request->language_id
+                languageId: $request->language_id,
+                postTypeId: $request->post_type_id
             );
 
             $contentHandler->saveContentDto($post->content, $content);
@@ -101,7 +103,8 @@ class PostApiController
             lead: $request->lead,
             layout: $request->layout,
             mainImageUrl: $request->main_image_url,
-            languageId: $request->language_id
+            languageId: $request->language_id,
+            postTypeId: $request->post_type_id
         );
 
         $contentHandler->saveContentDto($post->content, ContentDto::fromArray($request->content));
@@ -114,7 +117,7 @@ class PostApiController
             $post->postGroups()->sync($request->post_group_ids);
         }
 
-        $post->load('content.contentElements.children', 'authors', 'postGroups', 'postMeta');
+        $post->load('content.contentElements.children', 'authors', 'postGroups', 'postMeta', 'postType');
 
         return new PostResource($post);
     }
@@ -139,6 +142,7 @@ class PostApiController
         $post->load('postGroups');
         $post->load('postMeta');
         $post->load('language');
+        $post->load('postType');
 
         return new PostResource($post);
     }

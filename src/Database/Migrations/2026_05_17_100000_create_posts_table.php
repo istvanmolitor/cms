@@ -29,6 +29,9 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('language_id')->nullable();
             $table->foreign('language_id')->references('id')->on('languages');
 
+            $table->unsignedBigInteger('post_type_id')->nullable();
+            $table->foreign('post_type_id')->references('id')->on('post_types')->nullOnDelete();
+
             $table->timestamps();
         });
     }

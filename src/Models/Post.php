@@ -31,10 +31,12 @@ class Post extends Model
         'keywords',
         'content_id',
         'language_id',
+        'post_type_id',
     ];
 
     protected $casts = [
         'content_id' => 'integer',
+        'post_type_id' => 'integer',
         'is_published' => 'boolean',
     ];
 
@@ -60,6 +62,11 @@ class Post extends Model
     public function language(): BelongsTo
     {
         return $this->belongsTo(Language::class, 'language_id');
+    }
+
+    public function postType(): BelongsTo
+    {
+        return $this->belongsTo(PostType::class, 'post_type_id');
     }
 
     public function postMeta(): HasMany

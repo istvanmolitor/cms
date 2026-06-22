@@ -78,6 +78,7 @@ class PostRepository implements PostRepositoryInterface
         ?string $layout = null,
         ?string $mainImageUrl = null,
         ?int $languageId = null,
+        ?int $postTypeId = null,
     ): Post {
         $data = [
             'title' => $title,
@@ -105,6 +106,10 @@ class PostRepository implements PostRepositoryInterface
             $data['language_id'] = $languageId;
         }
 
+        if ($postTypeId !== null) {
+            $data['post_type_id'] = $postTypeId;
+        }
+
         return $this->post->create($data);
     }
 
@@ -116,7 +121,8 @@ class PostRepository implements PostRepositoryInterface
         ?string $lead = null,
         ?string $layout = null,
         ?string $mainImageUrl = null,
-        ?int $languageId = null
+        ?int $languageId = null,
+        ?int $postTypeId = null
     ): Post {
         $data = [];
 
@@ -146,6 +152,10 @@ class PostRepository implements PostRepositoryInterface
 
         if ($languageId !== null) {
             $data['language_id'] = $languageId;
+        }
+
+        if ($postTypeId !== null) {
+            $data['post_type_id'] = $postTypeId;
         }
 
         $post->update($data);

@@ -27,6 +27,8 @@ class PostResource extends JsonResource
             'keywords' => $this->keywords,
             'language_id' => $this->language_id,
             'language' => $this->whenLoaded('language'),
+            'post_type_id' => $this->post_type_id,
+            'postType' => $this->whenLoaded('postType'),
             'content' => new ContentResource($this->whenLoaded('content')),
             'authors' => AuthorResource::collection($this->whenLoaded('authors')),
             'postGroups' => PostGroupResource::collection($this->whenLoaded('postGroups')),
