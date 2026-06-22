@@ -29,6 +29,9 @@ class UpdatePostGroupRequest extends FormRequest
                 Rule::unique('post_groups', 'slug')->ignore($this->route('post_group')),
             ],
             'layout' => 'nullable|string|max:255',
+            'lead' => 'nullable|string',
+            'main_image_url' => 'nullable|string|max:2048',
+            'keywords' => 'nullable|string|max:500',
         ];
     }
 }

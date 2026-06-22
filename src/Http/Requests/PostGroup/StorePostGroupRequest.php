@@ -23,6 +23,9 @@ class StorePostGroupRequest extends FormRequest
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:post_groups,slug',
             'layout' => 'nullable|string|max:255',
+            'lead' => 'nullable|string',
+            'main_image_url' => 'nullable|string|max:2048',
+            'keywords' => 'nullable|string|max:500',
         ];
     }
 }

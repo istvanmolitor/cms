@@ -19,6 +19,9 @@ class PostGroupResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'layout' => $this->layout,
+            'lead' => $this->lead,
+            'main_image_url' => $this->main_image_url,
+            'keywords' => $this->keywords,
             'posts' => $this->whenLoaded('posts', function () {
                 return PostResource::collection($this->posts);
             }),

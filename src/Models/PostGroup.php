@@ -13,6 +13,9 @@ class PostGroup extends Model
         'name',
         'slug',
         'layout',
+        'lead',
+        'main_image_url',
+        'keywords',
     ];
 
     protected $casts = [
