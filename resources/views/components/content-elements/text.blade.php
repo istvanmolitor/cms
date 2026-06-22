@@ -11,7 +11,7 @@
 
 <div class="content-element content-element-text mb-6">
     <p class="text-gray-700 leading-relaxed {{ $alignClass }}">
-        {{ $text }}
+        {!! $text !!}
     </p>
 </div>
 

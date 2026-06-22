@@ -11,6 +11,8 @@ interface PageTypeRepositoryInterface
 {
     public function getAll(): Collection;
 
+    public function getDefault(): ?PageType;
+
     public function getById(int $id): ?PageType;
 
     public function getBySlug(string $slug): ?PageType;

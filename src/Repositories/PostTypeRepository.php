@@ -18,6 +18,11 @@ class PostTypeRepository implements PostTypeRepositoryInterface
         return $this->postType->all();
     }
 
+    public function getDefault(): ?PostType
+    {
+        return $this->postType->first();
+    }
+
     public function getById(int $id): ?PostType
     {
         return $this->postType->find($id);

@@ -11,6 +11,8 @@ interface PostTypeRepositoryInterface
 {
     public function getAll(): Collection;
 
+    public function getDefault(): ?PostType;
+
     public function getById(int $id): ?PostType;
 
     public function getBySlug(string $slug): ?PostType;

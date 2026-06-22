@@ -18,6 +18,11 @@ class PageTypeRepository implements PageTypeRepositoryInterface
         return $this->pageType->all();
     }
 
+    public function getDefault(): ?PageType
+    {
+        return $this->pageType->first();
+    }
+
     public function getById(int $id): ?PageType
     {
         return $this->pageType->find($id);
