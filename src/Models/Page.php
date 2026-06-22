@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Molitor\Language\Models\Language;
+use Molitor\Cms\Models\PageType;
 
 class Page extends Model
 {
@@ -21,10 +22,12 @@ class Page extends Model
         'keywords',
         'content_id',
         'language_id',
+        'page_type_id',
     ];
 
     protected $casts = [
         'content_id' => 'integer',
+        'page_type_id' => 'integer',
         'is_published' => 'boolean',
     ];
 
@@ -45,5 +48,10 @@ class Page extends Model
     public function metaData(): HasMany
     {
         return $this->hasMany(PageMeta::class, 'page_id');
+    }
+
+    public function pageType(): BelongsTo
+    {
+        return $this->belongsTo(PageType::class, 'page_type_id');
     }
 }

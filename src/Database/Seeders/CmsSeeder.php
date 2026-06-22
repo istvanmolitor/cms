@@ -26,6 +26,7 @@ class CmsSeeder extends Seeder
             $aclService->createPermission('cms_author', 'Szerzők kezelése', 'admin', $permissionGroupName);
             $aclService->createPermission('cms_menu', 'Menük kezelése', 'admin', $permissionGroupName);
             $aclService->createPermission('cms_post_type', 'Poszt típusok kezelése', 'admin', $permissionGroupName);
+            $aclService->createPermission('cms_page_type', 'Oldal típusok kezelése', 'admin', $permissionGroupName);
         } catch (PermissionException $e) {
             $this->command->error($e->getMessage());
         }
@@ -35,6 +36,9 @@ class CmsSeeder extends Seeder
 
         // Seed post types
         $this->call(PostTypeSeeder::class);
+
+        // Seed page types
+        $this->call(PageTypeSeeder::class);
 
         // Seed menu data
         $this->call(MenuSeeder::class);

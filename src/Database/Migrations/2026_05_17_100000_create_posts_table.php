@@ -26,11 +26,11 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('content_id');
             $table->foreign('content_id')->references('id')->on('contents');
 
-            $table->unsignedBigInteger('language_id')->nullable();
+            $table->unsignedBigInteger('language_id');
             $table->foreign('language_id')->references('id')->on('languages');
 
-            $table->unsignedBigInteger('post_type_id')->nullable();
-            $table->foreign('post_type_id')->references('id')->on('post_types')->nullOnDelete();
+            $table->unsignedBigInteger('post_type_id');
+            $table->foreign('post_type_id')->references('id')->on('post_types');
 
             $table->timestamps();
         });

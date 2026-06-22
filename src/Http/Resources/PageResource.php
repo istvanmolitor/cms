@@ -26,6 +26,8 @@ class PageResource extends JsonResource
             'keywords' => $this->keywords,
             'language_id' => $this->language_id,
             'language' => $this->whenLoaded('language'),
+            'page_type_id' => $this->page_type_id,
+            'page_type' => $this->whenLoaded('pageType'),
             'content' => new ContentResource($this->whenLoaded('content')),
             'meta_data' => $this->whenLoaded('metaData', function (): array {
                 return $this->metaData

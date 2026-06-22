@@ -68,7 +68,8 @@ class PageApiController
                 lead: $request->lead,
                 layout: $request->layout,
                 mainImageUrl: $request->main_image_url,
-                languageId: $request->language_id
+                languageId: $request->language_id,
+                pageTypeId: $request->page_type_id
             );
 
             $contentHandler->saveContentDto($page->content, $content);
@@ -92,7 +93,8 @@ class PageApiController
             lead: $request->lead,
             layout: $request->layout,
             mainImageUrl: $request->main_image_url,
-            languageId: $request->language_id
+            languageId: $request->language_id,
+            pageTypeId: $request->page_type_id
         );
 
         $contentHandler->saveContentDto($page->content, ContentDto::fromArray($request->content));

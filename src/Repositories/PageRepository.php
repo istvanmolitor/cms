@@ -78,6 +78,7 @@ class PageRepository implements PageRepositoryInterface
         ?string $layout = null,
         ?string $mainImageUrl = null,
         ?int $languageId = null,
+        ?int $pageTypeId = null,
     ): Page {
         $data = [
             'title' => $title,
@@ -105,6 +106,8 @@ class PageRepository implements PageRepositoryInterface
             $data['language_id'] = $languageId;
         }
 
+        $data['page_type_id'] = $pageTypeId;
+
         $page = $this->page->create($data);
 
         return $page;
@@ -118,7 +121,8 @@ class PageRepository implements PageRepositoryInterface
         ?string $lead = null,
         ?string $layout = null,
         ?string $mainImageUrl = null,
-        ?int $languageId = null
+        ?int $languageId = null,
+        ?int $pageTypeId = null
     ): Page {
         $data = [];
 
@@ -149,6 +153,8 @@ class PageRepository implements PageRepositoryInterface
         if ($languageId !== null) {
             $data['language_id'] = $languageId;
         }
+
+        $data['page_type_id'] = $pageTypeId;
 
         $page->update($data);
 

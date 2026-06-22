@@ -28,6 +28,7 @@ class StorePageRequest extends FormRequest
             'main_image_url' => 'nullable|string|max:2048',
             'keywords' => 'nullable|string|max:1000',
             'language_id' => 'nullable|exists:languages,id',
+            'page_type_id' => 'nullable|exists:page_types,id',
             'content' => 'required|array',
             'content.content_elements' => 'required|array|min:1',
             'content.content_elements.*.type' => 'required|string|max:255',

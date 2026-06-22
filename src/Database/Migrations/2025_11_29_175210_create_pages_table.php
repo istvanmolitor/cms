@@ -23,6 +23,9 @@ class CreatePagesTable extends Migration
             $table->string('main_image_url')->nullable();
             $table->string('keywords')->nullable();
 
+            $table->unsignedBigInteger('page_type_id');
+            $table->foreign('page_type_id')->references('id')->on('page_types');
+
             $table->unsignedBigInteger('content_id');
             $table->foreign('content_id')->references('id')->on('contents');
 

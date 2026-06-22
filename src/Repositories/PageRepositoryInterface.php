@@ -25,7 +25,8 @@ interface PageRepositoryInterface
         ?string $lead = null,
         ?string $layout = null,
         ?string $mainImageUrl = null,
-        ?int $languageId = null
+        ?int $languageId = null,
+        ?int $pageTypeId = null
     ): Page;
 
     public function update(
@@ -36,7 +37,8 @@ interface PageRepositoryInterface
         ?string $lead = null,
         ?string $layout = null,
         ?string $mainImageUrl = null,
-        ?int $languageId = null
+        ?int $languageId = null,
+        ?int $pageTypeId = null
     ): Page;
 
     public function delete(Page $page): void;
