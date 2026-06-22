@@ -10,6 +10,7 @@ use Molitor\Cms\Http\Controllers\Api\PageApiController;
 use Molitor\Cms\Http\Controllers\Api\PostApiController;
 use Molitor\Cms\Http\Controllers\Api\PostGroupApiController;
 use Molitor\Cms\Http\Controllers\Api\PostMetaApiController;
+use Molitor\Cms\Http\Controllers\Api\PostTypeApiController;
 
 Route::prefix('api/cms')->middleware(['api', 'auth:sanctum'])->group(function () {
     Route::apiResource('pages', PageApiController::class)->middleware('permission:cms_page');
@@ -22,6 +23,7 @@ Route::prefix('api/cms')->middleware(['api', 'auth:sanctum'])->group(function ()
     Route::apiResource('authors', AuthorApiController::class)->middleware('permission:cms_author');
 
     Route::apiResource('post-groups', PostGroupApiController::class)->middleware('permission:cms_post');
+    Route::apiResource('post-types', PostTypeApiController::class)->middleware('permission:cms_post_type');
     Route::apiResource('post-metas', PostMetaApiController::class)->middleware('permission:cms_post');
     Route::get('posts/{post}/metas', [PostMetaApiController::class, 'index'])->name('cms.api.posts.metas.index')->middleware('permission:cms_post');
 

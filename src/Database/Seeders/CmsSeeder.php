@@ -25,12 +25,16 @@ class CmsSeeder extends Seeder
             $aclService->createPermission('cms_region', 'Tartalom régiók kezelése', 'admin', $permissionGroupName);
             $aclService->createPermission('cms_author', 'Szerzők kezelése', 'admin', $permissionGroupName);
             $aclService->createPermission('cms_menu', 'Menük kezelése', 'admin', $permissionGroupName);
+            $aclService->createPermission('cms_post_type', 'Poszt típusok kezelése', 'admin', $permissionGroupName);
         } catch (PermissionException $e) {
             $this->command->error($e->getMessage());
         }
 
         // Seed content element types
         $this->call(ContentElementTypeSeeder::class);
+
+        // Seed post types
+        $this->call(PostTypeSeeder::class);
 
         // Seed menu data
         $this->call(MenuSeeder::class);

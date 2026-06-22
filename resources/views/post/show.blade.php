@@ -54,3 +54,7 @@
         </div>
     </article>
 @endsection
+
+@section('sidebar')
+    <x-theme::component view="cms::post.partials.sidebar" />
+@endsection
