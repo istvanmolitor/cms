@@ -1,0 +1,1 @@
+<x-cms-content-region name="post-list-sidebar" />

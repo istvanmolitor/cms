@@ -1,5 +1,5 @@
 @if($isEditable)
-    <a href=""></a>
+    <a href="/admin/cms/region/{{ $region->id }}/edit">Régió szerkesztése</a>
 @endif
 
 

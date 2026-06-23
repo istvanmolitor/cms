@@ -41,7 +41,9 @@ use Molitor\Cms\View\Components\ContentRegion as ContentRegionComponent;
 use Molitor\Cms\View\Components\Menu;
 use Molitor\Cms\View\Components\MenuItem;
 use Molitor\Cms\View\Components\Pager;
+use Molitor\Cms\Services\CmsSettingForm;
 use Molitor\Cms\View\Components\PostList;
+use Molitor\Setting\Services\SettingHandler;
 
 class CmsServiceProvider extends ServiceProvider
 {
@@ -69,6 +71,8 @@ class CmsServiceProvider extends ServiceProvider
         Blade::component('cms-menu-item', MenuItem::class);
         Blade::component('cms-post-list', PostList::class);
         Blade::component('cms-pager', Pager::class);
+
+        $this->app->make(SettingHandler::class)->registerSettingForm(CmsSettingForm::class);
 
         $contentObserver = new ContentObserver;
         Page::observe($contentObserver);

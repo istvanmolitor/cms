@@ -7,13 +7,15 @@ namespace Molitor\Cms\Http\Controllers;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Molitor\Cms\Repositories\PostRepositoryInterface;
+use Molitor\Cms\Services\CmsSettingForm;
 use Molitor\Theme\Services\LayoutService;
 
 class PostController
 {
     public function __construct(
         private PostRepositoryInterface $postRepository,
-        private LayoutService $layoutService
+        private LayoutService $layoutService,
+        private CmsSettingForm $cmsSettingForm
     ) {}
 
     public function index(): View|Response
@@ -24,8 +26,8 @@ class PostController
             'per_page' => 10,
         ]);
 
-        $layout = $this->layoutService->getLayoutTemplate();
-
+        $layoutName = $this->cmsSettingForm->get('post_list_layout');
+        $layout = $this->layoutService->getLayoutTemplate($layoutName);
         return view('cms::post.index', [
             'layout' => $layout,
             'posts' => $posts,

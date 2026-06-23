@@ -17,3 +17,7 @@
         @endif
     </div>
 @endsection
+
+@section('sidebar')
+    <x-theme::component view="cms::post.partials.list-sidebar" />
+@endsection

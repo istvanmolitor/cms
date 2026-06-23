@@ -11,10 +11,14 @@ use Molitor\Cms\Repositories\ContentRegionRepositoryInterface;
 
 class ContentRegion extends Component
 {
+    public bool $isEditable;
+
     public function __construct(
         private ContentRegionRepositoryInterface $contentRegionRepository,
         public string $name
-    ) {}
+    ) {
+        $this->isEditable = Gate::allows('acl', 'cms_region');
+    }
 
     public function render(): View
     {
@@ -25,7 +29,6 @@ class ContentRegion extends Component
         }
 
         return view('cms::components.content-region', [
-            'isEditable' => Gate::allows('acl', 'cms'),
             'region' => $region,
         ]);
     }
