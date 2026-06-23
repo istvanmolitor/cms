@@ -23,6 +23,7 @@ class CodeElementType extends BaseContentElementType
     {
         return [
             'code' => $data['code'] ?? '',
+            'language' => $data['language'] ?? 'javascript',
         ];
     }
 
@@ -30,6 +31,7 @@ class CodeElementType extends BaseContentElementType
     {
         return [
             'code' => 'required|string',
+            'language' => 'nullable|string',
         ];
     }
 }
