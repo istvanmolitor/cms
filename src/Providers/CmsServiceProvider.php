@@ -41,6 +41,7 @@ use Molitor\Cms\View\Components\ContentRegion as ContentRegionComponent;
 use Molitor\Cms\View\Components\Menu;
 use Molitor\Cms\View\Components\MenuItem;
 use Molitor\Cms\View\Components\Pager;
+use Molitor\Cms\Services\CmsComponentRegistry;
 use Molitor\Cms\Services\CmsSettingForm;
 use Molitor\Cms\View\Components\PostList;
 use Molitor\Setting\Services\SettingHandler;
@@ -95,5 +96,6 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(AuthorRepositoryInterface::class, AuthorRepository::class);
         $this->app->bind(PageMetaRepositoryInterface::class, PageMetaRepository::class);
         $this->app->bind(PostMetaRepositoryInterface::class, PostMetaRepository::class);
+        $this->app->singleton(CmsComponentRegistry::class);
     }
 }
