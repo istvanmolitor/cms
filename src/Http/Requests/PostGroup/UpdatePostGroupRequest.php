@@ -12,7 +12,7 @@ class UpdatePostGroupRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return Gate::allows('acl', 'cms');
+        return Gate::allows('acl', 'cms_post');
     }
 
     /**
