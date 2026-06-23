@@ -279,12 +279,10 @@ class ContentHandler
             return '';
         }
 
-        $settings = $type->unserialize($element->settings);
-        $data = $type->prepare($settings);
-        $data['element'] = $element;
+        $prepared = $type->unserialize($element->settings);
 
         $view = $this->themeHelper->getRealView($type->getTemplate());
-        
-        return view($view, $data)->render();
+
+        return view($view, ['settings' => $prepared, 'element' => $element])->render();
     }
 }
