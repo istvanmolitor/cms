@@ -18,6 +18,10 @@ class PostRepository implements PostRepositoryInterface
     {
         $query = $this->post->with(['postGroups']);
 
+        if (isset($params['is_published'])) {
+            $query->where('is_published', $params['is_published']);
+        }
+
         if (isset($params['search']) && $params['search']) {
             $query->where(function ($q) use ($params) {
                 $q->where('title', 'like', "%{$params['search']}%")

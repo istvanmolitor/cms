@@ -18,10 +18,17 @@ class PostController
 
     public function index(): View|Response
     {
+        $posts = $this->postRepository->getAll([
+            'is_published' => true,
+            'paginate' => true,
+            'per_page' => 10,
+        ]);
+
         $layout = $this->layoutService->getLayoutTemplate();
 
         return view('cms::post.index', [
             'layout' => $layout,
+            'posts' => $posts,
         ]);
     }
 
