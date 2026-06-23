@@ -7,6 +7,7 @@ namespace Molitor\Cms\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
+use Molitor\Language\Http\Resources\LanguageResource;
 
 class PostResource extends JsonResource
 {
@@ -26,9 +27,9 @@ class PostResource extends JsonResource
             'main_image_url' => $this->main_image_url,
             'keywords' => $this->keywords,
             'language_id' => $this->language_id,
-            'language' => $this->whenLoaded('language'),
+            'language' => new LanguageResource($this->whenLoaded('language')),
             'post_type_id' => $this->post_type_id,
-            'postType' => $this->whenLoaded('postType'),
+            'postType' => new PostTypeResource($this->whenLoaded('postType')),
             'content' => new ContentResource($this->whenLoaded('content')),
             'authors' => AuthorResource::collection($this->whenLoaded('authors')),
             'postGroups' => PostGroupResource::collection($this->whenLoaded('postGroups')),

@@ -6,24 +6,43 @@ abstract class BaseContentElementType
 {
     abstract public function getName(): string;
 
+    abstract public function getPackage(): string;
+
     abstract public function getLabel(): string;
 
-    /**
-     * Convert form data to a string for database storage
-     */
-    abstract public function serialize(array $data): string;
+    abstract public function prepare(array $data): array;
 
-    /**
-     * Convert stored string back to form data
-     */
-    abstract public function unserialize(string $content): array;
+    public function serialize(array $data): string
+    {
+        return json_encode($this->prepare($data));
+    }
 
-    abstract public function getDefaultSettings(): array;
+    public function unserialize(string $content): array
+    {
+        if (empty($content)) {
+            return $this->prepare($this->getDefaultSettings());
+        }
+
+        $data = json_decode($content, true);
+        if (!is_array($data)) {
+            return $this->prepare($this->getDefaultSettings());
+        }
+
+        return $this->prepare($data);
+    }
+
+    public function getDefaultSettings(): array
+    {
+        return $this->prepare([]);
+    }
 
     /**
      * Get the template path for rendering this element type
      */
-    abstract public function getTemplate(): string;
+    public function getTemplate(): string
+    {
+        return $this->getPackage() . '::components.content-elements.' . $this->getName();
+    }
 
     /**
      * Get the validation rules for this element type
@@ -31,16 +50,6 @@ abstract class BaseContentElementType
      * @return array<string, mixed>
      */
     abstract public function getValidationRules(): array;
-
-    /**
-     * Prepare data for the view
-     */
-    public function prepare(array $settings): array
-    {
-        return [
-            'settings' => $settings,
-        ];
-    }
 
     /**
      * Check if a string is valid JSON

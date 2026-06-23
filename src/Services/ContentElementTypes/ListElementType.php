@@ -9,58 +9,20 @@ class ListElementType extends BaseContentElementType
         return 'list';
     }
 
+    public function getPackage(): string
+    {
+        return 'cms';
+    }
+
     public function getLabel(): string
     {
         return __('List');
     }
 
-    public function getTemplate(): string
-    {
-        return 'cms::components.content-elements.list';
-    }
-
-    public function serialize(array $data): string
-    {
-        return serialize([
-            'items' => $data['items'] ?? [],
-        ]);
-    }
-
-    public function unserialize(string $content): array
-    {
-        // Handle empty content
-        if (empty($content)) {
-            return $this->getDefaultSettings();
-        }
-
-        // Check if content is JSON (for backward compatibility or migration)
-        if ($this->isJson($content)) {
-            $data = json_decode($content, true);
-
-            return [
-                'items' => $data['items'] ?? [],
-            ];
-        }
-
-        // Attempt to unserialize with error handling
-        $data = @unserialize($content);
-
-        // If unserialize failed, try to handle gracefully
-        if ($data === false && $content !== serialize(false)) {
-            error_log('Failed to unserialize content in ListElementType: '.$content);
-
-            return $this->getDefaultSettings();
-        }
-
-        return [
-            'items' => $data['items'] ?? [],
-        ];
-    }
-
-    public function getDefaultSettings(): array
+    public function prepare(array $data): array
     {
         return [
-            'items' => [],
+            'items' => $data['items'] ?? [],
         ];
     }
 

@@ -2,11 +2,16 @@
 
 namespace Molitor\Cms\Services\ContentElementTypes;
 
-class CodeElementType extends TextElementType
+class CodeElementType extends BaseContentElementType
 {
     public function getName(): string
     {
         return 'code';
+    }
+
+    public function getPackage(): string
+    {
+        return 'cms';
     }
 
     public function getLabel(): string
@@ -14,8 +19,17 @@ class CodeElementType extends TextElementType
         return __('Code');
     }
 
-    public function getTemplate(): string
+    public function prepare(array $data): array
     {
-        return 'cms::components.content-elements.code';
+        return [
+            'code' => $data['code'] ?? '',
+        ];
+    }
+
+    public function getValidationRules(): array
+    {
+        return [
+            'code' => 'required|string',
+        ];
     }
 }

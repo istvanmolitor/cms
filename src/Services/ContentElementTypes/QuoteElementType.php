@@ -2,11 +2,18 @@
 
 namespace Molitor\Cms\Services\ContentElementTypes;
 
-class QuoteElementType extends TextElementType
+use Override;
+
+class QuoteElementType extends BaseContentElementType
 {
     public function getName(): string
     {
         return 'quote';
+    }
+
+    public function getPackage(): string
+    {
+        return 'cms';
     }
 
     public function getLabel(): string
@@ -14,8 +21,17 @@ class QuoteElementType extends TextElementType
         return __('Quote');
     }
 
-    public function getTemplate(): string
+    public function prepare(array $data): array
     {
-        return 'cms::components.content-elements.quote';
+        return [
+            'text' => $data['text'] ?? '',
+        ];
+    }
+
+    public function getValidationRules(): array
+    {
+        return [
+            'text' => 'required|string',
+        ];
     }
 }
