@@ -9,6 +9,7 @@ use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Translation\PotentiallyTranslatedString;
+use Molitor\Cms\Exceptions\InvalidElementTypeNameException;
 use Molitor\Cms\Services\ContentHandler;
 
 class ContentElementValidator implements DataAwareRule, ValidationRule
@@ -55,9 +56,10 @@ class ContentElementValidator implements DataAwareRule, ValidationRule
 
         /** @var ContentHandler $handler */
         $handler = app(ContentHandler::class);
-        $elementType = $handler->getElementType($type);
 
-        if (! $elementType) {
+        try {
+            $elementType = $handler->getElementType($type);
+        } catch (InvalidElementTypeNameException) {
             $fail(__('The selected content element type is invalid.'));
 
             return;
@@ -76,8 +78,8 @@ class ContentElementValidator implements DataAwareRule, ValidationRule
 
     protected function getIndexFromAttribute(string $attribute): ?string
     {
-        // Example: content.content_elements.0.content
-        if (preg_match('/content\.content_elements\.(\d+)\.content/', $attribute, $matches)) {
+        // Example: content.content_elements.0.settings
+        if (preg_match('/content\.content_elements\.(\d+)\.settings/', $attribute, $matches)) {
             return $matches[1];
         }
 

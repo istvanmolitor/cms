@@ -17,6 +17,7 @@ use Molitor\Cms\Services\ContentElementTypes\HeadingElementType;
 use Molitor\Cms\Services\ContentElementTypes\IframeElementType;
 use Molitor\Cms\Services\ContentElementTypes\ImageElementType;
 use Molitor\Cms\Services\ContentElementTypes\ListElementType;
+use Molitor\Cms\Services\ContentElementTypes\MenuElementType;
 use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
 use Molitor\Cms\Services\ContentElementTypes\TextElementType;
 use Molitor\Cms\Services\ContentElementTypes\VideoElementType;
@@ -44,6 +45,7 @@ class ContentHandler
         $this->registerElementType(new CodeElementType);
         $this->registerElementType(new QuoteElementType);
         $this->registerElementType(new ListElementType);
+        $this->registerElementType(new MenuElementType);
     }
 
     public function registerElementType(BaseContentElementType $elementType): void
