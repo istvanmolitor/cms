@@ -24,14 +24,16 @@ class QuoteElementType extends BaseContentElementType
     public function prepare(array $data): array
     {
         return [
-            'text' => $data['text'] ?? '',
+            'quote' => $data['quote'] ?? '',
+            'author' => $data['author'] ?? '',
         ];
     }
 
     public function getValidationRules(): array
     {
         return [
-            'text' => 'required|string',
+            'quote' => 'required|string',
+            'author' => 'string',
         ];
     }
 }
