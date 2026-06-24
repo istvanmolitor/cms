@@ -36,7 +36,7 @@ class ImageElementType extends BaseContentElementType
     {
         return [
             'src' => 'required|string',
-            'alt' => 'string',
+            'alt' => 'nullable|string',
             'width' => 'nullable|integer',
             'height' => 'nullable|integer',
             'alignment' => 'string|in:left,center,right',

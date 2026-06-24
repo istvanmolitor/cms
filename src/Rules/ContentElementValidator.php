@@ -7,23 +7,22 @@ namespace Molitor\Cms\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\ValidatorAwareRule;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Translation\PotentiallyTranslatedString;
+use Illuminate\Validation\Validator as ValidatorInstance;
 use Molitor\Cms\Exceptions\InvalidElementTypeNameException;
 use Molitor\Cms\Services\ContentHandler;
 
-class ContentElementValidator implements DataAwareRule, ValidationRule
+class ContentElementValidator implements DataAwareRule, ValidationRule, ValidatorAwareRule
 {
     /**
-     * All of the data under validation.
-     *
      * @var array<string, mixed>
      */
-    protected $data = [];
+    protected array $data = [];
+
+    protected ValidatorInstance $validator;
 
     /**
-     * Set the data under validation.
-     *
      * @param  array<string, mixed>  $data
      */
     public function setData(array $data): static
@@ -33,15 +32,16 @@ class ContentElementValidator implements DataAwareRule, ValidationRule
         return $this;
     }
 
-    /**
-     * Run the validation rule.
-     *
-     * @param  Closure(string): PotentiallyTranslatedString  $fail
-     */
+    public function setValidator(ValidatorInstance $validator): static
+    {
+        $this->validator = $validator;
+
+        return $this;
+    }
+
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        // $attribute: content.content_elements.0.content
-        // We need the type of this element.
+        // $attribute: content.content_elements.0.settings
         $index = $this->getIndexFromAttribute($attribute);
         if ($index === null) {
             return;
@@ -66,19 +66,19 @@ class ContentElementValidator implements DataAwareRule, ValidationRule
         }
 
         $rules = $elementType->getValidationRules();
+        $subValidator = Validator::make($value, $rules);
 
-        $validator = Validator::make($value, $rules);
-
-        if ($validator->fails()) {
-            foreach ($validator->errors()->all() as $message) {
-                $fail($message);
+        if ($subValidator->fails()) {
+            foreach ($subValidator->errors()->messages() as $field => $messages) {
+                foreach ($messages as $message) {
+                    $this->validator->errors()->add("{$attribute}.{$field}", $message);
+                }
             }
         }
     }
 
     protected function getIndexFromAttribute(string $attribute): ?string
     {
-        // Example: content.content_elements.0.settings
         if (preg_match('/content\.content_elements\.(\d+)\.settings/', $attribute, $matches)) {
             return $matches[1];
         }

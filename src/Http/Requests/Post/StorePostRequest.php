@@ -6,6 +6,7 @@ namespace Molitor\Cms\Http\Requests\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Molitor\Cms\Rules\ContentElementValidator;
 
 class StorePostRequest extends FormRequest
 {
@@ -31,6 +32,7 @@ class StorePostRequest extends FormRequest
             'content' => 'nullable|array',
             'content.content_elements' => 'nullable|array',
             'content.content_elements.*.type' => 'required|string|max:255',
+            'content.content_elements.*.settings' => ['nullable', 'array', new ContentElementValidator],
             'content.content_elements.*.sort' => 'required|integer',
             'author_ids' => 'nullable|array',
             'author_ids.*' => 'exists:authors,id',
