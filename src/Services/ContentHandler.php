@@ -285,6 +285,6 @@ class ContentHandler
 
         $view = $this->themeHelper->getRealView($type->getTemplate());
 
-        return view($view, ['settings' => $prepared, 'element' => $element])->render();
+        return template($view, ['settings' => $prepared, 'element' => $element])->render();
     }
 }

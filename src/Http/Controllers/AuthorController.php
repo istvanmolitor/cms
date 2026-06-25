@@ -21,7 +21,7 @@ class AuthorController
         $authors = $this->authorRepository->getAll(['paginate' => true]);
         $layout = $this->layoutService->getLayoutTemplate();
 
-        return view('cms::author.index', [
+        return template('cms::author.index', [
             'layout' => $layout,
             'authors' => $authors,
         ]);
@@ -38,7 +38,7 @@ class AuthorController
         $posts = $author->posts()->orderBy('created_at', 'desc')->paginate(10);
         $layout = $this->layoutService->getLayoutTemplate();
 
-        return view('cms::author.show', [
+        return template('cms::author.show', [
             'layout' => $layout,
             'author' => $author,
             'posts' => $posts,

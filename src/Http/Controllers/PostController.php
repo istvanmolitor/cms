@@ -28,7 +28,7 @@ class PostController
 
         $layoutName = $this->cmsSettingForm->get('post_list_layout');
         $layout = $this->layoutService->getLayoutTemplate($layoutName);
-        return view('cms::post.index', [
+        return template('cms::post.index', [
             'layout' => $layout,
             'posts' => $posts,
         ]);
@@ -46,7 +46,7 @@ class PostController
 
         $layout = $this->layoutService->getLayoutTemplate($post->layout);
         
-        return view('cms::post.show', [
+        return template('cms::post.show', [
             'layout' => $layout,
             'post' => $post,
         ]);

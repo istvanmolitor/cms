@@ -21,7 +21,7 @@ class PostGroupController
         $postGroups = $this->postGroupRepository->getAll();
         $layout = $this->layoutService->getLayoutTemplate();
 
-        return view('cms::post-group.index', [
+        return template('cms::post-group.index', [
             'layout' => $layout,
             'postGroups' => $postGroups,
         ]);
@@ -38,7 +38,7 @@ class PostGroupController
         $posts = $postGroup->posts()->paginate(10);
         $layout = $this->layoutService->getLayoutTemplate($postGroup->layout);
 
-        return view('cms::post-group.show', [
+        return template('cms::post-group.show', [
             'layout' => $layout,
             'postGroup' => $postGroup,
             'posts' => $posts,

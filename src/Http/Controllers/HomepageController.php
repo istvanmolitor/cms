@@ -18,7 +18,7 @@ class HomepageController
     {
         $layout = $this->layoutService->getLayoutTemplate();
 
-        return view('cms::homepage.index', [
+        return template('cms::homepage.index', [
             'layout' => $layout,
         ]);
     }

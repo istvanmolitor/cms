@@ -20,7 +20,7 @@ class PageController
     {
         $layout = $this->layoutService->getLayoutTemplate();
 
-        return view('cms::page.index', [
+        return template('cms::page.index', [
             'layout' => $layout,
         ]);
     }
@@ -37,7 +37,7 @@ class PageController
 
         $layout = $this->layoutService->getLayoutTemplate($page->layout);
 
-        return view('cms::page.show', [
+        return template('cms::page.show', [
             'layout' => $layout,
             'page' => $page,
         ]);
