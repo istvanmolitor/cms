@@ -68,3 +68,27 @@
 @section('sidebar')
     <x-theme::template view="cms::author.partials.show-sidebar" />
 @endsection
+
+@section('top')
+    <x-theme::template view="cms::author.partials.show-top" />
+@endsection
+
+@section('bottom')
+    <x-theme::template view="cms::author.partials.show-bottom" />
+@endsection
+
+@section('page-top')
+    <x-theme::template view="cms::author.partials.show-page-top" />
+@endsection
+
+@section('page-bottom')
+    <x-theme::template view="cms::author.partials.show-page-bottom" />
+@endsection
+
+@section('content-top')
+    <x-theme::template view="cms::author.partials.show-content-top" />
+@endsection
+
+@section('content-bottom')
+    <x-theme::template view="cms::author.partials.show-content-bottom" />
+@endsection

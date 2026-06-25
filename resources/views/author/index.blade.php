@@ -33,25 +33,25 @@
 @endsection
 
 @section('top')
-    <x-theme::template view="cms::author.partials.list-top" />
+    <x-theme::template view="cms::author.partials.index-top" />
 @endsection
 
 @section('bottom')
-    <x-theme::template view="cms::author.partials.list-bottom" />
+    <x-theme::template view="cms::author.partials.index-bottom" />
 @endsection
 
 @section('page-top')
-    <x-theme::template view="cms::author.partials.list-page-top" />
+    <x-theme::template view="cms::author.partials.index-page-top" />
 @endsection
 
 @section('page-bottom')
-    <x-theme::template view="cms::author.partials.list-page-bottom" />
+    <x-theme::template view="cms::author.partials.index-page-bottom" />
 @endsection
 
 @section('content-top')
-    <x-theme::template view="cms::author.partials.list-content-top" />
+    <x-theme::template view="cms::author.partials.index-content-top" />
 @endsection
 
 @section('content-bottom')
-    <x-theme::template view="cms::author.partials.list-content-bottom" />
+    <x-theme::template view="cms::author.partials.index-content-bottom" />
 @endsection
