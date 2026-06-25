@@ -8,11 +8,15 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 use Molitor\Cms\Repositories\PostRepositoryInterface;
+use Molitor\Cms\Services\CmsSettingForm;
+use Molitor\Theme\Services\LayoutService;
 
 class SearchController extends Controller
 {
     public function __construct(
         private PostRepositoryInterface $postRepository,
+        private LayoutService $layoutService,
+        private CmsSettingForm $cmsSettingForm,
     ) {}
 
     public function __invoke(Request $request): View
@@ -30,6 +34,9 @@ class SearchController extends Controller
             $posts->appends(['q' => $query]);
         }
 
-        return template('cms::search.index', compact('posts', 'query'));
+        $layoutName = $this->cmsSettingForm->get('search_layout');
+        $layout = $this->layoutService->getLayoutTemplate($layoutName);
+
+        return template('cms::search.index', compact('posts', 'query', 'layout'));
     }
 }

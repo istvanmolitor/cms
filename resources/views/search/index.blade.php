@@ -1,4 +1,4 @@
-@extends('theme::layouts.container')
+@extends($layout)
 
 @section('content')
 
@@ -63,4 +63,8 @@
     </div>
   @endif
 
+@endsection
+
+@section('sidebar')
+    <x-theme::template view="cms::search.partials.sidebar" />
 @endsection

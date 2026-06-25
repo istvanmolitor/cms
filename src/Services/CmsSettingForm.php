@@ -41,6 +41,12 @@ class CmsSettingForm extends SettingForm
                 'options' => $this->getLayoutOptions(),
                 'default' => app(LayoutService::class)->getDefault(),
             ],
+            'search_layout' => [
+                'label' => 'Keresési találatok layout',
+                'type' => SettingFieldType::Select,
+                'options' => $this->getLayoutOptions(),
+                'default' => app(LayoutService::class)->getDefault(),
+            ],
         ];
     }
 
