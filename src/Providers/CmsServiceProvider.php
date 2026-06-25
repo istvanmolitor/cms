@@ -37,6 +37,7 @@ use Molitor\Cms\Repositories\PostRepository;
 use Molitor\Cms\Repositories\PostRepositoryInterface;
 use Molitor\Cms\Services\CmsComponentRegistry;
 use Molitor\Cms\Services\CmsSettingForm;
+use Molitor\Cms\Services\ContentHandler;
 use Molitor\Setting\Services\SettingHandler;
 
 class CmsServiceProvider extends ServiceProvider
@@ -83,5 +84,6 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(PageMetaRepositoryInterface::class, PageMetaRepository::class);
         $this->app->bind(PostMetaRepositoryInterface::class, PostMetaRepository::class);
         $this->app->singleton(CmsComponentRegistry::class);
+        $this->app->singleton(ContentHandler::class);
     }
 }
