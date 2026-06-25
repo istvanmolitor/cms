@@ -16,15 +16,6 @@ class PageController
         private LayoutService $layoutService
     ) {}
 
-    public function index(): View|Response
-    {
-        $layout = $this->layoutService->getLayoutTemplate();
-
-        return template('cms::page.index', [
-            'layout' => $layout,
-        ]);
-    }
-
     public function show(string $slug): View|Response
     {
         $page = $this->pageRepository->getBySlug($slug);

@@ -42,5 +42,8 @@ class CmsSeeder extends Seeder
 
         // Seed menu data
         $this->call(MenuSeeder::class);
+
+        // Seed base pages
+        $this->call(PageSeeder::class);
     }
 }

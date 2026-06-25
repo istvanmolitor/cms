@@ -10,8 +10,6 @@ use Molitor\Cms\Http\Controllers\SearchController;
 
 Route::middleware(['web'])->group(function () {
     Route::get('/', [HomepageController::class, 'index'])->name('homepage');
-    Route::get('/page', [PageController::class, 'index'])->name('cms.page.index');
-    Route::get('/page/{slug}', [PageController::class, 'show'])->name('cms.page.show');
     Route::get('/post', [PostController::class, 'index'])->name('cms.post.index');
     Route::get('/post/{slug}', [PostController::class, 'show'])->name('cms.post.show');
     Route::get('/post-group', [PostGroupController::class, 'index'])->name('cms.post-group.index');
@@ -19,4 +17,5 @@ Route::middleware(['web'])->group(function () {
     Route::get('/author', [AuthorController::class, 'index'])->name('cms.author.index');
     Route::get('/author/{slug}', [AuthorController::class, 'show'])->name('cms.author.show');
     Route::get('/search', SearchController::class)->name('cms.search');
+    Route::get('/{slug}', [PageController::class, 'show'])->name('cms.page.show');
 });

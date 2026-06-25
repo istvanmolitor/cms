@@ -5,110 +5,55 @@ namespace Molitor\Cms\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Molitor\Cms\Models\Menu;
 use Molitor\Cms\Models\MenuItem;
-use Molitor\Language\Models\Language;
+use Molitor\Language\Repositories\LanguageRepositoryInterface;
 
 class MenuSeeder extends Seeder
 {
+    public function __construct(private LanguageRepositoryInterface $languageRepository) {}
+
     public function run(): void
     {
-        // Get the first enabled language (or create a default one)
-        $language = Language::where('enabled', true)->first();
+        $language = $this->languageRepository->getDefaultLanguage();
 
         if (! $language) {
-            $this->command->warn('No enabled language found. Please seed languages first.');
+            $this->command->warn('No default language found. Please seed languages first.');
 
             return;
         }
 
-        // Create main menu
-        $mainMenu = Menu::firstOrCreate(
-            ['name' => 'main', 'language_id' => $language->id],
-            ['name' => 'main', 'language_id' => $language->id]
-        );
+        $menus = [
+            'main' => [
+                ['label' => 'Főoldal', 'url' => '/', 'sort' => 1],
+                ['label' => 'Hírek', 'url' => '/post', 'sort' => 2],
+                ['label' => 'Rólunk', 'url' => '/rolunk', 'sort' => 3],
+                ['label' => 'Kapcsolat', 'url' => '/contact', 'sort' => 4],
+            ],
+            'footer' => [
+                ['label' => 'Impresszum', 'url' => '/impresszum', 'sort' => 1],
+                ['label' => 'Hírek', 'url' => '/post', 'sort' => 2],
+                ['label' => 'Adatvédelem', 'url' => '/adatvedelem', 'sort' => 2],
+                ['label' => 'Süti tájékoztató', 'url' => '/sutik', 'sort' => 3],
+            ],
+        ];
 
-        // Clear existing items
-        $mainMenu->menuItems()->delete();
+        foreach ($menus as $name => $items) {
+            $menu = Menu::firstOrCreate(
+                ['name' => $name, 'language_id' => $language->id],
+            );
 
-        // Create top-level menu items
-        $homeItem = MenuItem::create([
-            'menu_id' => $mainMenu->id,
-            'label' => 'Kezdőlap',
-            'url' => '/',
-            'sort' => 1,
-            'is_external' => false,
-        ]);
+            $seededUrls = array_column($items, 'url');
+            MenuItem::where('menu_id', $menu->id)
+                ->whereNotIn('url', $seededUrls)
+                ->delete();
 
-        $aboutItem = MenuItem::create([
-            'menu_id' => $mainMenu->id,
-            'label' => 'Rólunk',
-            'url' => '/about',
-            'sort' => 2,
-            'is_external' => false,
-        ]);
+            foreach ($items as $item) {
+                MenuItem::updateOrCreate(
+                    ['menu_id' => $menu->id, 'url' => $item['url']],
+                    ['label' => $item['label'], 'sort' => $item['sort'], 'is_external' => false],
+                );
+            }
+        }
 
-        // Create sub-items for About
-        MenuItem::create([
-            'menu_id' => $mainMenu->id,
-            'parent_id' => $aboutItem->id,
-            'label' => 'Csapatunk',
-            'url' => '/about/team',
-            'sort' => 1,
-            'is_external' => false,
-        ]);
-
-        MenuItem::create([
-            'menu_id' => $mainMenu->id,
-            'parent_id' => $aboutItem->id,
-            'label' => 'Történetünk',
-            'url' => '/about/history',
-            'sort' => 2,
-            'is_external' => false,
-        ]);
-
-        $servicesItem = MenuItem::create([
-            'menu_id' => $mainMenu->id,
-            'label' => 'Szolgáltatások',
-            'url' => '/services',
-            'sort' => 3,
-            'is_external' => false,
-        ]);
-
-        // Create sub-items for Services
-        MenuItem::create([
-            'menu_id' => $mainMenu->id,
-            'parent_id' => $servicesItem->id,
-            'label' => 'Webfejlesztés',
-            'url' => '/services/web-development',
-            'sort' => 1,
-            'is_external' => false,
-        ]);
-
-        MenuItem::create([
-            'menu_id' => $mainMenu->id,
-            'parent_id' => $servicesItem->id,
-            'label' => 'Mobilalkalmazások',
-            'url' => '/services/mobile-apps',
-            'sort' => 2,
-            'is_external' => false,
-        ]);
-
-        MenuItem::create([
-            'menu_id' => $mainMenu->id,
-            'parent_id' => $servicesItem->id,
-            'label' => 'Tanácsadás',
-            'url' => '/services/consulting',
-            'sort' => 3,
-            'is_external' => false,
-        ]);
-
-        MenuItem::create([
-            'menu_id' => $mainMenu->id,
-            'label' => 'Kapcsolat',
-            'url' => '/contact',
-            'sort' => 4,
-            'is_external' => false,
-        ]);
-
-        $this->command->info('Main menu created successfully with multi-level items!');
+        $this->command->info('Menus ensured.');
     }
 }
