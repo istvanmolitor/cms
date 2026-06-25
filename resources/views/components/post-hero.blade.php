@@ -1,8 +1,8 @@
 @if($post->main_image_url)
-    <div class="relative overflow-hidden shadow-lg min-h-96">
+    <div class="relative overflow-hidden shadow-lg min-h-[32rem]">
         <img src="{{ $post->main_image_url }}" alt="{{ $post->title }}" class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-        <div class="relative z-10 flex flex-col justify-end h-full min-h-96 p-8">
+        <div class="relative z-10 flex flex-col justify-end h-full min-h-[32rem] p-8">
             <a href="{{ route('cms.post.show', $post->slug) }}" class="block">
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 hover:text-gray-200 transition-colors">
                     {{ $post->title }}

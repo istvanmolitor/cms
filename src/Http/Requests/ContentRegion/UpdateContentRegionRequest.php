@@ -24,8 +24,8 @@ class UpdateContentRegionRequest extends FormRequest
 
         return [
             'name' => 'sometimes|required|string|max:255|unique:content_regions,name,'.$id,
-            'content' => 'sometimes|required|array',
-            'content.content_elements' => 'sometimes|required|array|min:1',
+            'content' => 'sometimes|nullable|array',
+            'content.content_elements' => 'sometimes|nullable|array',
             'content.content_elements.*.type' => 'required|string|max:255',
             'content.content_elements.*.settings' => ['required', 'array', new ContentElementValidator],
             'content.content_elements.*.sort' => 'required|integer',
