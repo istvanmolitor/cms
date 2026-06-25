@@ -31,3 +31,27 @@
 @section('sidebar')
     <x-theme::template view="cms::author.partials.list-sidebar" />
 @endsection
+
+@section('top')
+    <x-theme::template view="cms::author.partials.list-top" />
+@endsection
+
+@section('bottom')
+    <x-theme::template view="cms::author.partials.list-bottom" />
+@endsection
+
+@section('page-top')
+    <x-theme::template view="cms::author.partials.list-page-top" />
+@endsection
+
+@section('page-bottom')
+    <x-theme::template view="cms::author.partials.list-page-bottom" />
+@endsection
+
+@section('content-top')
+    <x-theme::template view="cms::author.partials.list-content-top" />
+@endsection
+
+@section('content-bottom')
+    <x-theme::template view="cms::author.partials.list-content-bottom" />
+@endsection
