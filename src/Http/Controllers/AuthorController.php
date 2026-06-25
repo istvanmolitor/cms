@@ -5,26 +5,24 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Controllers;
 
 use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
 use Illuminate\View\View;
+use Molitor\Cms\Models\Author;
 use Molitor\Cms\Repositories\AuthorRepositoryInterface;
-use Molitor\Theme\Services\LayoutService;
 
-class AuthorController
+class AuthorController extends Controller
 {
     public function __construct(
         private AuthorRepositoryInterface $authorRepository,
-        private LayoutService $layoutService
     ) {}
 
-    public function index(): View|Response
+    public function index(): View
     {
-        $authors = $this->authorRepository->getAll(['paginate' => true]);
-        $layout = $this->layoutService->getLayoutTemplate();
+        $authors = Author::withCount(['posts' => fn ($q) => $q->where('is_published', true)])
+            ->orderBy('name')
+            ->get();
 
-        return template('cms::author.index', [
-            'layout' => $layout,
-            'authors' => $authors,
-        ]);
+        return template('cms::author.index', ['authors' => $authors]);
     }
 
     public function show(string $slug): View|Response
@@ -35,13 +33,14 @@ class AuthorController
             abort(404);
         }
 
-        $posts = $author->posts()->orderBy('created_at', 'desc')->paginate(10);
-        $layout = $this->layoutService->getLayoutTemplate();
+        $posts = $author->posts()
+            ->where('is_published', true)
+            ->latest()
+            ->paginate(12);
 
         return template('cms::author.show', [
-            'layout' => $layout,
             'author' => $author,
-            'posts' => $posts,
+            'posts'  => $posts,
         ]);
     }
 }
