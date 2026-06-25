@@ -23,6 +23,7 @@ class CreateAuthorsTable extends Migration
             $table->string('position')->nullable();
             $table->text('bio')->nullable();
             $table->string('profile_url')->nullable();
+            $table->string('layout')->default('right-sidebar');
             $table->timestamps();
         });
     }

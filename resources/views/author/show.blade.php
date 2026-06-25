@@ -1,4 +1,4 @@
-@extends('theme::layouts.right-sidebar')
+@extends($layout)
 
 @section('content')
   {{-- Szerző profil --}}

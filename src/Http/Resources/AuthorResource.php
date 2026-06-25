@@ -24,6 +24,7 @@ class AuthorResource extends JsonResource
             'position' => $this->position,
             'bio' => $this->bio,
             'profile_url' => $this->profile_url,
+            'layout' => $this->layout,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
         ];

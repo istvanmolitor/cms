@@ -29,6 +29,7 @@ class UpdateAuthorRequest extends FormRequest
             'position' => 'nullable|string|max:255',
             'bio' => 'nullable|string',
             'profile_url' => 'nullable|string|max:255',
+            'layout' => 'required|string|max:255',
         ];
     }
 }

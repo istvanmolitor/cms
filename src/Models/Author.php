@@ -19,11 +19,16 @@ class Author extends Model
         'position',
         'bio',
         'profile_url',
+        'layout',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+    ];
+
+    protected $attributes = [
+        'layout' => 'right-sidebar',
     ];
 
     protected static function booted(): void

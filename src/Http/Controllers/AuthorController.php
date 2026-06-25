@@ -9,11 +9,13 @@ use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 use Molitor\Cms\Models\Author;
 use Molitor\Cms\Repositories\AuthorRepositoryInterface;
+use Molitor\Theme\Services\LayoutService;
 
 class AuthorController extends Controller
 {
     public function __construct(
         private AuthorRepositoryInterface $authorRepository,
+        private LayoutService $layoutService,
     ) {}
 
     public function index(): View
@@ -38,7 +40,10 @@ class AuthorController extends Controller
             ->latest()
             ->paginate(12);
 
+        $layout = $this->layoutService->getLayoutTemplate($author->layout);
+
         return template('cms::author.show', [
+            'layout' => $layout,
             'author' => $author,
             'posts'  => $posts,
         ]);
