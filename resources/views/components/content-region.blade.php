@@ -3,4 +3,4 @@
 @endif
 
 
-<x-cms-content :content="$region->content" />
+<x-cms::content :content="$region->content" />

@@ -1,11 +1,15 @@
 @extends($layout)
 
+@section('title')
+    {{ $post->title }}
+@endsection
+
+@section('top')
+    <x-cms::post-hero :post="$post" />
+@endsection
+
 @section('content')
     <article class="bg-white rounded-lg shadow-sm p-6 lg:p-8">
-        <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-            {{ $post->title }}
-        </h1>
-
         <div class="flex flex-wrap gap-4 mb-6 text-sm text-gray-600">
             @if($post->authors->isNotEmpty())
                 <div class="flex items-center gap-2">
@@ -34,13 +38,6 @@
                 <span>{{ $post->created_at->format('Y.m.d. H:i') }}</span>
             </div>
         </div>
-        @if($post->main_image_url)
-            <img
-                src="{{ $post->main_image_url }}"
-                alt="{{ $post->title }}"
-                class="w-full h-auto rounded-lg mb-6 object-cover"
-            >
-        @endif
 
 
         @if($post->lead)
@@ -50,11 +47,11 @@
         @endif
 
         <div class="prose prose-lg max-w-none">
-            <x-cms-content :content="$post->content" />
+            <x-cms::content :content="$post->content" />
         </div>
     </article>
 @endsection
 
 @section('sidebar')
-    <x-theme::template view="cms::post.partials.sidebar" />
+    <x-theme::template view="cms::post.partials.show-sidebar" />
 @endsection

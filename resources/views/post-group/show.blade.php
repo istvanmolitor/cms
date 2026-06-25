@@ -7,7 +7,7 @@
         </h1>
 
         @if($posts->isNotEmpty())
-            <x-cms-post-list :posts="$posts" />
+            <x-cms::post-list :posts="$posts" />
 
             <div class="mt-8">
                 {{ $posts->links() }}

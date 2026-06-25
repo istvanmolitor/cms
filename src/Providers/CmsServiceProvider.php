@@ -35,15 +35,8 @@ use Molitor\Cms\Repositories\PostMetaRepository;
 use Molitor\Cms\Repositories\PostMetaRepositoryInterface;
 use Molitor\Cms\Repositories\PostRepository;
 use Molitor\Cms\Repositories\PostRepositoryInterface;
-use Molitor\Cms\View\Components\Content;
-use Molitor\Cms\View\Components\ContentElement;
-use Molitor\Cms\View\Components\ContentRegion as ContentRegionComponent;
-use Molitor\Cms\View\Components\Menu;
-use Molitor\Cms\View\Components\MenuItem;
-use Molitor\Cms\View\Components\Pager;
 use Molitor\Cms\Services\CmsComponentRegistry;
 use Molitor\Cms\Services\CmsSettingForm;
-use Molitor\Cms\View\Components\PostList;
 use Molitor\Setting\Services\SettingHandler;
 
 class CmsServiceProvider extends ServiceProvider
@@ -64,14 +57,7 @@ class CmsServiceProvider extends ServiceProvider
             __DIR__.'/../config/cms.php', 'cms'
         );
 
-        // Register Blade components
-        Blade::component('cms-content', Content::class);
-        Blade::component('cms-content-element', ContentElement::class);
-        Blade::component('cms-content-region', ContentRegionComponent::class);
-        Blade::component('cms-menu', Menu::class);
-        Blade::component('cms-menu-item', MenuItem::class);
-        Blade::component('cms-post-list', PostList::class);
-        Blade::component('cms-pager', Pager::class);
+        Blade::componentNamespace('Molitor\\Cms\\View\\Components', 'cms');
 
         $this->app->make(SettingHandler::class)->registerSettingForm(CmsSettingForm::class);
 

@@ -1,1 +1,1 @@
-<x-cms-content-region name="post-list-sidebar" />
+<x-cms::content-region name="post-list-sidebar" />
