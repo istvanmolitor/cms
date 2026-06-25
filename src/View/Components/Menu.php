@@ -24,7 +24,7 @@ class Menu extends Component
         $menuManager->addMenuBuilder(new CmsMenuBuilder);
         $menu = $menuManager->build($this->name);
 
-        return view('cms::components.main-menu', [
+        return template('cms::components.main-menu', [
             'menu' => $menu,
         ]);
     }

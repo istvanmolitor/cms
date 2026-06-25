@@ -16,6 +16,6 @@ class MenuItem extends Component
 
     public function render(): View
     {
-        return view('cms::components.menu-item');
+        return template('cms::components.menu-item');
     }
 }

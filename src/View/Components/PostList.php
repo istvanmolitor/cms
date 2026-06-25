@@ -15,6 +15,6 @@ class PostList extends Component
 
     public function render(): View
     {
-        return view('cms::components.post-list');
+        return template('cms::components.post-list');
     }
 }

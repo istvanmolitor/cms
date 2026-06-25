@@ -20,7 +20,7 @@ class ContentElement extends Component
     {
         $content = $this->contentHandler->renderElement($this->element);
 
-        return view('cms::components.content-element', [
+        return template('cms::components.content-element', [
             'element' => $this->element,
             'content' => $content,
         ]);

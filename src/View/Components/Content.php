@@ -16,7 +16,7 @@ class Content extends Component
 
     public function render(): View
     {
-        return view('cms::components.content', [
+        return template('cms::components.content', [
             'content' => $this->content,
         ]);
     }

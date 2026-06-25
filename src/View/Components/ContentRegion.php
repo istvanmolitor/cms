@@ -28,7 +28,7 @@ class ContentRegion extends Component
             $region = $this->contentRegionRepository->create(['name' => $this->name]);
         }
 
-        return view('cms::components.content-region', [
+        return template('cms::components.content-region', [
             'region' => $region,
         ]);
     }

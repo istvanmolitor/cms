@@ -16,6 +16,6 @@ class Pager extends Component
 
     public function render(): View
     {
-        return view('cms::components.pager');
+        return template('cms::components.pager');
     }
 }
