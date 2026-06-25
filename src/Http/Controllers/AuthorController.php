@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\View\View;
 use Molitor\Cms\Models\Author;
 use Molitor\Cms\Repositories\AuthorRepositoryInterface;
+use Molitor\Cms\Services\CmsSettingForm;
 use Molitor\Theme\Services\LayoutService;
 
 class AuthorController extends Controller
@@ -16,6 +17,7 @@ class AuthorController extends Controller
     public function __construct(
         private AuthorRepositoryInterface $authorRepository,
         private LayoutService $layoutService,
+        private CmsSettingForm $cmsSettingForm,
     ) {}
 
     public function index(): View
@@ -24,7 +26,13 @@ class AuthorController extends Controller
             ->orderBy('name')
             ->get();
 
-        return template('cms::author.index', ['authors' => $authors]);
+        $layoutName = $this->cmsSettingForm->get('author_list_layout');
+        $layout = $this->layoutService->getLayoutTemplate($layoutName);
+
+        return template('cms::author.index', [
+            'layout' => $layout,
+            'authors' => $authors,
+        ]);
     }
 
     public function show(string $slug): View|Response

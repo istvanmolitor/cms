@@ -35,6 +35,12 @@ class CmsSettingForm extends SettingForm
                 'options' => $this->getLayoutOptions(),
                 'default' => app(LayoutService::class)->getDefault(),
             ],
+            'author_list_layout' => [
+                'label' => 'Author lista layout',
+                'type' => SettingFieldType::Select,
+                'options' => $this->getLayoutOptions(),
+                'default' => app(LayoutService::class)->getDefault(),
+            ],
         ];
     }
 

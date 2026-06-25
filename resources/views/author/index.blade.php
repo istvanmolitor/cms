@@ -1,4 +1,4 @@
-@extends('theme::layouts.left-sidebar')
+@extends($layout)
 
 @section('content')
   <div class="relative rounded-2xl overflow-hidden mb-8" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #2563eb22 100%);">
@@ -29,7 +29,5 @@
 @endsection
 
 @section('sidebar')
-  @include('news::partials.sidebar.trending')
-  @include('news::partials.sidebar.newsletter')
-  @include('news::partials.sidebar.ad')
+    <x-theme::template view="cms::author.partials.list-sidebar" />
 @endsection
