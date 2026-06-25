@@ -56,5 +56,5 @@
 @endsection
 
 @section('sidebar')
-    <x-theme::component view="cms::post.partials.sidebar" />
+    <x-theme::template view="cms::post.partials.sidebar" />
 @endsection
