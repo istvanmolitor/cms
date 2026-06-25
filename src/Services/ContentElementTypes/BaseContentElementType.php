@@ -31,6 +31,11 @@ abstract class BaseContentElementType
         return $this->prepare($data);
     }
 
+    public function getCalculated(array $settings): array
+    {
+        return [];
+    }
+
     public function getDefaultSettings(): array
     {
         return $this->prepare([]);

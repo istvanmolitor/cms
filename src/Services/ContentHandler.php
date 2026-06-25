@@ -19,6 +19,7 @@ use Molitor\Cms\Services\ContentElementTypes\IframeElementType;
 use Molitor\Cms\Services\ContentElementTypes\ImageElementType;
 use Molitor\Cms\Services\ContentElementTypes\ListElementType;
 use Molitor\Cms\Services\ContentElementTypes\MenuElementType;
+use Molitor\Cms\Services\ContentElementTypes\LatestPostsElementType;
 use Molitor\Cms\Services\ContentElementTypes\PostHeroElementType;
 use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
 use Molitor\Cms\Services\ContentElementTypes\TextElementType;
@@ -50,6 +51,7 @@ class ContentHandler
         $this->registerElementType(new ListElementType);
         $this->registerElementType(new MenuElementType);
         $this->registerElementType(new PostHeroElementType);
+        $this->registerElementType(app()->make(LatestPostsElementType::class));
     }
 
     public function registerElementType(BaseContentElementType $elementType): void
@@ -289,6 +291,10 @@ class ContentHandler
 
         $view = $this->themeHelper->getRealView($type->getTemplate());
 
-        return template($view, ['settings' => $prepared, 'element' => $element])->render();
+        return template($view, [
+            'settings' => $prepared,
+            'calculated' => $type->getCalculated($prepared),
+            'element' => $element]
+        )->render();
     }
 }

@@ -43,6 +43,15 @@ class PostRepository implements PostRepositoryInterface
         return $query->get();
     }
 
+    public function getLatest(int $limit): mixed
+    {
+        return $this->post
+            ->where('is_published', true)
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
     public function getById(int $id): ?Post
     {
         return $this->post->find($id);

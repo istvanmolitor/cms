@@ -10,6 +10,8 @@ interface PostRepositoryInterface
 {
     public function getAll(array $params = []): mixed;
 
+    public function getLatest(int $limit): mixed;
+
     public function getById(int $id): ?Post;
 
     public function getBySlug(string $slug): ?Post;
