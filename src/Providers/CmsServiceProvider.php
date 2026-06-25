@@ -31,6 +31,8 @@ use Molitor\Cms\Repositories\PageTypeRepository;
 use Molitor\Cms\Repositories\PageTypeRepositoryInterface;
 use Molitor\Cms\Repositories\PostTypeRepository;
 use Molitor\Cms\Repositories\PostTypeRepositoryInterface;
+use Molitor\Cms\Repositories\PostKeywordRepository;
+use Molitor\Cms\Repositories\PostKeywordRepositoryInterface;
 use Molitor\Cms\Repositories\PostMetaRepository;
 use Molitor\Cms\Repositories\PostMetaRepositoryInterface;
 use Molitor\Cms\Repositories\PostRepository;
@@ -85,6 +87,7 @@ class CmsServiceProvider extends ServiceProvider
         $this->app->bind(MenuItemRepositoryInterface::class, MenuItemRepository::class);
         $this->app->bind(AuthorRepositoryInterface::class, AuthorRepository::class);
         $this->app->bind(PageMetaRepositoryInterface::class, PageMetaRepository::class);
+        $this->app->bind(PostKeywordRepositoryInterface::class, PostKeywordRepository::class);
         $this->app->bind(PostMetaRepositoryInterface::class, PostMetaRepository::class);
         $this->app->singleton(CmsComponentRegistry::class);
         $this->app->singleton(ContentHandler::class);
