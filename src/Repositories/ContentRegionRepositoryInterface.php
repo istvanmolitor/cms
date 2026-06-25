@@ -9,7 +9,7 @@ use Molitor\Cms\Models\ContentRegion;
 
 interface ContentRegionRepositoryInterface
 {
-    public function getAll(): Collection;
+    public function getAll(?string $search = null): Collection;
 
     public function getById(int $id): ?ContentRegion;
 

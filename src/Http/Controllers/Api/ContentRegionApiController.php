@@ -21,7 +21,8 @@ class ContentRegionApiController
 
     public function index(): AnonymousResourceCollection
     {
-        $regions = $this->contentRegionRepository->getAll();
+        $search = request()->query('search');
+        $regions = $this->contentRegionRepository->getAll($search);
 
         return ContentRegionResource::collection($regions);
     }

@@ -16,9 +16,15 @@ class ContentRegionRepository implements ContentRegionRepositoryInterface
         private ContentHandler $contentHandler
     ) {}
 
-    public function getAll(): Collection
+    public function getAll(?string $search = null): Collection
     {
-        return $this->contentRegion->all();
+        $query = $this->contentRegion->newQuery();
+
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        return $query->orderBy('name')->get();
     }
 
     public function getById(int $id): ?ContentRegion
