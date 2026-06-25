@@ -6,9 +6,12 @@ namespace Molitor\Cms\Repositories;
 
 use Illuminate\Support\Collection;
 use Molitor\Cms\Models\Post;
+use Molitor\Keyword\Services\KeywordService;
 
 class PostKeywordRepository implements PostKeywordRepositoryInterface
 {
+    public function __construct(private readonly KeywordService $keywordService) {}
+
     public function getByPost(Post $post): Collection
     {
         return $post->keywords;
@@ -27,5 +30,11 @@ class PostKeywordRepository implements PostKeywordRepositoryInterface
     public function sync(Post $post, array $keywordIds): void
     {
         $post->keywords()->sync($keywordIds);
+    }
+
+    public function updateByPost(Post $post): void
+    {
+        $ids = $this->keywordService->getIds($post->getAttributes()['keywords'] ?? '');
+        $post->keywords()->sync($ids);
     }
 }

@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Molitor\Cms\Models\ContentRegion;
 use Molitor\Cms\Models\Page;
+use Molitor\Cms\Models\Post;
 use Molitor\Cms\Observers\ContentObserver;
+use Molitor\Cms\Observers\PostObserver;
 use Molitor\Cms\Repositories\AuthorRepository;
 use Molitor\Cms\Repositories\AuthorRepositoryInterface;
 use Molitor\Cms\Repositories\ContentElementRepository;
@@ -70,6 +72,8 @@ class CmsServiceProvider extends ServiceProvider
         $contentObserver = new ContentObserver;
         Page::observe($contentObserver);
         ContentRegion::observe($contentObserver);
+
+        Post::observe(PostObserver::class);
     }
 
     public function register(): void

@@ -16,4 +16,6 @@ interface PostKeywordRepositoryInterface
     public function detach(Post $post, int $keywordId): void;
 
     public function sync(Post $post, array $keywordIds): void;
+
+    public function updateByPost(Post $post): void;
 }
