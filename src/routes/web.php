@@ -12,6 +12,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/', [HomepageController::class, 'index'])->name('homepage');
     Route::get('/post', [PostController::class, 'index'])->name('cms.post.index');
     Route::get('/post/{slug}', [PostController::class, 'show'])->name('cms.post.show');
+    Route::get('/tag/{slug}', [PostController::class, 'byKeyword'])->name('cms.tag.show');
     Route::get('/post-group', [PostGroupController::class, 'index'])->name('cms.post-group.index');
     Route::get('/post-group/{slug}', [PostGroupController::class, 'show'])->name('cms.post-group.show');
     Route::get('/author', [AuthorController::class, 'index'])->name('cms.author.index');

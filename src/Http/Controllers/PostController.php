@@ -8,12 +8,14 @@ use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Molitor\Cms\Repositories\PostRepositoryInterface;
 use Molitor\Cms\Services\CmsSettingForm;
+use Molitor\Keyword\Repositories\KeywordRepositoryInterface;
 use Molitor\Theme\Services\LayoutService;
 
 class PostController
 {
     public function __construct(
         private PostRepositoryInterface $postRepository,
+        private KeywordRepositoryInterface $keywordRepository,
         private LayoutService $layoutService,
         private CmsSettingForm $cmsSettingForm
     ) {}
@@ -34,6 +36,26 @@ class PostController
         ]);
     }
 
+    public function byKeyword(string $slug): View|Response
+    {
+        $keyword = $this->keywordRepository->getBySlug($slug);
+
+        if (! $keyword) {
+            abort(404);
+        }
+
+        $posts = $this->postRepository->getByKeyword($keyword);
+
+        $layoutName = $this->cmsSettingForm->get('post_list_layout');
+        $layout = $this->layoutService->getLayoutTemplate($layoutName);
+
+        return template('cms::keyword.show', [
+            'layout' => $layout,
+            'keyword' => $keyword,
+            'posts' => $posts,
+        ]);
+    }
+
     public function show(string $slug): View|Response
     {
         $post = $this->postRepository->getBySlug($slug);
@@ -42,7 +64,7 @@ class PostController
             abort(404);
         }
 
-        $post->load(['content.contentElements', 'authors', 'postGroups']);
+        $post->load(['content.contentElements', 'authors', 'postGroups', 'keywords']);
 
         $layout = $this->layoutService->getLayoutTemplate($post->layout);
         

@@ -25,4 +25,15 @@
         </span>
     </div>
     @endif
+
+    @if($post->relationLoaded('keywords') && $post->getRelation('keywords')->isNotEmpty())
+    <div class="flex items-center gap-1.5">
+        <span class="font-semibold text-gray-700">{{ __('Kulcsszavak:') }}</span>
+        <span>
+            @foreach($post->getRelation('keywords') as $keyword)
+                <a href="{{ route('cms.tag.show', $keyword->slug) }}" class="text-blue-600 hover:text-blue-800 hover:underline">{{ $keyword->name }}</a>@if(!$loop->last), @endif
+            @endforeach
+        </span>
+    </div>
+    @endif
 </div>
