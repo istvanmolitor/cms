@@ -68,6 +68,7 @@ class PageApiController
                 lead: $request->lead,
                 layout: $request->layout,
                 mainImageUrl: $request->main_image_url,
+                keywords: $request->keywords,
                 languageId: $request->language_id,
                 pageTypeId: $request->page_type_id
             );
@@ -93,6 +94,7 @@ class PageApiController
             lead: $request->lead,
             layout: $request->layout,
             mainImageUrl: $request->main_image_url,
+            keywords: $request->keywords,
             languageId: $request->language_id,
             pageTypeId: $request->page_type_id
         );

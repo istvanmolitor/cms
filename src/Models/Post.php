@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Molitor\Cms\Events\Post\PostCreated;
 use Molitor\Cms\Events\Post\PostDeleted;
 use Molitor\Cms\Events\Post\PostUpdated;
-use Molitor\Keyword\Models\Keyword;
+use Molitor\Keyword\Traits\HasKeywords;
 use Molitor\Language\Models\Language;
 
 class Post extends Model
 {
+    use HasKeywords;
     protected $dispatchesEvents = [
         'created' => PostCreated::class,
         'updated' => PostUpdated::class,
@@ -68,11 +69,6 @@ class Post extends Model
     public function postType(): BelongsTo
     {
         return $this->belongsTo(PostType::class, 'post_type_id');
-    }
-
-    public function keywords(): BelongsToMany
-    {
-        return $this->belongsToMany(Keyword::class, 'post_keywords', 'post_id', 'keyword_id');
     }
 
     public function postMeta(): HasMany

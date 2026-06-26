@@ -25,6 +25,7 @@ interface PageRepositoryInterface
         ?string $lead = null,
         ?string $layout = null,
         ?string $mainImageUrl = null,
+        ?string $keywords = null,
         ?int $languageId = null,
         ?int $pageTypeId = null
     ): Page;
@@ -37,6 +38,7 @@ interface PageRepositoryInterface
         ?string $lead = null,
         ?string $layout = null,
         ?string $mainImageUrl = null,
+        ?string $keywords = null,
         ?int $languageId = null,
         ?int $pageTypeId = null
     ): Page;

@@ -77,6 +77,7 @@ class PageRepository implements PageRepositoryInterface
         ?string $lead = null,
         ?string $layout = null,
         ?string $mainImageUrl = null,
+        ?string $keywords = null,
         ?int $languageId = null,
         ?int $pageTypeId = null,
     ): Page {
@@ -102,6 +103,8 @@ class PageRepository implements PageRepositoryInterface
             $data['main_image_url'] = $mainImageUrl;
         }
 
+        $data['keywords'] = $keywords;
+
         if ($languageId !== null) {
             $data['language_id'] = $languageId;
         }
@@ -121,6 +124,7 @@ class PageRepository implements PageRepositoryInterface
         ?string $lead = null,
         ?string $layout = null,
         ?string $mainImageUrl = null,
+        ?string $keywords = null,
         ?int $languageId = null,
         ?int $pageTypeId = null
     ): Page {
@@ -149,6 +153,8 @@ class PageRepository implements PageRepositoryInterface
         if ($mainImageUrl !== null) {
             $data['main_image_url'] = $mainImageUrl;
         }
+
+        $data['keywords'] = $keywords;
 
         if ($languageId !== null) {
             $data['language_id'] = $languageId;

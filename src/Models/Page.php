@@ -7,11 +7,13 @@ namespace Molitor\Cms\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Molitor\Keyword\Traits\HasKeywords;
 use Molitor\Language\Models\Language;
 use Molitor\Cms\Models\PageType;
 
 class Page extends Model
 {
+    use HasKeywords;
     protected $fillable = [
         'title',
         'slug',
