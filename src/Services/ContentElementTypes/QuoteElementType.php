@@ -33,7 +33,7 @@ class QuoteElementType extends BaseContentElementType
     {
         return [
             'quote' => 'required|string',
-            'author' => 'string',
+            'author' => 'nullable|string',
         ];
     }
 
