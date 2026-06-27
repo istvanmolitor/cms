@@ -44,4 +44,6 @@ interface PageRepositoryInterface
     ): Page;
 
     public function delete(Page $page): void;
+
+    public function toString(Page $page): string;
 }

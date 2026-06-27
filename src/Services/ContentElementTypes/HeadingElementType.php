@@ -34,4 +34,9 @@ class HeadingElementType extends BaseContentElementType
             'level' => 'required|integer|min:1|max:6',
         ];
     }
+
+    public function settingsToString(array $settings): string
+    {
+        return (string)$settings['text'];
+    }
 }

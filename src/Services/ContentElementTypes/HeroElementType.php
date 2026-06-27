@@ -2,6 +2,8 @@
 
 namespace Molitor\Cms\Services\ContentElementTypes;
 
+use Override;
+
 class HeroElementType extends BaseContentElementType
 {
     public function getName(): string
@@ -35,5 +37,13 @@ class HeroElementType extends BaseContentElementType
             'title' => 'required|string|max:255',
             'lead' => 'nullable|string',
         ];
+    }
+
+    public function settingsToString(array $settings): string
+    {
+        return $this->arrayToString([
+            $settings['title'],
+            $settings['lead'],
+        ]);
     }
 }

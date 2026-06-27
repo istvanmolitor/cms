@@ -47,4 +47,6 @@ interface PostRepositoryInterface
     ): Post;
 
     public function delete(Post $post): void;
+
+    public function toString(Post $post): string;
 }

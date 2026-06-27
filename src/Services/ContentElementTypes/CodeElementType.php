@@ -34,4 +34,9 @@ class CodeElementType extends BaseContentElementType
             'language' => 'nullable|string',
         ];
     }
+
+    public function settingsToString(array $settings): string
+    {
+        return (string)$settings['code'];
+    }
 }

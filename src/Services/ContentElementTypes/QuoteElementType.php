@@ -36,4 +36,12 @@ class QuoteElementType extends BaseContentElementType
             'author' => 'string',
         ];
     }
+
+    public function settingsToString(array $settings): string
+    {
+        return $this->arrayToString([
+            $settings['quote'],
+            $settings['author'],
+        ]);
+    }
 }

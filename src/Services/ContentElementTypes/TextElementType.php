@@ -36,4 +36,9 @@ class TextElementType extends BaseContentElementType
             'align' => 'required|string|in:left,center,right,justify',
         ];
     }
+
+    public function settingsToString(array $settings): string
+    {
+        return (string)$settings['text'];
+    }
 }

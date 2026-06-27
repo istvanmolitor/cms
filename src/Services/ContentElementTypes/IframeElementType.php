@@ -40,4 +40,9 @@ class IframeElementType extends BaseContentElementType
             'allowFullscreen' => 'boolean',
         ];
     }
+
+    public function settingsToString(array $settings): string
+    {
+        return (string)$settings['title'];
+    }
 }

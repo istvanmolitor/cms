@@ -59,13 +59,25 @@ class ContentHandler
         $this->elementTypes[$elementType->getName()] = $elementType;
     }
 
-    public function getElementType(string $type): BaseContentElementType
+    public function getContentElementType(ContentElement $contentElement): ContentElementType
     {
-        if (! array_key_exists($type, $this->elementTypes)) {
-            throw new InvalidElementTypeNameException($type);
+        return $this->contentElementTypeRepository->getById($contentElement->content_element_type_id);
+    }
+
+    public function getElementType(string|ContentElementType|ContentElement $type): BaseContentElementType
+    {
+        if ($type instanceof ContentElement) {
+            $typeName = $this->getContentElementType($type)->name;
+        } elseif ($type instanceof ContentElementType) {
+            $typeName = $type->name;
+        } else {
+            $typeName = $type;
+        }
+        if (! array_key_exists($typeName, $this->elementTypes)) {
+            throw new InvalidElementTypeNameException($typeName);
         }
 
-        return $this->elementTypes[$type];
+        return $this->elementTypes[$typeName];
     }
 
     public function getOptions(): array
@@ -79,18 +91,9 @@ class ContentHandler
         return $options;
     }
 
-    public function getContentElementType(ContentElement $contentElement): ?ContentElementType
-    {
-        return $this->contentElementTypeRepository->getById($contentElement->content_element_type_id);
-    }
-
     public function getSettings(ContentElement $contentElement): array
     {
-        $contentElementType = $this->getContentElementType($contentElement);
-        if (! $contentElementType) {
-            return [];
-        }
-        $type = $this->getElementType($contentElementType->name);
+        $type = $this->getElementType($contentElement);
         if (! $type) {
             return [];
         }
@@ -274,26 +277,45 @@ class ContentHandler
         $this->contentElementRepository->deleteWhereSortGreaterOrEqual($targetContent, $sort);
     }
 
-    public function renderElement(ContentElement $element): string
+    public function contentToString(?Content $content): string
     {
-        $contentElementType = $this->getContentElementType($element);
-        if (! $contentElementType) {
+        if(!$content)
+        {
             return '';
         }
+        $output = [];
+        foreach ($this->contentElementRepository->getByContent($content) as $element) {
+            $output[] = $this->contentElementToString($element);
+        }
 
+        return implode(' ', $output);
+    }
+
+    public function contentElementToString(ContentElement $element): string
+    {
         try {
-            $type = $this->getElementType($contentElementType->name);
+            $type = $this->getElementType($element);
+        } catch (InvalidElementTypeNameException $e) {
+            return '';
+        }
+        return $type->settingsToString($type->unserialize($element->settings));
+    }
+
+    public function renderElement(ContentElement $element): string
+    {
+        try {
+            $type = $this->getElementType($element);
         } catch (InvalidElementTypeNameException $e) {
             return '';
         }
 
-        $prepared = $type->unserialize($element->settings);
+        $settings = $type->unserialize($element->settings);
 
         $view = $this->themeHelper->getRealView($type->getTemplate());
 
         return template($view, [
-            'settings' => $prepared,
-            'calculated' => $type->getCalculated($prepared),
+            'settings' => $settings,
+            'calculated' => $type->getCalculated($settings),
             'element' => $element]
         )->render();
     }

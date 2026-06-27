@@ -42,4 +42,9 @@ class ImageElementType extends BaseContentElementType
             'alignment' => 'string|in:left,center,right',
         ];
     }
+
+    public function settingsToString(array $settings): string
+    {
+        return (string)$settings['alt'];
+    }
 }

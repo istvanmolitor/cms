@@ -2,6 +2,8 @@
 
 namespace Molitor\Cms\Services\ContentElementTypes;
 
+use Molitor\Cms\Repositories\PostRepositoryInterface;
+
 class PostHeroElementType extends BaseContentElementType
 {
     public function getName(): string
@@ -31,5 +33,23 @@ class PostHeroElementType extends BaseContentElementType
         return [
             'post_id' => 'required|integer|exists:posts,id',
         ];
+    }
+
+    public function settingsToString(array $settings): string
+    {
+        $postId = $settings['post_id'];
+        if(empty($postId)) {
+            return '';
+        }
+
+        $post = app(PostRepositoryInterface::class)->getById($postId);
+        if(!$post) {
+            return '';
+        }
+        
+        return $this->arrayToString([
+            $post->title,
+            $post->lead,
+        ]);
     }
 }

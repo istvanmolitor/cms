@@ -32,4 +32,9 @@ class ListElementType extends BaseContentElementType
             'items' => 'required|array',
         ];
     }
+
+    public function settingsToString(array $settings): string
+    {
+        return $this->arrayToString($settings['items']);
+    }
 }

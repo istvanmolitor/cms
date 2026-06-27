@@ -6,6 +6,7 @@ namespace Molitor\Cms\Repositories;
 
 use Illuminate\Support\Str;
 use Molitor\Cms\Models\Post;
+use Molitor\Cms\Services\ContentHandler;
 use Molitor\Keyword\Models\Keyword;
 
 class PostRepository implements PostRepositoryInterface
@@ -194,5 +195,14 @@ class PostRepository implements PostRepositoryInterface
         if ($content) {
             $this->contentRepository->delete($content);
         }
+    }
+
+    public function toString(Post $post): string
+    {
+        return implode(' ', [
+            $post->title,
+            $post->lead,
+            app(ContentHandler::class)->contentToString($post->content),
+        ]);
     }
 }

@@ -36,6 +36,11 @@ abstract class BaseContentElementType
         return [];
     }
 
+    public function settingsToString(array $settings): string
+    {
+        return '';
+    }
+
     public function getDefaultSettings(): array
     {
         return $this->prepare([]);
@@ -67,5 +72,15 @@ abstract class BaseContentElementType
         json_decode($string);
 
         return json_last_error() === JSON_ERROR_NONE;
+    }
+
+    protected function arrayToString(array $values): string
+    {
+        $filtered = array_filter(
+            array_map(fn($v) => trim((string) $v), $values),
+            fn($v) => $v !== ''
+        );
+
+        return implode(' ', $filtered);
     }
 }

@@ -6,6 +6,7 @@ namespace Molitor\Cms\Repositories;
 
 use Illuminate\Support\Str;
 use Molitor\Cms\Models\Page;
+use Molitor\Cms\Services\ContentHandler;
 
 class PageRepository implements PageRepositoryInterface
 {
@@ -174,5 +175,14 @@ class PageRepository implements PageRepositoryInterface
         if ($content) {
             $this->contentRepository->delete($content);
         }
+    }
+
+    public function toString(Page $page): string
+    {
+        return implode(' ', [
+            $page->title,
+            $page->lead,
+            app(ContentHandler::class)->contentToString($page->content),
+        ]);
     }
 }
