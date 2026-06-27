@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Molitor\Search\Http\Requests\SearchRequest;
 use Illuminate\Support\Facades\Log;
 use Molitor\Admin\Traits\HasAdminFilters;
 use Molitor\Cms\Data\ContentDto;
+use Molitor\Search\Services\SearchService;
 use Molitor\Cms\Http\Requests\Post\StorePostRequest;
 use Molitor\Cms\Http\Requests\Post\UpdatePostRequest;
 use Molitor\Cms\Http\Resources\PostResource;
@@ -25,26 +26,19 @@ class PostApiController
         private PostRepositoryInterface $postRepository
     ) {}
 
-    public function index(Request $request): AnonymousResourceCollection|JsonResponse
+    public function index(SearchRequest $request): AnonymousResourceCollection|JsonResponse
     {
-        $params = $request->only(['search', 'sort', 'direction', 'page', 'per_page']);
-        $params['paginate'] = true;
+        $searchService = new SearchService(Post::class);
 
-        $posts = $this->postRepository->getAll($params);
+        $result = $searchService->search($request);
 
-        if ($request->wantsJson() || $request->ajax()) {
-            return PostResource::collection($posts)->additional([
-                'meta' => [
-                    'current_page' => $posts->currentPage(),
-                    'last_page' => $posts->lastPage(),
-                    'per_page' => $posts->perPage(),
-                    'total' => $posts->total(),
-                ],
-                'filters' => $request->only(['search', 'sort', 'direction']),
-            ]);
+        $response = PostResource::collection($result->items());
+
+        if ($result->isPaginated() && ($request->wantsJson() || $request->ajax())) {
+            return $response->additional($result->getAdditionals());
         }
 
-        return PostResource::collection($posts);
+        return $response;
     }
 
     public function show(Post $post): PostResource
