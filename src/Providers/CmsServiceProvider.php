@@ -72,7 +72,7 @@ class CmsServiceProvider extends ServiceProvider
 
         $this->app->make(SearchRegistry::class)->register(
             Post::class,
-            new LikeSearcher(Post::class, ['title', 'lead']),
+            new LikeSearcher(['title', 'lead']),
         );
 
         $contentObserver = new ContentObserver;

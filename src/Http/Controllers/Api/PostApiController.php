@@ -28,9 +28,9 @@ class PostApiController
 
     public function index(SearchRequest $request): AnonymousResourceCollection|JsonResponse
     {
-        $searchService = new SearchService(Post::class);
-
-        $result = $searchService->search($request);
+        $result = (new SearchService(Post::class))
+            ->fromRequest($request)
+            ->search();
 
         $response = PostResource::collection($result->items());
 
