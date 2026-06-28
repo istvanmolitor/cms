@@ -7,6 +7,7 @@ namespace Molitor\Cms\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Molitor\Cms\Events\Page\PageDeleted;
 use Molitor\Keyword\Traits\HasKeywords;
 use Molitor\Language\Models\Language;
 use Molitor\Cms\Models\PageType;
@@ -14,6 +15,11 @@ use Molitor\Cms\Models\PageType;
 class Page extends Model
 {
     use HasKeywords;
+
+    protected $dispatchesEvents = [
+        'deleted' => PageDeleted::class,
+    ];
+
     protected $fillable = [
         'title',
         'slug',

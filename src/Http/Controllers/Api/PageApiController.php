@@ -9,6 +9,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Log;
 use Molitor\Cms\Data\ContentDto;
 use Molitor\Cms\DataTables\PageDataTable;
+use Molitor\Cms\Events\Page\PageUpdated;
 use Molitor\Cms\Http\Requests\Page\StorePageRequest;
 use Molitor\Cms\Http\Requests\Page\UpdatePageRequest;
 use Molitor\Cms\Http\Resources\PageResource;
@@ -81,9 +82,10 @@ class PageApiController
 
         $contentHandler->saveContentDto($page->content, ContentDto::fromArray($request->content));
 
-        // Reload relationships
         $page->load('content.contentElements.children');
         $page->load('metaData');
+
+        PageUpdated::dispatch($page);
 
         return new PageResource($page);
     }

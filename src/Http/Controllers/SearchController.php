@@ -29,11 +29,6 @@ class SearchController extends Controller
             'per_page' => (int) $this->cmsSettingForm->get('search_per_page'),
         ]);
 
-        if ($posts instanceof \Illuminate\Pagination\LengthAwarePaginator) {
-            $posts->getCollection()->load('authors', 'postGroups');
-            $posts->appends(['q' => $query]);
-        }
-
         $layoutName = $this->cmsSettingForm->get('search_layout');
         $layout = $this->layoutService->getLayoutTemplate($layoutName);
 

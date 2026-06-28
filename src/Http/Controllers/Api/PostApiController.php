@@ -9,6 +9,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Log;
 use Molitor\Cms\Data\ContentDto;
 use Molitor\Cms\DataTables\PostDataTable;
+use Molitor\Cms\Events\Post\PostUpdated;
 use Molitor\Cms\Http\Requests\Post\StorePostRequest;
 use Molitor\Cms\Http\Requests\Post\UpdatePostRequest;
 use Molitor\Cms\Http\Resources\PostResource;
@@ -98,6 +99,8 @@ class PostApiController
         }
 
         $post->load('content.contentElements.children', 'authors', 'postGroups', 'postMeta', 'postType');
+
+        PostUpdated::dispatch($post);
 
         return new PostResource($post);
     }
