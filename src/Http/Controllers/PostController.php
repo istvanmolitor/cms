@@ -26,7 +26,7 @@ class PostController
         $posts = $this->postRepository->getAll([
             'is_published' => true,
             'paginate' => true,
-            'per_page' => 10,
+            'per_page' => (int) $this->cmsSettingForm->get('post_list_per_page'),
         ]);
 
         $layoutName = $this->cmsSettingForm->get('post_list_layout');

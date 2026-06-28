@@ -26,7 +26,7 @@ class SearchController extends Controller
         $posts = $this->postRepository->getAll([
             'search'   => $query,
             'paginate' => true,
-            'per_page' => 12,
+            'per_page' => (int) $this->cmsSettingForm->get('search_per_page'),
         ]);
 
         if ($posts instanceof \Illuminate\Pagination\LengthAwarePaginator) {

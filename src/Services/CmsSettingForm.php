@@ -35,17 +35,37 @@ class CmsSettingForm extends SettingForm
                 'options' => $this->getLayoutOptions(),
                 'default' => app(LayoutService::class)->getDefault(),
             ],
+            'post_list_per_page' => [
+                'label' => 'Post lista – elemek oldalanként',
+                'type' => SettingFieldType::Number,
+                'default' => 12,
+            ],
             'author_list_layout' => [
                 'label' => 'Author lista layout',
                 'type' => SettingFieldType::Select,
                 'options' => $this->getLayoutOptions(),
                 'default' => app(LayoutService::class)->getDefault(),
             ],
+            'author_posts_per_page' => [
+                'label' => 'Author oldal – posztok oldalanként',
+                'type' => SettingFieldType::Number,
+                'default' => 12,
+            ],
+            'post_group_per_page' => [
+                'label' => 'Post csoport – elemek oldalanként',
+                'type' => SettingFieldType::Number,
+                'default' => 10,
+            ],
             'search_layout' => [
                 'label' => 'Keresési találatok layout',
                 'type' => SettingFieldType::Select,
                 'options' => $this->getLayoutOptions(),
                 'default' => app(LayoutService::class)->getDefault(),
+            ],
+            'search_per_page' => [
+                'label' => 'Keresési találatok – elemek oldalanként',
+                'type' => SettingFieldType::Number,
+                'default' => 12,
             ],
         ];
     }

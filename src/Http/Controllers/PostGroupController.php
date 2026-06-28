@@ -7,13 +7,15 @@ namespace Molitor\Cms\Http\Controllers;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Molitor\Cms\Repositories\PostGroupRepositoryInterface;
+use Molitor\Cms\Services\CmsSettingForm;
 use Molitor\Theme\Services\LayoutService;
 
 class PostGroupController
 {
     public function __construct(
         private PostGroupRepositoryInterface $postGroupRepository,
-        private LayoutService $layoutService
+        private LayoutService $layoutService,
+        private CmsSettingForm $cmsSettingForm,
     ) {}
 
     public function index(): View|Response
@@ -35,7 +37,7 @@ class PostGroupController
             abort(404);
         }
 
-        $posts = $postGroup->posts()->paginate(10);
+        $posts = $postGroup->posts()->paginate((int) $this->cmsSettingForm->get('post_group_per_page'));
         $layout = $this->layoutService->getLayoutTemplate($postGroup->layout);
 
         return template('cms::post-group.show', [

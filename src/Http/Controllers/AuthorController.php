@@ -46,7 +46,7 @@ class AuthorController extends Controller
         $posts = $author->posts()
             ->where('is_published', true)
             ->latest()
-            ->paginate(12);
+            ->paginate((int) $this->cmsSettingForm->get('author_posts_per_page'));
 
         $layout = $this->layoutService->getLayoutTemplate($author->layout);
 
