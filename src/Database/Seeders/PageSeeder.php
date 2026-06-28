@@ -26,10 +26,10 @@ class PageSeeder extends Seeder
         $aboutType = PageType::where('slug', 'about')->first();
 
         $pages = [
-            ['title' => 'Rólunk', 'slug' => 'rolunk', 'lead' => 'Megbízható tájékoztatás, elfogulatlan hírszolgáltatás – ez a mi küldetésünk.', 'page_type' => $aboutType ?? $defaultType, 'layout' => 'default'],
-            ['title' => 'Impresszum', 'slug' => 'impresszum', 'lead' => 'A portál kiadójának és szerkesztőségének adatai.', 'page_type' => $defaultType, 'layout' => 'default'],
-            ['title' => 'Adatvédelmi tájékoztató', 'slug' => 'adatvedelem', 'lead' => 'Tájékoztató a személyes adatok kezeléséről és a felhasználók jogairól.', 'page_type' => $defaultType, 'layout' => 'default'],
-            ['title' => 'Süti tájékoztató', 'slug' => 'sutik', 'lead' => 'Tájékoztató a weboldalon használt sütikről.', 'page_type' => $defaultType, 'layout' => 'default'],
+            ['title' => 'Rólunk', 'slug' => 'rolunk', 'lead' => 'Megbízható tájékoztatás, elfogulatlan hírszolgáltatás – ez a mi küldetésünk.', 'page_type' => $aboutType ?? $defaultType, 'layout' => 'container'],
+            ['title' => 'Impresszum', 'slug' => 'impresszum', 'lead' => 'A portál kiadójának és szerkesztőségének adatai.', 'page_type' => $defaultType, 'layout' => 'container'],
+            ['title' => 'Adatvédelmi tájékoztató', 'slug' => 'adatvedelem', 'lead' => 'Tájékoztató a személyes adatok kezeléséről és a felhasználók jogairól.', 'page_type' => $defaultType, 'layout' => 'container'],
+            ['title' => 'Süti tájékoztató', 'slug' => 'sutik', 'lead' => 'Tájékoztató a weboldalon használt sütikről.', 'page_type' => $defaultType, 'layout' => 'container'],
         ];
 
         foreach ($pages as $data) {

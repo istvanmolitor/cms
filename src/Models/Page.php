@@ -34,7 +34,7 @@ class Page extends Model
     ];
 
     protected $attributes = [
-        'layout' => 'default',
+        'layout' => 'container',
     ];
 
     public function content(): BelongsTo
