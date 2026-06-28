@@ -7,6 +7,7 @@ namespace Molitor\Cms\Http\Controllers\Api;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Molitor\Cms\Data\ContentDto;
+use Molitor\Cms\DataTables\ContentRegionDataTable;
 use Molitor\Cms\Http\Requests\ContentRegion\StoreContentRegionRequest;
 use Molitor\Cms\Http\Requests\ContentRegion\UpdateContentRegionRequest;
 use Molitor\Cms\Http\Resources\ContentRegionResource;
@@ -19,12 +20,9 @@ class ContentRegionApiController
         private ContentRegionRepositoryInterface $contentRegionRepository
     ) {}
 
-    public function index(): AnonymousResourceCollection
+    public function index(ContentRegionDataTable $dataTable): AnonymousResourceCollection
     {
-        $search = request()->query('search');
-        $regions = $this->contentRegionRepository->getAll($search);
-
-        return ContentRegionResource::collection($regions);
+        return $dataTable->getResponse();
     }
 
     public function show(int $id): JsonResponse|ContentRegionResource

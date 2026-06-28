@@ -6,11 +6,9 @@ namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Molitor\Search\Http\Requests\SearchRequest;
 use Illuminate\Support\Facades\Log;
-use Molitor\Admin\Traits\HasAdminFilters;
 use Molitor\Cms\Data\ContentDto;
-use Molitor\Search\Services\SearchService;
+use Molitor\Cms\DataTables\PostDataTable;
 use Molitor\Cms\Http\Requests\Post\StorePostRequest;
 use Molitor\Cms\Http\Requests\Post\UpdatePostRequest;
 use Molitor\Cms\Http\Resources\PostResource;
@@ -20,25 +18,13 @@ use Molitor\Cms\Services\ContentHandler;
 
 class PostApiController
 {
-    use HasAdminFilters;
-
     public function __construct(
         private PostRepositoryInterface $postRepository
     ) {}
 
-    public function index(SearchRequest $request): AnonymousResourceCollection|JsonResponse
+    public function index(PostDataTable $dataTable): AnonymousResourceCollection
     {
-        $result = (new SearchService(Post::class))
-            ->fromRequest($request)
-            ->search();
-
-        $response = PostResource::collection($result->items());
-
-        if ($result->isPaginated() && ($request->wantsJson() || $request->ajax())) {
-            return $response->additional($result->getAdditionals());
-        }
-
-        return $response;
+        return $dataTable->getResponse();
     }
 
     public function show(Post $post): PostResource

@@ -6,6 +6,7 @@ namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Molitor\Cms\DataTables\PageTypeDataTable;
 use Molitor\Cms\Http\Requests\PageType\StorePageTypeRequest;
 use Molitor\Cms\Http\Requests\PageType\UpdatePageTypeRequest;
 use Molitor\Cms\Http\Resources\PageTypeResource;
@@ -17,11 +18,9 @@ class PageTypeApiController
         private PageTypeRepositoryInterface $pageTypeRepository
     ) {}
 
-    public function index(): AnonymousResourceCollection
+    public function index(PageTypeDataTable $dataTable): AnonymousResourceCollection
     {
-        $pageTypes = $this->pageTypeRepository->getAll();
-
-        return PageTypeResource::collection($pageTypes);
+        return $dataTable->getResponse();
     }
 
     public function show(int $id): JsonResponse|PageTypeResource

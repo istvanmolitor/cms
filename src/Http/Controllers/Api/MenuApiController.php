@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Molitor\Admin\Traits\HasAdminFilters;
+use Molitor\Cms\DataTables\MenuDataTable;
 use Molitor\Cms\Http\Requests\Menu\StoreMenuRequest;
 use Molitor\Cms\Http\Requests\Menu\UpdateMenuRequest;
 use Molitor\Cms\Http\Resources\MenuResource;
@@ -15,32 +14,13 @@ use Molitor\Cms\Repositories\MenuRepositoryInterface;
 
 class MenuApiController
 {
-    use HasAdminFilters;
-
     public function __construct(
         private MenuRepositoryInterface $menuRepository
     ) {}
 
-    public function index(Request $request): AnonymousResourceCollection|JsonResponse
+    public function index(MenuDataTable $dataTable): AnonymousResourceCollection
     {
-        $params = $request->only(['search', 'sort', 'direction', 'page', 'per_page']);
-        $params['paginate'] = true;
-
-        $menus = $this->menuRepository->getAll($params);
-
-        if ($request->wantsJson() || $request->ajax()) {
-            return MenuResource::collection($menus)->additional([
-                'meta' => [
-                    'current_page' => $menus->currentPage(),
-                    'last_page' => $menus->lastPage(),
-                    'per_page' => $menus->perPage(),
-                    'total' => $menus->total(),
-                ],
-                'filters' => $request->only(['search', 'sort', 'direction']),
-            ]);
-        }
-
-        return MenuResource::collection($menus);
+        return $dataTable->getResponse();
     }
 
     public function show(int $id): JsonResponse|MenuResource

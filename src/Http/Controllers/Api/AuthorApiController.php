@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Molitor\Admin\Traits\HasAdminFilters;
+use Molitor\Cms\DataTables\AuthorDataTable;
 use Molitor\Cms\Http\Requests\Author\StoreAuthorRequest;
 use Molitor\Cms\Http\Requests\Author\UpdateAuthorRequest;
 use Molitor\Cms\Http\Resources\AuthorResource;
@@ -15,32 +14,13 @@ use Molitor\Cms\Repositories\AuthorRepositoryInterface;
 
 class AuthorApiController
 {
-    use HasAdminFilters;
-
     public function __construct(
         private AuthorRepositoryInterface $authorRepository
     ) {}
 
-    public function index(Request $request): AnonymousResourceCollection|JsonResponse
+    public function index(AuthorDataTable $dataTable): AnonymousResourceCollection
     {
-        $params = $request->only(['search', 'sort', 'direction', 'page', 'per_page']);
-        $params['paginate'] = true;
-
-        $authors = $this->authorRepository->getAll($params);
-
-        if ($request->wantsJson() || $request->ajax()) {
-            return AuthorResource::collection($authors)->additional([
-                'meta' => [
-                    'current_page' => $authors->currentPage(),
-                    'last_page' => $authors->lastPage(),
-                    'per_page' => $authors->perPage(),
-                    'total' => $authors->total(),
-                ],
-                'filters' => $request->only(['search', 'sort', 'direction']),
-            ]);
-        }
-
-        return AuthorResource::collection($authors);
+        return $dataTable->getResponse();
     }
 
     public function show(int $id): JsonResponse|AuthorResource

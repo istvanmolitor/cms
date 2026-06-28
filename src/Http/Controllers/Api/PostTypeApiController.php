@@ -6,6 +6,7 @@ namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Molitor\Cms\DataTables\PostTypeDataTable;
 use Molitor\Cms\Http\Requests\PostType\StorePostTypeRequest;
 use Molitor\Cms\Http\Requests\PostType\UpdatePostTypeRequest;
 use Molitor\Cms\Http\Resources\PostTypeResource;
@@ -17,11 +18,9 @@ class PostTypeApiController
         private PostTypeRepositoryInterface $postTypeRepository
     ) {}
 
-    public function index(): AnonymousResourceCollection
+    public function index(PostTypeDataTable $dataTable): AnonymousResourceCollection
     {
-        $postTypes = $this->postTypeRepository->getAll();
-
-        return PostTypeResource::collection($postTypes);
+        return $dataTable->getResponse();
     }
 
     public function show(int $id): JsonResponse|PostTypeResource

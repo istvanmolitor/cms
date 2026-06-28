@@ -6,6 +6,7 @@ namespace Molitor\Cms\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Molitor\Cms\DataTables\PostGroupDataTable;
 use Molitor\Cms\Http\Requests\PostGroup\StorePostGroupRequest;
 use Molitor\Cms\Http\Requests\PostGroup\UpdatePostGroupRequest;
 use Molitor\Cms\Http\Resources\PostGroupResource;
@@ -17,11 +18,9 @@ class PostGroupApiController
         private PostGroupRepositoryInterface $postGroupRepository
     ) {}
 
-    public function index(): AnonymousResourceCollection
+    public function index(PostGroupDataTable $dataTable): AnonymousResourceCollection
     {
-        $postGroups = $this->postGroupRepository->getAll();
-
-        return PostGroupResource::collection($postGroups);
+        return $dataTable->getResponse();
     }
 
     public function show(int $id): JsonResponse|PostGroupResource
