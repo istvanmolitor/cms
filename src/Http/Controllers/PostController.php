@@ -6,6 +6,7 @@ namespace Molitor\Cms\Http\Controllers;
 
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Molitor\Cms\Events\Post\PostShow;
 use Molitor\Cms\Repositories\PostRepositoryInterface;
 use Molitor\Cms\Services\CmsSettingForm;
 use Molitor\Keyword\Repositories\KeywordRepositoryInterface;
@@ -65,6 +66,10 @@ class PostController
         }
 
         $post->load(['content.contentElements', 'authors', 'postGroups', 'keywords']);
+
+        PostShow::dispatch($post);
+
+        $post->refresh();
 
         $layout = $this->layoutService->getLayoutTemplate($post->layout);
         
