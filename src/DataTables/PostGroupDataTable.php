@@ -23,10 +23,12 @@ class PostGroupDataTable extends DataTable
     protected function initColumns(): void
     {
         $this->addColumn('name')
+            ->setLabel('Név')
             ->setSearchable()
             ->setOrderable();
 
         $this->addColumn('lead')
+            ->setLabel('Lead')
             ->setSearchable();
     }
 }

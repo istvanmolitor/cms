@@ -23,10 +23,12 @@ class AuthorDataTable extends DataTable
     protected function initColumns(): void
     {
         $this->addColumn('name')
+            ->setLabel('Név')
             ->setSearchable()
             ->setOrderable();
 
         $this->addColumn('email')
+            ->setLabel('E-mail')
             ->setSearchable();
     }
 }

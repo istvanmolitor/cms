@@ -23,14 +23,17 @@ class PostTypeDataTable extends DataTable
     protected function initColumns(): void
     {
         $this->addColumn('name')
+            ->setLabel('Név')
             ->setSearchable()
             ->setOrderable();
 
         $this->addColumn('slug')
+            ->setLabel('Slug')
             ->setSearchable()
             ->setOrderable();
 
         $this->addColumn('created_at')
+            ->setLabel('Létrehozva')
             ->setOrderable();
     }
 }

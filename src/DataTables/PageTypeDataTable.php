@@ -23,10 +23,12 @@ class PageTypeDataTable extends DataTable
     protected function initColumns(): void
     {
         $this->addColumn('name')
+            ->setLabel('Név')
             ->setSearchable()
             ->setOrderable();
 
         $this->addColumn('slug')
+            ->setLabel('Slug')
             ->setSearchable();
     }
 }
