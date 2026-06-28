@@ -42,6 +42,10 @@ class PostDataTable extends DataTable
 
         $this->addColumn('postGroups')
             ->setLabel('Csoportok');
+
+        $this->addColumn('created_at')
+            ->setLabel('Létrehozva')
+            ->setOrderable();
     }
 
     public function query(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
