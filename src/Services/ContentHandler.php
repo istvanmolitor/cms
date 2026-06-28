@@ -19,6 +19,7 @@ use Molitor\Cms\Services\ContentElementTypes\IframeElementType;
 use Molitor\Cms\Services\ContentElementTypes\ImageElementType;
 use Molitor\Cms\Services\ContentElementTypes\ListElementType;
 use Molitor\Cms\Services\ContentElementTypes\MenuElementType;
+use Molitor\Cms\Services\ContentElementTypes\ParagraphElementType;
 use Molitor\Cms\Services\ContentElementTypes\LatestPostsElementType;
 use Molitor\Cms\Services\ContentElementTypes\PostHeroElementType;
 use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
@@ -41,6 +42,7 @@ class ContentHandler
     public function initElementTypes(): void
     {
         $this->registerElementType(new TextElementType);
+        $this->registerElementType(new ParagraphElementType);
         $this->registerElementType(new HeadingElementType);
         $this->registerElementType(new HeroElementType);
         $this->registerElementType(new ImageElementType);
