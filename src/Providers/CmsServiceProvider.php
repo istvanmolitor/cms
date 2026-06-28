@@ -41,8 +41,6 @@ use Molitor\Cms\Repositories\PostRepositoryInterface;
 use Molitor\Cms\Services\CmsComponentRegistry;
 use Molitor\Cms\Services\CmsSettingForm;
 use Molitor\Cms\Services\ContentHandler;
-use Molitor\Search\Searchers\LikeSearcher;
-use Molitor\Search\Services\SearchRegistry;
 use Molitor\Setting\Services\SettingHandler;
 
 class CmsServiceProvider extends ServiceProvider
@@ -69,11 +67,6 @@ class CmsServiceProvider extends ServiceProvider
         Blade::componentNamespace('Molitor\\Cms\\View\\Components', 'cms');
 
         $this->app->make(SettingHandler::class)->registerSettingForm(CmsSettingForm::class);
-
-        $this->app->make(SearchRegistry::class)->register(
-            Post::class,
-            new LikeSearcher(['title', 'lead']),
-        );
 
         $contentObserver = new ContentObserver;
         Page::observe($contentObserver);
