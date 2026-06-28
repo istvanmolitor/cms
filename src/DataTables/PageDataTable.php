@@ -34,6 +34,7 @@ class PageDataTable extends DataTable
 
         $this->addColumn('lead')
             ->setLabel('Lead')
-            ->setSearchable();
+            ->setSearchable()
+            ->setOrderable();
     }
 }

@@ -27,6 +27,9 @@ class AuthorDataTable extends DataTable
 
     protected function initColumns(): void
     {
+        $this->addColumn('profile_url')
+            ->setLabel('Profilkép');
+
         $this->addColumn('name')
             ->setLabel('Név')
             ->setSearchable()

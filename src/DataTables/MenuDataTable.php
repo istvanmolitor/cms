@@ -31,5 +31,13 @@ class MenuDataTable extends DataTable
             ->setLabel('Név')
             ->setSearchable()
             ->setOrderable();
+
+        $this->addColumn('language')
+            ->setLabel('Nyelv');
+    }
+
+    public function query(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->with('language');
     }
 }

@@ -27,6 +27,9 @@ class PostDataTable extends DataTable
 
     protected function initColumns(): void
     {
+        $this->addColumn('main_image_url')
+            ->setLabel('Fő kép');
+
         $this->addColumn('title')
             ->setLabel('Cím')
             ->setSearchable()
@@ -34,6 +37,15 @@ class PostDataTable extends DataTable
 
         $this->addColumn('lead')
             ->setLabel('Lead')
-            ->setSearchable();
+            ->setSearchable()
+            ->setOrderable();
+
+        $this->addColumn('postGroups')
+            ->setLabel('Csoportok');
+    }
+
+    public function query(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->with('postGroups');
     }
 }
