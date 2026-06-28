@@ -25,6 +25,11 @@ class PageDataTable extends DataTable
         return 'Keresés cím vagy lead alapján...';
     }
 
+    public function query(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->with('pageType');
+    }
+
     protected function initColumns(): void
     {
         $this->addColumn('title')
@@ -33,8 +38,11 @@ class PageDataTable extends DataTable
             ->setOrderable();
 
         $this->addColumn('lead')
-            ->setLabel('Lead')
+            ->setLabel('Bevezető')
             ->setSearchable()
             ->setOrderable();
+
+        $this->addColumn('page_type_name')
+            ->setLabel('Típus');
     }
 }
