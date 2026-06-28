@@ -20,6 +20,11 @@ class PageTypeDataTable extends DataTable
         return PageTypeResource::class;
     }
 
+    protected function getSearchPlaceholder(): string
+    {
+        return 'Keresés név vagy slug alapján...';
+    }
+
     protected function initColumns(): void
     {
         $this->addColumn('name')

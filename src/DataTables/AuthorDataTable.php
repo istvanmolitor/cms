@@ -20,6 +20,11 @@ class AuthorDataTable extends DataTable
         return AuthorResource::class;
     }
 
+    protected function getSearchPlaceholder(): string
+    {
+        return 'Keresés név alapján...';
+    }
+
     protected function initColumns(): void
     {
         $this->addColumn('name')
