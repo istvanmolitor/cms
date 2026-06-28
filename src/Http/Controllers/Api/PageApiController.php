@@ -24,7 +24,7 @@ class PageApiController
 
     public function index(PageDataTable $dataTable): AnonymousResourceCollection
     {
-        return $dataTable->response();
+        return $dataTable->getResponse();
     }
 
     public function show(Page $page): PageResource
