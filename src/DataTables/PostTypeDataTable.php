@@ -27,6 +27,10 @@ class PostTypeDataTable extends DataTable
             ->setOrderable();
 
         $this->addColumn('slug')
-            ->setSearchable();
+            ->setSearchable()
+            ->setOrderable();
+
+        $this->addColumn('created_at')
+            ->setOrderable();
     }
 }
