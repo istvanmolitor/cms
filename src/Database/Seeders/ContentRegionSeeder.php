@@ -11,6 +11,15 @@ class ContentRegionSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->ensureElement('homepage', 'latest-posts', []);
+        $this->ensureElement('homepage-top', 'hero', [
+            'title' => 'Naprakész hírek, megbízható forrásból',
+            'lead' => 'Kövesse nyomon a legfontosabb híreket és eseményeket, elfogulatlan tájékoztatással.',
+        ]);
+    }
+
+    private function ensureElement(string $regionName, string $elementType, array $settings): void
+    {
         /** @var ContentRegionRepositoryInterface $contentRegionRepository */
         $contentRegionRepository = app(ContentRegionRepositoryInterface::class);
 
@@ -20,23 +29,23 @@ class ContentRegionSeeder extends Seeder
         /** @var ContentHandler $contentHandler */
         $contentHandler = app(ContentHandler::class);
 
-        $region = $contentRegionRepository->getByName('homepage');
+        $region = $contentRegionRepository->getByName($regionName);
 
         if (! $region) {
-            $region = $contentRegionRepository->create(['name' => 'homepage']);
+            $region = $contentRegionRepository->create(['name' => $regionName]);
         }
 
         $content = $region->content;
 
         if ($content) {
-            $hasLatestPosts = $contentElementRepository->getByContent($content)
-                ->contains(fn ($element) => $contentHandler->getTypeName($element) === 'latest-posts');
+            $hasElement = $contentElementRepository->getByContent($content)
+                ->contains(fn ($element) => $contentHandler->getTypeName($element) === $elementType);
 
-            if (! $hasLatestPosts) {
-                $contentHandler->createContentElement($content, 'latest-posts', []);
+            if (! $hasElement) {
+                $contentHandler->createContentElement($content, $elementType, $settings);
             }
         }
 
-        $this->command->info("Content region 'homepage' ensured with Latest Posts element.");
+        $this->command->info("Content region '{$regionName}' ensured with '{$elementType}' element.");
     }
 }
