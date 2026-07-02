@@ -17,9 +17,11 @@
                     <span>&bull;</span>
                     <span>{{ $post->authors->pluck('name')->implode(', ') }}</span>
                 @endif
+                @if($link)
                 <a href="{{ route('cms.post.show', $post->slug) }}" class="ml-auto font-semibold text-white hover:text-gray-200 transition-colors">
                     {{ __('Olvasd tovább') }} &rarr;
                 </a>
+                @endif
             </div>
         </div>
     </div>
@@ -39,9 +41,11 @@
                 <span>&bull;</span>
                 <span>{{ $post->authors->pluck('name')->implode(', ') }}</span>
             @endif
-            <a href="{{ route('cms.post.show', $post->slug) }}" class="ml-auto font-semibold text-blue-600 hover:text-blue-800 transition-colors">
-                {{ __('Olvasd tovább') }} &rarr;
-            </a>
+            @if($link)
+                <a href="{{ route('cms.post.show', $post->slug) }}" class="ml-auto font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                    {{ __('Olvasd tovább') }} &rarr;
+                </a>
+            @endif
         </div>
     </div>
 @endif

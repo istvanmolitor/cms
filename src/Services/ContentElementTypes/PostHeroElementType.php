@@ -2,7 +2,9 @@
 
 namespace Molitor\Cms\Services\ContentElementTypes;
 
+use Molitor\Cms\Models\Post;
 use Molitor\Cms\Repositories\PostRepositoryInterface;
+use Override;
 
 class PostHeroElementType extends BaseContentElementType
 {
@@ -32,6 +34,22 @@ class PostHeroElementType extends BaseContentElementType
     {
         return [
             'post_id' => 'required|integer|exists:posts,id',
+        ];
+    }
+
+    protected function getPost(array $settings): ?Post
+    {
+        $postId = $settings['post_id'] ?? null;
+        if(!$postId) {
+            return null;
+        }
+        return Post::with('authors')->find($postId);       
+    }
+
+    public function getCalculated(array $settings): array
+    {
+        return [
+            'post' => $this->getPost($settings),
         ];
     }
 

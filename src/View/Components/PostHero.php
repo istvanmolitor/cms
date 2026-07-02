@@ -12,12 +12,14 @@ class PostHero extends Component
 {
     public function __construct(
         public Post $post,
+        public bool $link = true
     ) {}
 
     public function render(): View
     {
         return template('cms::components.post-hero', [
             'post' => $this->post,
+            'link' => $this->link,
         ]);
     }
 }

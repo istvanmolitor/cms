@@ -6,7 +6,7 @@
 
 @section('top')
 <x-theme::template view="cms::post.partials.show-top" />
-<x-cms::post-hero :post="$post" />
+<x-cms::post-hero :post="$post" :link="false" />
 @endsection
 
 @section('content')

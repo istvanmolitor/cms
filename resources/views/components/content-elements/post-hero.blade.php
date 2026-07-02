@@ -1,6 +1,5 @@
 @php
-    $postId = $settings['post_id'] ?? null;
-    $post = $postId ? \Molitor\Cms\Models\Post::with('authors')->find($postId) : null;
+    $post = $calculated['post'] ?? null;
 @endphp
 
 @if($post)
