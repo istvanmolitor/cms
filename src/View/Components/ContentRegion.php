@@ -17,7 +17,8 @@ class ContentRegion extends Component
         private ContentRegionRepositoryInterface $contentRegionRepository,
         public string $name
     ) {
-        $this->isEditable = Gate::allows('acl', 'cms_region');
+        $isEditable = Gate::allows('acl', 'cms_region');
+        $this->isEditable = $isEditable;
     }
 
     public function render(): View
