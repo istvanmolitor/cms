@@ -45,5 +45,8 @@ class CmsSeeder extends Seeder
 
         // Seed base pages
         $this->call(PageSeeder::class);
+
+        // Seed content regions
+        $this->call(ContentRegionSeeder::class);
     }
 }
