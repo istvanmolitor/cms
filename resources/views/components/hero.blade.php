@@ -1,8 +1,8 @@
 @if($image_src)
-    <div class="relative overflow-hidden shadow-lg min-h-[32rem]">
-        <img src="{{ $image_src }}" alt="{{ $title }}" class="absolute inset-0 w-full h-full object-cover">
+    <div class="relative overflow-hidden shadow-lg min-h-[40rem]">
+        <img src="{{ $image_src }}" alt="{{ $title }}" class="absolute inset-0 w-full h-full object-cover object-top">
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-        <div class="relative z-10 flex flex-col justify-end h-full min-h-[32rem] p-8">
+        <div class="relative z-10 flex flex-col justify-end h-full min-h-[40rem] p-8">
             @if($link)
                 <a href="{{ $link }}" class="block">
                     <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 hover:text-gray-200 transition-colors">
