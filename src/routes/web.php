@@ -6,6 +6,7 @@ use Molitor\Cms\Http\Controllers\HomepageController;
 use Molitor\Cms\Http\Controllers\PageController;
 use Molitor\Cms\Http\Controllers\PostController;
 use Molitor\Cms\Http\Controllers\PostGroupController;
+use Molitor\Cms\Http\Controllers\PostTypeController;
 use Molitor\Cms\Http\Controllers\SearchController;
 
 Route::middleware(['web'])->group(function () {
@@ -15,6 +16,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/tag/{slug}', [PostController::class, 'byKeyword'])->name('cms.tag.show');
     Route::get('/post-group', [PostGroupController::class, 'index'])->name('cms.post-group.index');
     Route::get('/post-group/{slug}', [PostGroupController::class, 'show'])->name('cms.post-group.show');
+    Route::get('/post-type/{slug}', [PostTypeController::class, 'show'])->name('cms.post-type.show');
     Route::get('/author', [AuthorController::class, 'index'])->name('cms.author.index');
     Route::get('/author/{slug}', [AuthorController::class, 'show'])->name('cms.author.show');
     Route::get('/search', SearchController::class)->name('cms.search');

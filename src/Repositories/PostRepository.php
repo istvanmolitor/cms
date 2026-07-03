@@ -6,6 +6,7 @@ namespace Molitor\Cms\Repositories;
 
 use Illuminate\Support\Str;
 use Molitor\Cms\Models\Post;
+use Molitor\Cms\Models\PostType;
 use Molitor\Cms\Services\ContentHandler;
 use Molitor\Keyword\Models\Keyword;
 
@@ -49,6 +50,16 @@ class PostRepository implements PostRepositoryInterface
     {
         $query = $this->post
             ->whereHas('keywords', fn ($q) => $q->where('keywords.id', $keyword->id))
+            ->where('is_published', true)
+            ->orderBy('created_at', 'desc');
+
+        return $query->paginate((int) ($params['per_page'] ?? 10));
+    }
+
+    public function getByPostType(PostType $postType, array $params = []): mixed
+    {
+        $query = $this->post
+            ->where('post_type_id', $postType->id)
             ->where('is_published', true)
             ->orderBy('created_at', 'desc');
 

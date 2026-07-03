@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Molitor\Cms\Repositories;
 
 use Molitor\Cms\Models\Post;
+use Molitor\Cms\Models\PostType;
 use Molitor\Keyword\Models\Keyword;
 
 interface PostRepositoryInterface
@@ -12,6 +13,8 @@ interface PostRepositoryInterface
     public function getAll(array $params = []): mixed;
 
     public function getByKeyword(Keyword $keyword, array $params = []): mixed;
+
+    public function getByPostType(PostType $postType, array $params = []): mixed;
 
     public function getLatest(int $limit): mixed;
 

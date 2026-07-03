@@ -34,6 +34,12 @@ class MenuSeeder extends Seeder
                 ['label' => 'Adatvédelem', 'url' => '/adatvedelem', 'sort' => 2],
                 ['label' => 'Süti tájékoztató', 'url' => '/sutik', 'sort' => 3],
             ],
+            'post_type' => [
+            ],
+            'post_group' => [
+            ],
+            'keyword' => [
+            ],
         ];
 
         foreach ($menus as $name => $items) {
