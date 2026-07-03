@@ -34,6 +34,12 @@ class MenuSeeder extends Seeder
                 ['label' => 'Adatvédelem', 'url' => '/adatvedelem', 'sort' => 2],
                 ['label' => 'Süti tájékoztató', 'url' => '/sutik', 'sort' => 3],
             ],
+            'social' => [
+                ['label' => 'Facebook', 'url' => 'https://facebook.com', 'sort' => 1],
+                ['label' => 'Instagram', 'url' => 'https://instagram.com', 'sort' => 2],
+                ['label' => 'Twitter', 'url' => 'https://twitter.com', 'sort' => 3],
+                ['label' => 'LinkedIn', 'url' => 'https://linkedin.com', 'sort' => 4],
+            ],
             'post_type' => [
             ],
             'post_group' => [
