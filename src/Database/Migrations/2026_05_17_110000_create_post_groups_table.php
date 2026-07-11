@@ -18,6 +18,9 @@ class CreatePostGroupsTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('layout')->nullable();
+            $table->text('lead')->nullable();
+            $table->string('main_image_url')->nullable();
+            $table->string('keywords')->nullable();
             $table->timestamps();
         });
     }
