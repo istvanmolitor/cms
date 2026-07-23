@@ -13,7 +13,12 @@
     "require": {
         "istvanmolitor/user": "*@dev",
         "istvanmolitor/language": "*@dev",
-        "istvanmolitor/menu": "*@dev"
+        "istvanmolitor/menu": "*@dev",
+        "istvanmolitor/admin": "*@dev",
+        "istvanmolitor/setting": "*@dev",
+        "istvanmolitor/keyword": "*@dev",
+        "istvanmolitor/search": "*@dev",
+        "istvanmolitor/theme": "*@dev"
     },
     "autoload": {
         "psr-4": {

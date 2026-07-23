@@ -4,6 +4,25 @@
 
 Ez a CMS csomag Filament 4 alkalmazásokhoz készült, amely lehetővé teszi oldalak és tartalmak kezelését.
 
+## Függőségek
+
+- `istvanmolitor/user` – git@github.com:istvanmolitor/user.git
+  Szerzők (`Author`), jogosultságok az admin felülethez.
+- `istvanmolitor/language` – git@github.com:istvanmolitor/language.git
+  Oldalak/posztok fordításai (`Language` modell).
+- `istvanmolitor/menu` – git@github.com:istvanmolitor/menu.git
+  A CMS menüpontjai (`MenuDataTable`) az admin menübe illesztéséhez.
+- `istvanmolitor/admin` – git@github.com:istvanmolitor/admin.git
+  Az admin felület DataTable-jai és keresői (`Search/PageSearch`, `Search/PostSearch`) ehhez az admin réteghez kötődnek.
+- `istvanmolitor/setting` – git@github.com:istvanmolitor/setting.git
+  A CMS beállítási űrlapját (`CmsSettingForm`) a `SettingHandler`-nél regisztrálja.
+- `istvanmolitor/keyword` – git@github.com:istvanmolitor/keyword.git
+  Az oldalak/posztok kulcsszavas címkézése (`HasKeywords` trait).
+- `istvanmolitor/search` – git@github.com:istvanmolitor/search.git
+  A keresőoldal (`SearchController`, `PostSearcher`) a Search csomag `BaseSearcher`/`LikeSearcher` osztályaira épül.
+- `istvanmolitor/theme` – git@github.com:istvanmolitor/theme.git
+  Az oldalak/posztok megjelenítéséhez a layoutot a `LayoutService`/`ThemeHelper` szolgáltatja.
+
 ## Telepítés
 
 ### Konfiguráció publikálása
