@@ -10,7 +10,7 @@ use Molitor\Cms\Repositories\PostRepositoryInterface;
 use Molitor\Cms\Services\CmsSettingForm;
 use Molitor\Keyword\Repositories\KeywordGroupRepositoryInterface;
 use Molitor\Keyword\Repositories\KeywordRepositoryInterface;
-use Molitor\Theme\Services\LayoutService;
+use Molitor\BladeUi\Services\LayoutService;
 
 class KeywordController
 {

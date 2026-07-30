@@ -6,7 +6,7 @@ namespace Molitor\Cms\Services;
 
 use Molitor\Setting\Enums\SettingFieldType;
 use Molitor\Setting\Services\SettingForm;
-use Molitor\Theme\Services\LayoutService;
+use Molitor\BladeUi\Services\LayoutService;
 
 class CmsSettingForm extends SettingForm
 {

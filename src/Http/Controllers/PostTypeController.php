@@ -9,7 +9,7 @@ use Illuminate\View\View;
 use Molitor\Cms\Repositories\PostRepositoryInterface;
 use Molitor\Cms\Repositories\PostTypeRepositoryInterface;
 use Molitor\Cms\Services\CmsSettingForm;
-use Molitor\Theme\Services\LayoutService;
+use Molitor\BladeUi\Services\LayoutService;
 
 class PostTypeController
 {

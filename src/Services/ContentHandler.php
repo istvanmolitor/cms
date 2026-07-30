@@ -25,7 +25,6 @@ use Molitor\Cms\Services\ContentElementTypes\PostHeroElementType;
 use Molitor\Cms\Services\ContentElementTypes\QuoteElementType;
 use Molitor\Cms\Services\ContentElementTypes\TextElementType;
 use Molitor\Cms\Services\ContentElementTypes\VideoElementType;
-use Molitor\Theme\Services\ThemeHelper;
 
 class ContentHandler
 {
@@ -34,7 +33,6 @@ class ContentHandler
     public function __construct(
         private ContentElementRepositoryInterface $contentElementRepository,
         private ContentElementTypeRepositoryInterface $contentElementTypeRepository,
-        private ThemeHelper $themeHelper
     ) {
         $this->initElementTypes();
     }
@@ -313,9 +311,7 @@ class ContentHandler
 
         $settings = $type->unserialize($element->settings);
 
-        $view = $this->themeHelper->getRealView($type->getTemplate());
-
-        return template($view, [
+        return template($type->getTemplate(), [
             'settings' => $settings,
             'calculated' => $type->getCalculated($settings),
             'element' => $element]

@@ -5,7 +5,7 @@
 @endsection
 
 @section('top')
-    <x-theme::template view="cms::post.partials.index-top" />
+    @includeIf('cms::post.partials.index-top')
 @endsection
 
 @section('content')
@@ -21,25 +21,25 @@
 @endsection
 
 @section('sidebar')
-    <x-theme::template view="cms::post.partials.list-sidebar" />
+    @includeIf('cms::post.partials.list-sidebar')
 @endsection
 
 @section('bottom')
-    <x-theme::template view="cms::post.partials.index-bottom" />
+    @includeIf('cms::post.partials.index-bottom')
 @endsection
 
 @section('page-top')
-    <x-theme::template view="cms::post.partials.index-page-top" />
+    @includeIf('cms::post.partials.index-page-top')
 @endsection
 
 @section('page-bottom')
-    <x-theme::template view="cms::post.partials.index-page-bottom" />
+    @includeIf('cms::post.partials.index-page-bottom')
 @endsection
 
 @section('content-top')
-    <x-theme::template view="cms::post.partials.index-content-top" />
+    @includeIf('cms::post.partials.index-content-top')
 @endsection
 
 @section('content-bottom')
-    <x-theme::template view="cms::post.partials.index-content-bottom" />
+    @includeIf('cms::post.partials.index-content-bottom')
 @endsection

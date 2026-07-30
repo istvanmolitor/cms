@@ -11,29 +11,29 @@
 @endsection
 
 @section('sidebar')
-    <x-theme::template view="cms::author.partials.list-sidebar" />
+    @includeIf('cms::author.partials.list-sidebar')
 @endsection
 
 @section('top')
-    <x-theme::template view="cms::author.partials.index-top" />
+    @includeIf('cms::author.partials.index-top')
 @endsection
 
 @section('bottom')
-    <x-theme::template view="cms::author.partials.index-bottom" />
+    @includeIf('cms::author.partials.index-bottom')
 @endsection
 
 @section('page-top')
-    <x-theme::template view="cms::author.partials.index-page-top" />
+    @includeIf('cms::author.partials.index-page-top')
 @endsection
 
 @section('page-bottom')
-    <x-theme::template view="cms::author.partials.index-page-bottom" />
+    @includeIf('cms::author.partials.index-page-bottom')
 @endsection
 
 @section('content-top')
-    <x-theme::template view="cms::author.partials.index-content-top" />
+    @includeIf('cms::author.partials.index-content-top')
 @endsection
 
 @section('content-bottom')
-    <x-theme::template view="cms::author.partials.index-content-bottom" />
+    @includeIf('cms::author.partials.index-content-bottom')
 @endsection

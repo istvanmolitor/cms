@@ -18,7 +18,7 @@
         "istvanmolitor/setting": "*@dev",
         "istvanmolitor/keyword": "*@dev",
         "istvanmolitor/search": "*@dev",
-        "istvanmolitor/theme": "*@dev"
+        "istvanmolitor/blade-ui": "*@dev"
     },
     "autoload": {
         "psr-4": {

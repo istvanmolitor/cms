@@ -5,7 +5,7 @@
 @endsection
 
 @section('top')
-    <x-theme::template view="cms::keyword.partials.show-top" />
+    @includeIf('cms::keyword.partials.show-top')
 @endsection
 
 @section('content')
@@ -21,25 +21,25 @@
 @endsection
 
 @section('sidebar')
-    <x-theme::template view="cms::keyword.partials.show-sidebar" />
+    @includeIf('cms::keyword.partials.show-sidebar')
 @endsection
 
 @section('bottom')
-    <x-theme::template view="cms::keyword.partials.show-bottom" />
+    @includeIf('cms::keyword.partials.show-bottom')
 @endsection
 
 @section('page-top')
-    <x-theme::template view="cms::keyword.partials.show-page-top" />
+    @includeIf('cms::keyword.partials.show-page-top')
 @endsection
 
 @section('page-bottom')
-    <x-theme::template view="cms::keyword.partials.show-page-bottom" />
+    @includeIf('cms::keyword.partials.show-page-bottom')
 @endsection
 
 @section('content-top')
-    <x-theme::template view="cms::keyword.partials.show-content-top" />
+    @includeIf('cms::keyword.partials.show-content-top')
 @endsection
 
 @section('content-bottom')
-    <x-theme::template view="cms::keyword.partials.show-content-bottom" />
+    @includeIf('cms::keyword.partials.show-content-bottom')
 @endsection

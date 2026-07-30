@@ -9,7 +9,7 @@ use Illuminate\View\View;
 use Molitor\Cms\Events\Post\PostShow;
 use Molitor\Cms\Repositories\PostRepositoryInterface;
 use Molitor\Cms\Services\CmsSettingForm;
-use Molitor\Theme\Services\LayoutService;
+use Molitor\BladeUi\Services\LayoutService;
 
 class PostController
 {
@@ -50,7 +50,7 @@ class PostController
         $post->refresh();
 
         $layout = $this->layoutService->getLayoutTemplate($post->layout);
-        
+
         return template('cms::post.show', [
             'layout' => $layout,
             'post' => $post,

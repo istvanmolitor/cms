@@ -1,3 +1,3 @@
-<div class="content-element content-element-paragraph mb-6">
-    <div class="text-gray-700 leading-relaxed prose max-w-none">{!! $settings['content'] ?? '' !!}</div>
-</div>
+<x-cms::content-element-wrapper type="paragraph" class="mb-6">
+    <x-ui::typography.paragraph>{!! $settings['content'] ?? '' !!}</x-ui::typography.paragraph>
+</x-cms::content-element-wrapper>

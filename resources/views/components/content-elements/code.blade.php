@@ -1,4 +1,4 @@
 <div class="content-element content-element-code my-6">
-    <pre class="bg-gray-900 text-gray-100 rounded-lg p-6 overflow-x-auto"><code class="text-sm font-mono">{{ $settings['code'] }}</code></pre>
+    <x-ui::typography.code :code="$settings['code']" />
 </div>
 

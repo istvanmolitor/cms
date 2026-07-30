@@ -5,7 +5,7 @@
 @endsection
 
 @section('top')
-    <x-theme::template view="cms::keyword.partials.groups-top" />
+    @includeIf('cms::keyword.partials.groups-top')
 @endsection
 
 @section('content')
@@ -19,25 +19,25 @@
 @endsection
 
 @section('sidebar')
-    <x-theme::template view="cms::keyword.partials.groups-sidebar" />
+    @includeIf('cms::keyword.partials.groups-sidebar')
 @endsection
 
 @section('bottom')
-    <x-theme::template view="cms::keyword.partials.groups-bottom" />
+    @includeIf('cms::keyword.partials.groups-bottom')
 @endsection
 
 @section('page-top')
-    <x-theme::template view="cms::keyword.partials.groups-page-top" />
+    @includeIf('cms::keyword.partials.groups-page-top')
 @endsection
 
 @section('page-bottom')
-    <x-theme::template view="cms::keyword.partials.groups-page-bottom" />
+    @includeIf('cms::keyword.partials.groups-page-bottom')
 @endsection
 
 @section('content-top')
-    <x-theme::template view="cms::keyword.partials.groups-content-top" />
+    @includeIf('cms::keyword.partials.groups-content-top')
 @endsection
 
 @section('content-bottom')
-    <x-theme::template view="cms::keyword.partials.groups-content-bottom" />
+    @includeIf('cms::keyword.partials.groups-content-bottom')
 @endsection

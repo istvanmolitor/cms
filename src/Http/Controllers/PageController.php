@@ -7,7 +7,7 @@ namespace Molitor\Cms\Http\Controllers;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Molitor\Cms\Repositories\PageRepositoryInterface;
-use Molitor\Theme\Services\LayoutService;
+use Molitor\BladeUi\Services\LayoutService;
 
 class PageController
 {

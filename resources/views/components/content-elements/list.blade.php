@@ -2,12 +2,8 @@
     $items = $settings['items'] ?? [];
 @endphp
 
-<div class="content-element content-element-list mb-6">
+<x-cms::content-element-wrapper type="list" class="mb-6">
     @if(!empty($items))
-        <ul class="list-disc pl-6 space-y-2 text-gray-700">
-            @foreach($items as $item)
-                <li>{{ $item }}</li>
-            @endforeach
-        </ul>
+        <x-ui::typography.list :items="$items" />
     @endif
-</div>
+</x-cms::content-element-wrapper>

@@ -9,7 +9,7 @@ use Illuminate\View\View;
 use Molitor\Cms\Services\CmsSettingForm;
 use Molitor\Search\Http\Requests\SearchRequest;
 use Molitor\Search\Searchers\BaseSearcher;
-use Molitor\Theme\Services\LayoutService;
+use Molitor\BladeUi\Services\LayoutService;
 
 class SearchController extends Controller
 {

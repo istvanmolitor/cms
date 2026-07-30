@@ -26,7 +26,7 @@ class LayoutApiTest extends TestCase
 
         $this->assertArrayHasKey('container', $response->json('data'));
         $this->assertIsString($response->json('data.container.name'));
-        $this->assertEquals('theme::layouts.container', $response->json('data.container.template'));
+        $this->assertEquals('blade-ui::layouts.container', $response->json('data.container.template'));
     }
 }
 

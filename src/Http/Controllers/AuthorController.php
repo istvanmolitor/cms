@@ -10,7 +10,7 @@ use Illuminate\View\View;
 use Molitor\Cms\Models\Author;
 use Molitor\Cms\Repositories\AuthorRepositoryInterface;
 use Molitor\Cms\Services\CmsSettingForm;
-use Molitor\Theme\Services\LayoutService;
+use Molitor\BladeUi\Services\LayoutService;
 
 class AuthorController extends Controller
 {
